@@ -1,13 +1,13 @@
-//import java.awt.*;
+import java.awt.*;
 //import java.awt.image.*;
 //import java.awt.event.*;
+//import java.awt.image.*;
+import java.util.ArrayList;
+
+//import GameCanvas.playerListener;
 
 
-public class Player {
-    
-
-    private int playerPosX;
-	private int playerPosY;
+public class Player extends GameObject{
 
     private int playerInputVeloX;
 	private int playerInputVeloY;  
@@ -30,18 +30,17 @@ public class Player {
     private boolean jumpActive = false;
 
     public Player(){
-        playerPosX = 450;
-        playerPosY = 400;
+       super(450,400,30,60);
     }
 
     public int[] getPlayerPos(){
-        return new int[]{playerPosX,playerPosY};
+        return new int[]{(int)x,(int)y};
     }
 
-    public void playerLogic(){
+    public void tick(GameManager gm){
+
+        //System.out.print(".");
         playerVeloCalc();
-        playerPosX += playerVeloX;
-        playerPosY += playerVeloY;
        
         if(System.currentTimeMillis() >= attackTimer && isAttackOnline){
             //System.out.println("Timer ended");
@@ -51,7 +50,26 @@ public class Player {
         if(System.currentTimeMillis() <= attackTimer){
             isAttackOnline = true;
         }
+        //System.out.println("before " + playerVeloX + " " + playerVeloY);
         
+        playerCollision(gm);
+
+        //System.out.println("after " + playerVeloX + " " + playerVeloY);
+
+        x += playerVeloX;
+        y += playerVeloY;
+    }
+
+    public void render(Graphics2D g2d){
+        g2d.setColor(Color.blue);
+		int[] playerPos = getPlayerPos();
+		g2d.fillRect(playerPos[0],playerPos[1], 30, 60);
+
+        if(getIsAttackOnline()){
+			//System.out.println("Arc printing");
+			g2d.setColor(Color.yellow);
+			g2d.fillArc(getArcX()-20,getArcY()-25, 100, 100, (int)(getAttackAngle()*180/Math.PI - 15), 30);
+		}
     }
 
     public void playerInputVeloX(int x){
@@ -68,21 +86,22 @@ public class Player {
 
         if(System.currentTimeMillis() > jumpTimer +1000){
             jumpActive = false;
-            return;
         }
-
         if(jumpActive){
-            playerVeloY += (int)(-10 * ((-2 * (double)(System.currentTimeMillis()-jumpTimer) / 500) + 2));
+            playerVeloY += (int)(-5*(-2*(((double)(System.currentTimeMillis()-jumpTimer)/500.0)-1)+2));
+            //System.out.println(System.currentTimeMillis()-jumpTimer);
         }
+        playerVeloY+=8;//gravity
+        //System.out.println(playerVeloY); 
     }
 
-    public void swingSword(int x, int y){
+    public void swingSword(int x2, int y2){
         if(isAttackOnCooldown){
             return;
         }
 
-        int diffX = (int)x - playerPosX - 15;
-        int diffY = ((int)y - playerPosY - 15)*-1;
+        int diffX = ((int)x - x2 - 15)*-1;
+        int diffY = ((int)y - y2 - 15);
 
         System.out.println("diffx and y: " + diffX + " " + diffY);
 
@@ -104,11 +123,11 @@ public class Player {
 
        // System.out.println("Angle: " + attackAngle);
 
-        arcX = (int)(playerPosX -15 +  (25 * Math.cos(attackAngle)));
-        arcY = (int)(playerPosY -15 - (25 * Math.sin(attackAngle)));
+        arcX = (int)(x -15 +  (25 * Math.cos(attackAngle)));
+        arcY = (int)(y -15 - (25 * Math.sin(attackAngle)));
 
         //System.out.println(20*Math.cos(attackAngle) + " " + 20*Math.sin(attackAngle));
-        System.out.println("Your POS: " + (int)(playerPosX+15) + " " + (int)(playerPosY+15) + " arc pos: " + arcX +" " + arcY);
+        System.out.println("Your POS: " + (int)(x+15) + " " + (int)(y+15) + " arc pos: " + arcX +" " + arcY);
 
         //double arcAngle = getAttackAngle();
 			//System.out.println("arcAngle is " + getAttackAngle() + " attackAngle is " + attackAngle);
@@ -132,7 +151,7 @@ public class Player {
     }
 
     public void jump(){
-        System.out.println("Hi");
+        //System.out.println("Hi");
         jumpActive = true;
         jumpTimer = System.currentTimeMillis();
     }
@@ -154,4 +173,43 @@ public class Player {
         return keyD;
     }
 
+    public void playerCollision(GameManager gm){
+        ArrayList<Rectangle> arr = gm.getCurrentLevel().collisionArray;
+        //left
+        Rectangle tempRectangle = new Rectangle((int)x-5,(int)y,5,60);
+        for(int i=0;i<arr.size();i++){
+            if(tempRectangle.intersects(arr.get(i)) && playerVeloX<0){ 
+                playerVeloX=0;
+                x=arr.get(i).x+arr.get(i).width+2;//reset just outside to avoid clipping
+            }
+        }
+        //down
+        tempRectangle = new Rectangle((int)x,(int)y+70,30,5);
+        for(int i=0;i<arr.size();i++){
+            if(tempRectangle.intersects(arr.get(i)) && playerVeloY>0){ 
+                //System.out.print(".");
+                playerVeloY=0;
+                y=arr.get(i).y-62;
+            }
+        }
+             //right
+        tempRectangle = new Rectangle((int)x+35,(int)y,5,60);
+        for(int i=0;i<arr.size();i++){
+            if(tempRectangle.intersects(arr.get(i)) && playerVeloX>0){ 
+                //System.out.print(".");
+                playerVeloX=0;
+                x=arr.get(i).x-32;
+            }
+        }
+        //UP
+        tempRectangle = new Rectangle((int)x,(int)y-5,30,5);
+        for(int i=0;i<arr.size();i++){
+            if(tempRectangle.intersects(arr.get(i)) && playerVeloY<0){ 
+                //System.out.print(".");
+                playerVeloY=0;
+                y=arr.get(i).y+arr.get(i).height+5;
+                jumpActive=false;
+            }
+        } 
+    }
 }

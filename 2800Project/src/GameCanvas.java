@@ -14,11 +14,14 @@ public class GameCanvas extends Canvas implements Runnable {
 	private Thread thread;
 	private BufferStrategy bufferStrategy;
 
+	private GameManager gameManager = new GameManager();
+
 	Player player = new Player();
 
 	Point mousePos;
 
 	public GameCanvas() { 
+		gameManager.addGameObject(player);
 	}
 
 	// This initalizes the buffering and starts the game thread.
@@ -91,7 +94,7 @@ public class GameCanvas extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-		player.playerLogic();	
+		gameManager.tick();	
 	}
 	
 	// this function is called maximum times per second. Use it to draw the game's graphics
@@ -99,23 +102,11 @@ public class GameCanvas extends Canvas implements Runnable {
 		// Gets the graphics of the buffer and enables anti-aliasing (looks nicer but computationaly expensive)
 		Graphics2D g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-		// Drawing Begins______________________________
-
 		// black background
 		g2d.setColor(Color.black);
 		g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
-		
-		// our blue square color
-		g2d.setColor(Color.blue);
-		int[] playerPos = player.getPlayerPos();
-		g2d.fillRect(playerPos[0],playerPos[1], 30, 60);
 
-		if(player.getIsAttackOnline()){
-			//System.out.println("Arc printing");
-			g2d.setColor(Color.yellow);
-			g2d.fillArc(player.getArcX()-20, player.getArcY()-25, 100, 100, (int)(player.getAttackAngle()*180/Math.PI - 15), 30);
-		}
+		gameManager.render(g2d);
 
 		g2d.dispose(); // Disposes the graphics after we are done drawing
 		bufferStrategy.show();

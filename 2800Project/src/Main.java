@@ -1,5 +1,3 @@
-// Author: Ali Aman (burkia@uwindsor.ca)
-
 import javax.swing.*;
 
 public class Main {
