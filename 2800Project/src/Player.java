@@ -28,6 +28,7 @@ public class Player extends GameObject{
 
     private long jumpTimer;
     private boolean jumpActive = false;
+    private boolean jumpAllowed = true;
 
     public Player(){
        super(450,400,30,60);
@@ -56,8 +57,17 @@ public class Player extends GameObject{
 
         //System.out.println("after " + playerVeloX + " " + playerVeloY);
 
+        if(x<10 && gm.getCurrentLevel().leftLevel==null && playerVeloX<0){//Can't enter null levels
+            playerVeloX=0;
+        }
+        if(x>920 && gm.getCurrentLevel().rightLevel==null && playerVeloX>0){//Can't enter null levels
+            playerVeloX=0;
+        }
+
         x += playerVeloX;
         y += playerVeloY;
+
+        swapLevel(gm);
     }
 
     public void render(Graphics2D g2d){
@@ -152,8 +162,11 @@ public class Player extends GameObject{
 
     public void jump(){
         //System.out.println("Hi");
+        if(jumpAllowed){
+            jumpAllowed=false;
         jumpActive = true;
         jumpTimer = System.currentTimeMillis();
+        }
     }
 
 
@@ -172,6 +185,17 @@ public class Player extends GameObject{
     public boolean getKeyD(){
         return keyD;
     }
+    public void swapLevel(GameManager gm){
+        if(x<5){
+            gm.setCurrentLevel(gm.getCurrentLevel().leftLevel);
+            x=910;
+        }
+        if(x>925){
+            gm.setCurrentLevel(gm.getCurrentLevel().rightLevel);
+            x=20;
+        }
+    }
+    
 
     public void playerCollision(GameManager gm){
         ArrayList<Rectangle> arr = gm.getCurrentLevel().collisionArray;
@@ -191,6 +215,17 @@ public class Player extends GameObject{
                 playerVeloY=0;
                 y=arr.get(i).y-62;
             }
+        }
+        //JUMP
+        tempRectangle = new Rectangle((int)x,(int)y+70,(int)height,10);
+        for(int i=0;i<arr.size();i++){
+            if(tempRectangle.intersects(arr.get(i))){ 
+              jumpAllowed=true;
+              break;
+            }
+            else{
+                jumpAllowed=false;
+            }     
         }
              //right
         tempRectangle = new Rectangle((int)x+35,(int)y,5,60);

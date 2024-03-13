@@ -28,4 +28,8 @@ public class GameManager {
 	public Level getCurrentLevel(){
 		return currLevel;
 	}
+
+	public void setCurrentLevel(Level l){
+		currLevel = l;
+	}
 }
