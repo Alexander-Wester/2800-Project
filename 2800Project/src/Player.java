@@ -20,6 +20,7 @@ public class Player extends GameObject{
 
     private int arcX;
     private int arcY;
+    private Polygon attackTriangle;
 
     private boolean isAttackOnCooldown = false;
     private boolean isAttackOnline = false;
@@ -29,6 +30,13 @@ public class Player extends GameObject{
     private long jumpTimer;
     private boolean jumpActive = false;
     private boolean jumpAllowed = true;
+
+    private int health=3;
+    private long IFrames;
+    private boolean canBeHit = true;
+    private Rectangle hitBox;
+
+    private long deathMessageTimer;
 
     public Player(){
        super(450,400,30,60);
@@ -41,6 +49,7 @@ public class Player extends GameObject{
     public void tick(GameManager gm){
 
         //System.out.print(".");
+        hitBox = new Rectangle((int)x,(int)y,(int)width,(int)height);
         playerVeloCalc();
        
         if(System.currentTimeMillis() >= attackTimer && isAttackOnline){
@@ -68,6 +77,8 @@ public class Player extends GameObject{
         y += playerVeloY;
 
         swapLevel(gm);
+        detectHits(gm);
+
     }
 
     public void render(Graphics2D g2d){
@@ -75,11 +86,22 @@ public class Player extends GameObject{
 		int[] playerPos = getPlayerPos();
 		g2d.fillRect(playerPos[0],playerPos[1], 30, 60);
 
-        if(getIsAttackOnline()){
-			//System.out.println("Arc printing");
+        if(isAttackOnline){
+			//printing attack hitbox. the animation for the attack should eventually go here, likely. 
 			g2d.setColor(Color.yellow);
-			g2d.fillArc(getArcX()-20,getArcY()-25, 100, 100, (int)(getAttackAngle()*180/Math.PI - 15), 30);
+            g2d.fillPolygon(attackTriangle);
 		}
+
+        g2d.setColor(Color.RED);
+        for(int i=0;i<health;i++){
+            g2d.fillRect(50+25*(i+1), 50, 20, 20);
+        }
+
+        if(System.currentTimeMillis()<deathMessageTimer){
+            g2d.setColor(Color.red);
+            g2d.drawString("YOU DIED", 400, 150);
+
+        }
     }
 
     public void playerInputVeloX(int x){
@@ -89,8 +111,7 @@ public class Player extends GameObject{
         playerInputVeloY = y;   
     }
 
-    public void playerVeloCalc(){//This method is trivial now, but if we add any speed up tools/powers or enemies that slow you,
-        //you can add them to this calculation here.
+    public void playerVeloCalc(){
         playerVeloX = playerInputVeloX;
         playerVeloY = playerInputVeloY;
 
@@ -99,10 +120,8 @@ public class Player extends GameObject{
         }
         if(jumpActive){
             playerVeloY += (int)(-5*(-2*(((double)(System.currentTimeMillis()-jumpTimer)/500.0)-1)+2));
-            //System.out.println(System.currentTimeMillis()-jumpTimer);
         }
         playerVeloY+=8;//gravity
-        //System.out.println(playerVeloY); 
     }
 
     public void swingSword(int x2, int y2){
@@ -113,7 +132,7 @@ public class Player extends GameObject{
         int diffX = ((int)x - x2 - 15)*-1;
         int diffY = ((int)y - y2 - 15);
 
-        System.out.println("diffx and y: " + diffX + " " + diffY);
+       // System.out.println("diffx and y: " + diffX + " " + diffY);
 
         attackAngle  = Math.atan((double)diffY/diffX);
         if(diffX<0 && diffY>0){
@@ -127,23 +146,26 @@ public class Player extends GameObject{
             attackAngle = 2*Math.PI + attackAngle;
         }
 
-        //if(attackAngle < 0){
-            //attackAngle += 2*Math.PI;
-        //}
 
-       // System.out.println("Angle: " + attackAngle);
-
-        arcX = (int)(x -15 +  (25 * Math.cos(attackAngle)));
-        arcY = (int)(y -15 - (25 * Math.sin(attackAngle)));
+        arcX = (int)(x  +15 +  (25 * Math.cos(attackAngle)));
+        arcY = (int)(y  +15 - (25 * Math.sin(attackAngle)));
 
         //System.out.println(20*Math.cos(attackAngle) + " " + 20*Math.sin(attackAngle));
         System.out.println("Your POS: " + (int)(x+15) + " " + (int)(y+15) + " arc pos: " + arcX +" " + arcY);
 
-        //double arcAngle = getAttackAngle();
-			//System.out.println("arcAngle is " + getAttackAngle() + " attackAngle is " + attackAngle);
+            //create triangle;
+            int arcX2 = (int)(arcX +  (100 * Math.cos((attackAngle)+(15*Math.PI/180))));
+            int arcY2 = (int)(arcY - (100 * Math.sin((attackAngle)+(15*Math.PI/180))));
+            int arcX3 = (int)(arcX +  (100 * Math.cos((attackAngle)-(15*Math.PI/180))));
+            int arcY3 = (int)(arcY - (100 * Math.sin((attackAngle)-(15*Math.PI/180))));
 
-        attackTimer = System.currentTimeMillis() + 1000;
-        //System.out.println("Timer Started!");
+            int[] triangleXvalues = new int[]{arcX,arcX2,arcX3};
+            int[] triangleYvalues = new int[]{arcY,arcY2,arcY3};
+
+
+            attackTriangle = new Polygon(triangleXvalues,triangleYvalues,3);
+
+        attackTimer = System.currentTimeMillis() + 450;
 
     }
 
@@ -195,6 +217,38 @@ public class Player extends GameObject{
             x=20;
         }
     }
+
+    public void detectHits(GameManager gm){
+        ArrayList<Enemy> tempEnemyList = gm.getCurrentLevel().enemyList;
+        for(int i=0;i<tempEnemyList.size();i++){
+            if (isAttackOnline && this.attackTriangle.intersects(tempEnemyList.get(i).getHitBox())){
+                tempEnemyList.get(i).hitLanded();
+            }
+
+            if(System.currentTimeMillis()>IFrames){
+                canBeHit=true;
+            }
+           // System.out.println("i is " + i);
+            if(hitBox.intersects(tempEnemyList.get(i).getHitBox()) && canBeHit){
+                health--;
+                if(health<=0){
+                    death(gm);
+                }
+                canBeHit=false;
+                IFrames = System.currentTimeMillis() + 1000;
+                //if there is a unique enemy hit effect, it will be called here, abstract method defined in Enemy and actual method
+                //defined in the unique enemy file (eg knockback, more than one hit, etc. )
+            }
+        }
+    }
+
+    public void death(GameManager gm){
+        gm.reset();
+        health=3;
+        x=450;
+        y=400;
+        deathMessageTimer=System.currentTimeMillis() + 3000;
+    }
     
 
     public void playerCollision(GameManager gm){
@@ -213,7 +267,7 @@ public class Player extends GameObject{
             if(tempRectangle.intersects(arr.get(i)) && playerVeloY>0){ 
                 //System.out.print(".");
                 playerVeloY=0;
-                y=arr.get(i).y-62;
+                y=arr.get(i).y-height-2;
             }
         }
         //JUMP
@@ -233,7 +287,7 @@ public class Player extends GameObject{
             if(tempRectangle.intersects(arr.get(i)) && playerVeloX>0){ 
                 //System.out.print(".");
                 playerVeloX=0;
-                x=arr.get(i).x-32;
+                x=arr.get(i).x-width-2;
             }
         }
         //UP

@@ -10,6 +10,7 @@ public class GameManager {
 		for(int i = 0; i < gameObjects.size(); i++){
 			gameObjects.get(i).tick(this);
 		}
+		currLevel.tick(this);
 	}
 	
 	public void render(Graphics2D g2d) {
@@ -31,5 +32,9 @@ public class GameManager {
 
 	public void setCurrentLevel(Level l){
 		currLevel = l;
+	}
+
+	public void reset(){
+		currLevel = Level.levelStartUp();
 	}
 }

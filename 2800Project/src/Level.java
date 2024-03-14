@@ -9,14 +9,15 @@ public class Level {
 
     private String levelTitle;
 
-    //ArrayList<Enemies>
+    ArrayList<Enemy> enemyList;
     public ArrayList<Rectangle> collisionArray;
 
-    public Level(Level left, Level right, ArrayList<Rectangle> colArr,String title){//ADD ENEMY ARRAY
+    public Level(Level left, Level right, ArrayList<Rectangle> colArr,String title,ArrayList<Enemy> enArr){//ADD ENEMY ARRAY
         leftLevel = left;
         rightLevel = right;
         collisionArray = colArr;
         levelTitle=title;
+        enemyList=enArr;
     }
 
 
@@ -25,20 +26,31 @@ public class Level {
         colArr.add(new Rectangle(0,500,960,60)); 
         colArr.add(new Rectangle(200,450,200,40));
         colArr.add(new Rectangle(500,300,100,20));
-        Level startingLevel = new Level(null,null,colArr, "MAIN");
+        ArrayList<Enemy> enemyArrStart = new ArrayList<Enemy>();
+        enemyArrStart.add(new DummyEnemy(700,400,50,50,2));
+
+        Level startingLevel = new Level(null,null,colArr, "MAIN",enemyArrStart);
+
        
+        ArrayList<Enemy> emptyEnemyArr = new ArrayList<Enemy>();
+
+        ArrayList<Enemy> enemyArrRight1 = new ArrayList<Enemy>();
+        enemyArrRight1.add(new StalagtiteTrap(550, 220, 0, 0, 0));
+        enemyArrRight1.add(new StalagtiteTrap(750, 70, 0, 0, 0));
+
+    
         ArrayList<Rectangle> colArr2= new ArrayList<>();
         colArr2.add(new Rectangle(0,500,960,60)); 
         colArr2.add(new Rectangle(100,400,200,40));
         colArr2.add(new Rectangle(320,200,100,20));
-        Level leftLevel1 = new Level(null,startingLevel,colArr2, "LEFT");
+        Level leftLevel1 = new Level(null,startingLevel,colArr2, "LEFT",emptyEnemyArr);
 
         ArrayList<Rectangle> colArr3= new ArrayList<>();
         colArr3.add(new Rectangle(0,500,960,60)); 
         colArr3.add(new Rectangle(200,350,100,40));
         colArr3.add(new Rectangle(500,200,100,20));
         colArr3.add(new Rectangle(700,50,100,20));
-        Level rightLevel1 = new Level(startingLevel,null,colArr3, "RIGHT");
+        Level rightLevel1 = new Level(startingLevel,null,colArr3, "RIGHT",enemyArrRight1);
 
 
 
@@ -55,6 +67,16 @@ public class Level {
         }
         g2d.setColor(Color.red);
         g2d.drawString(levelTitle,400,100);
+
+        for(int i=0;i<enemyList.size();i++){
+            enemyList.get(i).render(g2d);
+        }
+    }
+
+    public void tick(GameManager gm){
+        for(int i=0;i<enemyList.size();i++){
+            enemyList.get(i).tick(gm);
+        }
     }
 
 
