@@ -5,6 +5,8 @@ public class StalagtiteTrap extends Enemy{
 
     boolean isFalling = false;
     Polygon visualPolygon;
+
+    //simple trap, is invicible. 
     
 
     public StalagtiteTrap(int x1, int y1, int w1, int h1, int h2){
@@ -17,10 +19,10 @@ public class StalagtiteTrap extends Enemy{
     public void tick(GameManager gm){
         hitBox = new Rectangle((int)x+5,(int)y,10,25);
        
-        if(Math.abs(gm.gameObjects.get(0).x-x)<50){
+        if(Math.abs(gm.gameObjects.get(0).x-x)<50){//falls if near the player. 
            isFalling=true;
         }
-        if(isFalling){
+        if(isFalling){//falls, breaks when it hits the ground.
             Rectangle tempRectangle = new Rectangle((int)x,(int)(y+5+height),(int)width,5);
             ArrayList<Rectangle> arr=gm.getCurrentLevel().collisionArray;
             for(int i=0;i<arr.size();i++){
@@ -37,7 +39,7 @@ public class StalagtiteTrap extends Enemy{
     public void render(Graphics2D g2d){
         int[] xVals = new int[]{(int)x,(int)x+10,(int)x+20};
         int[] yVals = new int[]{(int)y,(int)y+30,(int)y};
-        visualPolygon = new Polygon(xVals,yVals,3);
+        visualPolygon = new Polygon(xVals,yVals,3);//makes, then prints a triangle 
         
        g2d.setColor(Color.gray);
         g2d.fill(visualPolygon);

@@ -20,6 +20,17 @@ public class Level {
         enemyList=enArr;
     }
 
+    //all new levels go here
+
+    //steps:
+    //make rectangles to go in a collision array (for walking and jumping on)
+    //attach a left and right level so when you go to the side of the screen you enter a new level (likely done later)
+    //make a list of enemies
+    //init the level
+    //then attach it as the left or right level of another level to put it into play.
+    
+    //has a level string for title for tracking, may or may not be deleted later. 
+    
 
     public static Level levelStartUp(){
         ArrayList<Rectangle> colArr= new ArrayList<>();
@@ -61,6 +72,8 @@ public class Level {
     }
 
     public void render(Graphics2D g2d){
+
+        //draws all rectangles in collision array. 
         g2d.setColor(Color.white);
         for(int i=0;i<collisionArray.size();i++){
             g2d.fill(collisionArray.get(i));

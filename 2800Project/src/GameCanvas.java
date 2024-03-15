@@ -7,15 +7,16 @@ import java.awt.event.*;
 //import java.io.*;
 //import javax.imageio.*;
 
-// A custom Canvas class which will execute the game logic and drawing on a custom thread
+//simple canvas and thread.
+//important: this file contains mouse and keyboard listener, for new tools you will likely have to add new if statements for new keys.
+//framerate decided here, and background and basic frawing components are here too.
+
 public class GameCanvas extends Canvas implements Runnable {
 
-	// Our game thread and the buffer strategy of our canvas
 	private Thread thread;
 	private BufferStrategy bufferStrategy;
 
 	private GameManager gameManager = new GameManager();
-
 	Player player = new Player();
 
 	Point mousePos;
@@ -37,7 +38,7 @@ public class GameCanvas extends Canvas implements Runnable {
 
 		addMouseListener(new MouseListener() {
 			public void mouseClicked(MouseEvent e){
-				System.out.println("Mouse Pressed! mouse coords: " + e.getX() + " " + e.getY());
+				//System.out.println("Mouse Pressed! mouse coords: " + e.getX() + " " + e.getY());
 				player.swingSword(e.getX(),e.getY());
 			}
 			public void mouseExited(MouseEvent e){
@@ -94,6 +95,7 @@ public class GameCanvas extends Canvas implements Runnable {
 	}
 
 	private void tick() {
+		//this activates the real code
 		gameManager.tick();	
 	}
 	
@@ -106,6 +108,7 @@ public class GameCanvas extends Canvas implements Runnable {
 		g2d.setColor(Color.black);
 		g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
+		//this draws the real code
 		gameManager.render(g2d);
 
 		g2d.dispose(); // Disposes the graphics after we are done drawing

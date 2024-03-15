@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 public class GameObject {
 	
 	public float x, y, width, height;
+	//basically from lab. just has position and size, any subclasses of this will have their own tick render and more. 
 
 	public GameObject(float x, float y, float width, float height) {
 		this.x = x;

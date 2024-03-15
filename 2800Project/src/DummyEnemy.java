@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class DummyEnemy extends Enemy {
 
-    
+    //basic enemy that just falls to the ground, doesnt move or attack, but you take damage if you run into it
     
     public DummyEnemy(int x1, int y1, int w1, int h1, int h2){
         super(x1,y1,w1,h1,h2);
@@ -17,7 +17,7 @@ public class DummyEnemy extends Enemy {
         hitBox = new Rectangle((int)x,(int)y,(int)width,(int)height);
         
          if(isAlive){
-         if(isBeingHit){
+         if(isBeingHit){//isBeinghit blocks from being hit, and turns them orange. (it and the timer is set in player File.)
              if(beingHitTimer<System.currentTimeMillis()){
                  isBeingHit=false;
              }
@@ -27,7 +27,7 @@ public class DummyEnemy extends Enemy {
          }
      }
          if(health<=0){
-             isAlive=false;
+             isAlive=false;//if not alive it doesnt render or do collision anymore. 
          }
      }
 
