@@ -39,7 +39,10 @@ public class Level {
         colArr.add(new Rectangle(500,300,100,20));
         ArrayList<Enemy> enemyArrStart = new ArrayList<Enemy>();
         enemyArrStart.add(new DummyEnemy(700,400,50,50,2));
-
+        enemyArrStart.add(new LavaTrap(50,480,200,20));
+        enemyArrStart.add(new MovingPlatform(300, 100, 100, 20, 100, 500,2, false));
+        colArr.add(((MovingPlatform)enemyArrStart.get(2)).hitBox);
+        //Adds the moving platforms hitbox into the collision array
         Level startingLevel = new Level(null,null,colArr, "MAIN",enemyArrStart);
 
        
