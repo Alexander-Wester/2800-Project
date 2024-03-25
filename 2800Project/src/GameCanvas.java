@@ -1,5 +1,6 @@
 
 
+import javax.swing.*;
 import java.awt.*;
 //import java.awt.geom.*;
 import java.awt.image.*;
@@ -37,9 +38,12 @@ public class GameCanvas extends Canvas implements Runnable {
 		setFocusable(true);
 
 		addMouseListener(new MouseListener() {
-			public void mouseClicked(MouseEvent e){
-				//System.out.println("Mouse Pressed! mouse coords: " + e.getX() + " " + e.getY());
-				player.swingSword(e.getX(),e.getY());
+			public void mouseClicked(MouseEvent e) {
+				if (SwingUtilities.isLeftMouseButton(e)) {
+					player.swingSword(e.getX(), e.getY());
+				} else if (SwingUtilities.isRightMouseButton(e)) {
+					player.fireball(e.getX(), e.getY());
+				}
 			}
 			public void mouseExited(MouseEvent e){
 			}

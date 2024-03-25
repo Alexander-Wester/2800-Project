@@ -32,6 +32,12 @@ public class Player extends GameObject{
 
     private long deathMessageTimer; //calcs how long to display "you died" message
 
+    private boolean fireballActivated = true; // one of the abilities that you unlock
+    private PlayerFireball playerFireball;
+    private boolean fireballAlive = false;
+    private double fireballTimer = 0;
+
+
     public Player(){
        super(450,400,30,60);
     }
@@ -48,6 +54,9 @@ public class Player extends GameObject{
 
         if(System.currentTimeMillis() <= attackTimer){//ditto
             isAttackOnline = true;
+        }
+        if(fireballAlive){
+            playerFireball.tick(gm);
         }
         
         playerCollision(gm);//lets you stand on rects from the collisionArray from the current level
@@ -76,6 +85,9 @@ public class Player extends GameObject{
 			g2d.setColor(Color.yellow);
             g2d.fillPolygon(attackTriangle);
 		}
+        if(fireballAlive){
+            playerFireball.render(g2d);
+        }
 
         g2d.setColor(Color.RED);//print level title
         for(int i=0;i<health;i++){
@@ -152,6 +164,25 @@ public class Player extends GameObject{
 
         attackTimer = System.currentTimeMillis() + 450;
 
+    }
+
+    public void activateFireball(){
+        this.fireballActivated = true;
+    }
+
+    public void resetFireball(){
+        this.fireballAlive = false;
+        fireballTimer = System.currentTimeMillis();
+    }
+
+    public void fireball(int x2, int y2){
+        if(fireballActivated && !fireballAlive && System.currentTimeMillis() >= fireballTimer + 500){
+            double dx = x2 - x;
+            double dy = y2 - y;
+            double angle = Math.atan2(dy,dx);
+            playerFireball = new PlayerFireball(x,y,angle, System.currentTimeMillis());
+            fireballAlive = true;
+        }
     }
 
     public int getArcX(){//random getters needed because of bad formatting at the start of this project. may be refactored later
