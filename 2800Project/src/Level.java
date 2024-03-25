@@ -12,12 +12,16 @@ public class Level {
     ArrayList<Enemy> enemyList;
     public ArrayList<Rectangle> collisionArray;
 
+    // Add a tick counter for fireball generation
+    private int tickCounter;
+
     public Level(Level left, Level right, ArrayList<Rectangle> colArr,String title,ArrayList<Enemy> enArr){//ADD ENEMY ARRAY
         leftLevel = left;
         rightLevel = right;
         collisionArray = colArr;
         levelTitle=title;
         enemyList=enArr;
+        tickCounter = 0;
     }
 
     //all new levels go here
@@ -33,7 +37,7 @@ public class Level {
     
 
     public static Level levelStartUp(){
-        ArrayList<Rectangle> colArr= new ArrayList<>();
+        ArrayList<Rectangle> colArr = new ArrayList<>();
         colArr.add(new Rectangle(0,500,960,60)); 
         colArr.add(new Rectangle(200,450,200,40));
         colArr.add(new Rectangle(500,300,100,20));
@@ -42,37 +46,41 @@ public class Level {
         enemyArrStart.add(new LavaTrap(50,480,200,20));
         enemyArrStart.add(new MovingPlatform(300, 100, 100, 20, 100, 500,2, false));
         colArr.add(((MovingPlatform)enemyArrStart.get(2)).hitBox);
-        //Adds the moving platforms hitbox into the collision array
-        Level startingLevel = new Level(null,null,colArr, "MAIN",enemyArrStart);
-
-       
-        ArrayList<Enemy> emptyEnemyArr = new ArrayList<Enemy>();
-
+        // Adds the moving platform's hitbox into the collision array
+        Level startingLevel = new Level(null, null, colArr, "MAIN", enemyArrStart);
+    
         ArrayList<Enemy> enemyArrRight1 = new ArrayList<Enemy>();
         enemyArrRight1.add(new StalagtiteTrap(550, 220, 0, 0, 0));
         enemyArrRight1.add(new StalagtiteTrap(750, 70, 0, 0, 0));
-
+        enemyArrRight1.add(new JumpingEnemy(850, 350, 50, 50, 2));
     
-        ArrayList<Rectangle> colArr2= new ArrayList<>();
+        ArrayList<Enemy> enemyArrLeft1 = new ArrayList<Enemy>();
+        enemyArrLeft1.add(new EnemyGrimm(50, 100, 50, 50, 5));
+        enemyArrLeft1.add(new Fireball());
+    
+        ArrayList<Rectangle> colArr2 = new ArrayList<>();
         colArr2.add(new Rectangle(0,500,960,60)); 
         colArr2.add(new Rectangle(100,400,200,40));
         colArr2.add(new Rectangle(320,200,100,20));
-        Level leftLevel1 = new Level(null,startingLevel,colArr2, "LEFT",emptyEnemyArr);
-
-        ArrayList<Rectangle> colArr3= new ArrayList<>();
+        Level leftLevel1 = new Level(null, startingLevel, colArr2, "LEFT", enemyArrLeft1);
+    
+        ArrayList<Rectangle> colArr3 = new ArrayList<>();
         colArr3.add(new Rectangle(0,500,960,60)); 
         colArr3.add(new Rectangle(200,350,100,40));
         colArr3.add(new Rectangle(500,200,100,20));
         colArr3.add(new Rectangle(700,50,100,20));
-        Level rightLevel1 = new Level(startingLevel,null,colArr3, "RIGHT",enemyArrRight1);
-
-
-
+        Level rightLevel1 = new Level(startingLevel, null, colArr3, "RIGHT", enemyArrRight1);
+    
         startingLevel.leftLevel = leftLevel1;
-        startingLevel.rightLevel=rightLevel1;
-
+        startingLevel.rightLevel = rightLevel1;
+    
+        // Ensure that both left and right levels receive the same enemy list
+        leftLevel1.enemyList = enemyArrLeft1;
+        rightLevel1.enemyList = enemyArrRight1;
+    
         return startingLevel;
     }
+    
 
     public void render(Graphics2D g2d){
 
@@ -89,11 +97,53 @@ public class Level {
         }
     }
 
-    public void tick(GameManager gm){
-        for(int i=0;i<enemyList.size();i++){
+    public void tick(GameManager gm) {
+        // Increment the tick counter
+        tickCounter++;
+    
+        // Increment the 5-second counter
+        int fiveSecondCounter = tickCounter / 50; // Since you're incrementing tickCounter every tick, 50 ticks = 1 second
+    
+        // Check if 5 seconds have passed
+        if (gm.getCurrentLevel() instanceof Level && ((Level) gm.getCurrentLevel()).leftLevel == null
+        && this == gm.getCurrentLevel() && fiveSecondCounter % 5 == 0) {
+            // If 5 seconds have passed, stop fireball generation for 1 second
+            if (gm.getCurrentLevel() instanceof Level && ((Level) gm.getCurrentLevel()).leftLevel == null
+            && this == gm.getCurrentLevel() && tickCounter % 20 == 0) {
+                // Generate new fireball only if the EnemyGrimm is alive
+                if (isEnemyGrimmAlive()) {
+                    generateNewFireball();
+                }
+            }
+        } else {
+            // Generate new fireball every 10 ticks (0.1 seconds) outside of the 1-second pause
+            if (gm.getCurrentLevel() instanceof Level && ((Level) gm.getCurrentLevel()).leftLevel == null
+                    && this == gm.getCurrentLevel() && tickCounter % 20 == 0) {
+                // Generate new fireball only if the EnemyGrimm is alive
+                if (isEnemyGrimmAlive()) {
+                    generateNewFireball();
+                }
+            }
+        }
+    
+        // Rest of the tick method
+        for (int i = 0; i < enemyList.size(); i++) {
             enemyList.get(i).tick(gm);
         }
     }
-
-
+    
+    private boolean isEnemyGrimmAlive() {
+        for (Enemy enemy : enemyList) {
+            if (enemy instanceof EnemyGrimm && enemy.isAlive()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    private void generateNewFireball() {
+        // Generate and add a new fireball to the enemy list
+        enemyList.add(new Fireball());
+    }
 }
