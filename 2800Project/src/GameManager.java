@@ -10,6 +10,10 @@ public class GameManager {
 	public LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
 	Level currLevel = Level.level1();
 
+	public LinkedList<GameObject> getGameObjects() {
+        return gameObjects;
+    }
+	
 	public void tick() {
 		//calls all gameobject's tick()
 		for(int i = 0; i < gameObjects.size(); i++){

@@ -1,4 +1,3 @@
-import java.awt.Graphics2D;
 import java.awt.*;
 
 public class Enemy extends GameObject{
@@ -12,6 +11,11 @@ public class Enemy extends GameObject{
     boolean doneFalling;
 
     boolean isInvincible;//used for traps or other hazards that cannot be killed. 
+    
+
+    public boolean isAlive() {
+        return isAlive;
+    }
 
     //basic enemy. can even be made general if needed
     //NOTE: a fair bit of the enemies' collisions with player is in the play function
