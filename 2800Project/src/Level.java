@@ -56,7 +56,7 @@ public class Level {
     
         ArrayList<Enemy> enemyArrLeft1 = new ArrayList<Enemy>();
         enemyArrLeft1.add(new EnemyGrimm(50, 100, 50, 50, 5));
-        enemyArrLeft1.add(new Fireball());
+        enemyArrLeft1.add(new Fireball(50, 100));
     
         ArrayList<Rectangle> colArr2 = new ArrayList<>();
         colArr2.add(new Rectangle(0,500,960,60)); 
@@ -90,8 +90,8 @@ public class Level {
         colArr.add(new Rectangle(810,400,150,50));
         colArr.add(new Rectangle(900,350,60,50));
 
-        enemyArr.add(new DummyEnemy(600,380,50,100,2));
-        enemyArr.add(new DummyEnemy(830,200,50,100,2));
+        enemyArr.add(new JumpingEnemy(600,380,50,100,2));
+        enemyArr.add(new JumpingEnemy(830,200,50,100,2));
 
         Level roomOne = new Level(null,null, colArr, "Room1" ,enemyArr);
 
@@ -134,8 +134,8 @@ public class Level {
         enemyArr3.add(platform2);
         colArr3.add(platform2.hitBox);
 
-        enemyArr3.add(new DummyEnemy(390,0,50,100,2));
-        enemyArr3.add(new DummyEnemy(830,0,50,100,2));
+        enemyArr3.add(new JumpingEnemy(390,0,50,100,2));
+        enemyArr3.add(new JumpingEnemy(830,0,50,100,2));
 
         Level roomThree = new Level(roomTwo,null, colArr3, "Room3" ,enemyArr3);
         roomTwo.rightLevel = roomThree;
@@ -151,7 +151,7 @@ public class Level {
         enemyArr4.add(new LavaTrap(410,485,550,30));
         colArr4.add(new Rectangle(530, 410, 200, 200));
         colArr4.add(new Rectangle(850, 450,200,100));
-        enemyArr4.add(new DummyEnemy(650,250,50,100,2));
+        enemyArr4.add(new JumpingEnemy(650,250,50,100,2));
 
         for(int i = 0; i < random.nextInt(4) + 4; i ++) {
             randomInt = random.nextInt(661) + 150;
@@ -170,7 +170,7 @@ public class Level {
         colArr5.add(new Rectangle(835, 450, 125,100));
         colArr5.add(new Rectangle(125,255,175,20));
         colArr5.add(new Rectangle(660,255,175,20));
-        enemyArr5.add(new DummyEnemy(480,100,100,100,2));
+        enemyArr5.add(new EnemyGrimm(480,100,100,100,10));
 
         Level roomBoss = new Level(roomFour,null, colArr5, "Boss Room" ,enemyArr5);
         roomFour.rightLevel = roomBoss;
@@ -240,6 +240,6 @@ public class Level {
     
     private void generateNewFireball() {
         // Generate and add a new fireball to the enemy list
-        enemyList.add(new Fireball());
+        enemyList.add(new Fireball(10, 20));
     }
 }
