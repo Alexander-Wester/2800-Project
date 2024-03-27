@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.geom.Ellipse2D;
+
 
 public class Player extends GameObject{
 
@@ -14,7 +16,7 @@ public class Player extends GameObject{
 
     private int arcX;   //angle calculations for sword attack
     private int arcY;
-    private Polygon attackTriangle;
+    public Polygon attackTriangle;
 
     private boolean isAttackOnCooldown = false;//attack information
     private boolean isAttackOnline = false;
@@ -25,12 +27,19 @@ public class Player extends GameObject{
     private boolean jumpActive = false;
     private boolean jumpAllowed = true;
 
-    private int health=3;   //health stuff
-    private long IFrames;
-    private boolean canBeHit = true;    //temp invincibility after being hit
+    public int health=3;   //health stuff
+     long IFrames;
+     boolean canBeHit = true;    //temp invincibility after being hit
     private Rectangle hitBox;
 
     private long deathMessageTimer; //calcs how long to display "you died" message
+
+    public boolean orbActive = false;
+    public Color orbColor;
+
+    boolean bossSwordKnockback = false;
+    int bossSwordKnockbackDirection=0; //-1 left, 1 right;
+    long bossSwordKnockbackTimer;
 
     public Player(){
        super(450,400,30,60);
@@ -41,6 +50,10 @@ public class Player extends GameObject{
         hitBox = new Rectangle((int)x,(int)y,(int)width,(int)height);//update hitbox for collision
         
         playerVeloCalc();
+
+        if(bossSwordKnockback && System.currentTimeMillis()>bossSwordKnockbackTimer){
+            bossSwordKnockback = false;
+        }
        
         if(System.currentTimeMillis() >= attackTimer && isAttackOnline){//checks if the attack hitbox and render should still be active
             isAttackOnline=false;
@@ -87,6 +100,15 @@ public class Player extends GameObject{
             g2d.drawString("YOU DIED", 400, 150);
 
         }
+        
+        
+        if(orbActive){
+            g2d.setColor(orbColor);
+            Ellipse2D.Double sphere = new Ellipse2D.Double(x + 40, y - 20, 10, 10);
+            g2d.fill(sphere);
+        }
+        g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+ bossSwordKnockbackDirection, 100, 120);
+       
     }
 
     public void playerInputVeloX(int x){//part of velo calc. I could probably find a way to skip this step but it works for now 
@@ -105,6 +127,9 @@ public class Player extends GameObject{
         }
         if(jumpActive){
             playerVeloY += (int)(-5*(-2*(((double)(System.currentTimeMillis()-jumpTimer)/500.0)-1)+2));//jump calc
+        }
+        if(bossSwordKnockback){
+            playerVeloX += 20 * bossSwordKnockbackDirection;
         }
         playerVeloY+=8;//gravity
     }
@@ -208,7 +233,7 @@ public class Player extends GameObject{
         ArrayList<Enemy> tempEnemyList = gm.getCurrentLevel().enemyList;
         for(int i=0;i<tempEnemyList.size();i++){
             if (isAttackOnline && this.attackTriangle.intersects(tempEnemyList.get(i).getHitBox())){
-                tempEnemyList.get(i).hitLanded();
+                tempEnemyList.get(i).hitLanded(gm);
             }
 
             if(System.currentTimeMillis()>IFrames){
@@ -216,7 +241,8 @@ public class Player extends GameObject{
             }
            // System.out.println("i is " + i);
            //if you are in enemy hitbox, you take damage
-            if(hitBox.intersects(tempEnemyList.get(i).getHitBox()) && canBeHit && tempEnemyList.get(i).isAlive){
+            if(hitBox.intersects(tempEnemyList.get(i).getHitBox()) && canBeHit && tempEnemyList.get(i).isAlive && tempEnemyList.get(i).doesDamageOnCollision){
+                tempEnemyList.get(i).hitLanded(gm);
                 health--;
                 if(health<=0){
                     death(gm);
@@ -226,6 +252,8 @@ public class Player extends GameObject{
                 //if there is a unique enemy hit effect, it will be called here, abstract method defined in Enemy and actual method
                 //defined in the unique enemy file (eg knockback, more than one hit, etc. )
             }
+
+
         }
     }
 
@@ -235,6 +263,14 @@ public class Player extends GameObject{
         x=450;
         y=400;
         deathMessageTimer=System.currentTimeMillis() + 3000;
+    }
+
+    public Polygon getAttackTriangle(){
+        return this.attackTriangle;
+    }
+
+    public Rectangle getHitBox(){
+        return new Rectangle((int)x,(int)y,(int)width,(int)height);
     }
     
 

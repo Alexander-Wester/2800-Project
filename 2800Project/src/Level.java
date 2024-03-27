@@ -39,37 +39,47 @@ public class Level {
     public static Level levelStartUp(){
         ArrayList<Rectangle> colArr = new ArrayList<>();
         colArr.add(new Rectangle(0,500,960,60)); 
-        colArr.add(new Rectangle(200,450,200,40));
-        colArr.add(new Rectangle(500,300,100,20));
+        colArr.add(new Rectangle(100,400,700,10));
+        colArr.add(new Rectangle(940,0,20,400));
+
+        //colArr.add(new Rectangle(500,300,100,20));
         ArrayList<Enemy> enemyArrStart = new ArrayList<Enemy>();
-        enemyArrStart.add(new DummyEnemy(700,400,50,50,2));
-        enemyArrStart.add(new LavaTrap(50,480,200,20));
-        enemyArrStart.add(new MovingPlatform(300, 100, 100, 20, 100, 500,2, false));
-        colArr.add(((MovingPlatform)enemyArrStart.get(2)).hitBox);
+        enemyArrStart.add(new Boss());
+        //enemyArrStart.add(new BossOrbGenerator(250, 390, Color.blue));
+        //enemyArrStart.add(new BossOrbGenerator(650, 390, Color.orange));
+        //enemyArrStart.add(new DummyEnemy(700,400,50,50,2));
+        //enemyArrStart.add(new LavaTrap(50,480,200,20));
+        //enemyArrStart.add(new MovingPlatform(300, 100, 100, 20, 100, 500,2, false));
+        //colArr.add(((MovingPlatform)enemyArrStart.get(2)).hitBox);
         // Adds the moving platform's hitbox into the collision array
         Level startingLevel = new Level(null, null, colArr, "MAIN", enemyArrStart);
     
         ArrayList<Enemy> enemyArrRight1 = new ArrayList<Enemy>();
-        enemyArrRight1.add(new StalagtiteTrap(550, 220, 0, 0, 0));
-        enemyArrRight1.add(new StalagtiteTrap(750, 70, 0, 0, 0));
-        enemyArrRight1.add(new JumpingEnemy(850, 350, 50, 50, 2));
+        //enemyArrRight1.add(new StalagtiteTrap(550, 220, 0, 0, 0));
+        //enemyArrRight1.add(new StalagtiteTrap(750, 70, 0, 0, 0));
+        //enemyArrRight1.add(new JumpingEnemy(850, 350, 50, 50, 2));
     
         ArrayList<Enemy> enemyArrLeft1 = new ArrayList<Enemy>();
-        enemyArrLeft1.add(new EnemyGrimm(50, 100, 50, 50, 5));
-        enemyArrLeft1.add(new Fireball());
+       // enemyArrLeft1.add(new EnemyGrimm(50, 100, 50, 50, 5));
+       // enemyArrLeft1.add(new Fireball());
     
-        ArrayList<Rectangle> colArr2 = new ArrayList<>();
-        colArr2.add(new Rectangle(0,500,960,60)); 
-        colArr2.add(new Rectangle(100,400,200,40));
-        colArr2.add(new Rectangle(320,200,100,20));
-        Level leftLevel1 = new Level(null, startingLevel, colArr2, "LEFT", enemyArrLeft1);
+        ArrayList<Rectangle> colArrRight1 = new ArrayList<>();
+       colArrRight1.add(new Rectangle(0,500,960,60)); 
+        colArrRight1.add(new Rectangle(0,350,800,20));
+        colArrRight1.add(new Rectangle(100,200,800,20));
+        colArrRight1.add(new Rectangle(0,0,5,400));
+         enemyArrRight1.add(new BossOrbGenerator(700, 190, Color.blue));
+       
     
-        ArrayList<Rectangle> colArr3 = new ArrayList<>();
-        colArr3.add(new Rectangle(0,500,960,60)); 
-        colArr3.add(new Rectangle(200,350,100,40));
-        colArr3.add(new Rectangle(500,200,100,20));
-        colArr3.add(new Rectangle(700,50,100,20));
-        Level rightLevel1 = new Level(startingLevel, null, colArr3, "RIGHT", enemyArrRight1);
+        ArrayList<Rectangle> colArrLeft1 = new ArrayList<>();
+        colArrLeft1.add(new Rectangle(0,500,960,60)); 
+        colArrLeft1.add(new Rectangle(200,350,100,40));
+        colArrLeft1.add(new Rectangle(500,200,100,20));
+        colArrLeft1.add(new Rectangle(700,100,100,20));
+        enemyArrLeft1.add(new BossOrbGenerator(700, 95, Color.orange));
+
+        Level leftLevel1 = new Level(null, startingLevel, colArrLeft1, "LEFT", enemyArrLeft1);
+        Level rightLevel1 = new Level(startingLevel, null, colArrRight1, "RIGHT", enemyArrRight1);
     
         startingLevel.leftLevel = leftLevel1;
         startingLevel.rightLevel = rightLevel1;

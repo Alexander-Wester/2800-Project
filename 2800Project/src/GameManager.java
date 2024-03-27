@@ -10,6 +10,8 @@ public class GameManager {
 	public LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
 	Level currLevel = Level.levelStartUp();
 
+	Player player;
+
 	public LinkedList<GameObject> getGameObjects() {
         return gameObjects;
     }
@@ -20,6 +22,7 @@ public class GameManager {
 			gameObjects.get(i).tick(this);
 		}
 		currLevel.tick(this);
+		player.tick(this);
 		//NOTE: Enemy tick is called through the level tick function
 	}
 	
@@ -27,6 +30,7 @@ public class GameManager {
 		//calls all gameObject's render()
 		for(int i = 0; i < gameObjects.size(); i++) gameObjects.get(i).render(g2d);
 		currLevel.render(g2d);
+		player.render(g2d);
 	}
 
 	public void addGameObject(GameObject gameObject) {

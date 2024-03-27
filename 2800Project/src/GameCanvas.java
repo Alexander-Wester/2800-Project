@@ -21,7 +21,8 @@ public class GameCanvas extends Canvas implements Runnable {
 	Point mousePos;
 
 	public GameCanvas() { 
-		gameManager.addGameObject(player);
+		//gameManager.addGameObject(player);
+		gameManager.player = player;
 	}
 
 	// This initalizes the buffering and starts the game thread.
