@@ -57,7 +57,7 @@ public class Player extends GameObject {
 
     public Player() {
         super(450, 400, 30, 60);
-        loadSpriteSheet("player-spritemap-v9-greenpants.png");
+        loadSpriteSheet("player.png");
 >>>>>>> Stashed changes
     }
 
