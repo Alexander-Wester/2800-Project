@@ -43,10 +43,13 @@ public class Player extends GameObject {
 
     private long deathMessageTimer; // calcs how long to display "you died" message
 
-<<<<<<< Updated upstream
+    <<<<<<<
+    Updated upstream
+
     public Player(){
        super(450,400,30,60);
 =======
+
     private boolean fireballActivated = true; // one of the abilities that you unlock
     private PlayerFireball playerFireball;
     private boolean fireballAlive = false;
@@ -144,22 +147,26 @@ public class Player extends GameObject {
 <<<<<<< Updated upstream
 		}
 =======
-        }
-        if (fireballAlive) {
-            playerFireball.render(g2d);
-        }
->>>>>>> Stashed changes
+        }if(fireballAlive)
 
-        g2d.setColor(Color.RED);// print level title
-        for (int i = 0; i < health; i++) {
-            g2d.fillRect(50 + 25 * (i + 1), 50, 20, 20);
-        }
+    {
+        playerFireball.render(g2d);
+    }>>>>>>>
+    Stashed changes
 
-        if (System.currentTimeMillis() < deathMessageTimer) {// print death message
-            g2d.setColor(Color.red);
-            g2d.drawString("YOU DIED", 400, 150);
+    g2d.setColor(Color.RED);// print level title
+    for(
+    int i = 0;i<health;i++)
+    {
+        g2d.fillRect(50 + 25 * (i + 1), 50, 20, 20);
+    }
 
-        }
+    if(System.currentTimeMillis()<deathMessageTimer)
+    {// print death message
+        g2d.setColor(Color.red);
+        g2d.drawString("YOU DIED", 400, 150);
+
+    }
     }
 
     public void playerInputVeloX(int x) {// part of velo calc. I could probably find a way to skip this step but it
@@ -229,9 +236,13 @@ public class Player extends GameObject {
 
     }
 
-<<<<<<< Updated upstream
+    <<<<<<<
+
+    Updated upstream
+
     public int getArcX(){//random getters needed because of bad formatting at the start of this project. may be refactored later
 =======
+
     public void activateFireball() {
         this.fireballActivated = true;
     }
