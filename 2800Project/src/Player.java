@@ -107,7 +107,7 @@ public class Player extends GameObject{
             Ellipse2D.Double sphere = new Ellipse2D.Double(x + 40, y - 20, 10, 10);
             g2d.fill(sphere);
         }
-        g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+ bossSwordKnockbackDirection, 100, 120);
+        //g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+ bossSwordKnockbackDirection, 100, 120);
        
     }
 

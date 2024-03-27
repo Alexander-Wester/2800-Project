@@ -22,7 +22,7 @@ public class Boss extends Enemy{
 
         if(isAlive){
 
-        if(gm.player.x>x-100 && gm.player.x<x+width+100){
+        if(gm.player.x>x-140 && gm.player.x<x+width+140){
             if(System.currentTimeMillis()>attackCooldownTimer){
                 if(gm.player.x<x+50){
                     sword = new BossSwordAttack((int)x-150);
@@ -32,7 +32,7 @@ public class Boss extends Enemy{
                 }
                 gm.currLevel.enemyList.add(sword);
                 isAttackActive=true;
-                attackCooldownTimer= System.currentTimeMillis() + 5000;
+                attackCooldownTimer= System.currentTimeMillis() + 3000;
             }
         }
 
@@ -87,8 +87,16 @@ public class Boss extends Enemy{
         g2d.setColor(Color.blue);
         g2d.fillRect((int)x+120, (int)y-40, 20, 20);
         }
-       g2d.setColor(Color.white);
-       g2d.drawString("Invicible returns: " + isInvincible + " health is: " + health, 100, 100);
+
+        g2d.setColor(Color.gray);
+        g2d.fillRect(440,150,80,20);
+
+        g2d.setColor(Color.red);
+        g2d.fillRect(442, 152, 15 * health, 16);
+
+        
+       //g2d.setColor(Color.white);
+       //g2d.drawString("Invicible returns: " + isInvincible + " health is: " + health, 100, 100);
        
 
 

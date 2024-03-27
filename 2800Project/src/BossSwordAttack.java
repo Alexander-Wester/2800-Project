@@ -18,7 +18,7 @@ public class BossSwordAttack extends Enemy {
         hitBox = new Rectangle((int)x,(int)y,(int)width,(int)height);
 
         if(System.currentTimeMillis()>swordAttackTimer){
-            y+=8;
+            y+=10;
             if(y>400){
                 plzEnd=true;
             }
