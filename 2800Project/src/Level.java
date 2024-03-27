@@ -53,6 +53,7 @@ public class Level {
         enemyArrRight1.add(new StalagtiteTrap(550, 220, 0, 0, 0));
         enemyArrRight1.add(new StalagtiteTrap(750, 70, 0, 0, 0));
         enemyArrRight1.add(new JumpingEnemy(850, 350, 50, 50, 2));
+        enemyArrRight1.add(new VengeflyEnemy(350, 500, 20, 20, 3));
     
         ArrayList<Enemy> enemyArrLeft1 = new ArrayList<Enemy>();
         enemyArrLeft1.add(new EnemyGrimm(50, 100, 50, 50, 5));
