@@ -11,6 +11,11 @@ public class Enemy extends GameObject{
     boolean doneFalling;
 
     boolean isInvincible;//used for traps or other hazards that cannot be killed. 
+    
+
+    public boolean isAlive() {
+        return isAlive;
+    }
 
     boolean doesDamageOnCollision = true;
     
