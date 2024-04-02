@@ -6,15 +6,15 @@ import java.lang.Math;
 // Chases and attacks player, if hitted by Vengefly, player will lose 1 health.
 public class VengeflyEnemy extends Enemy {
 
-    private double speed;
-    private boolean isChasing;
+    //private double speed;
+    //private boolean isChasing;
 
     public VengeflyEnemy(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);
         isInvincible = false;
         hitBox = new Rectangle(x1, y1, w1, h1);
-        speed = 2; // Set the chasing speed
-        isChasing = false;
+       // speed = 2; // Set the chasing speed
+        //isChasing = false;
     }
 
     @Override

@@ -18,11 +18,6 @@ public class Enemy extends GameObject{
     }
 
     boolean doesDamageOnCollision = true;
-    
-
-    public boolean isAlive() {
-        return isAlive;
-    }
 
     //basic enemy. can even be made general if needed
     //NOTE: a fair bit of the enemies' collisions with player is in the play function

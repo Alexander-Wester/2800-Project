@@ -58,11 +58,6 @@ public class Player extends GameObject {
     int bossSwordKnockbackDirection=0; //-1 left, 1 right;
     long bossSwordKnockbackTimer;
 
-    private boolean fireballActivated = true; // one of the abilities that you unlock
-    private PlayerFireball playerFireball;
-    private boolean fireballAlive = false;
-    private double fireballTimer = 0;
-
     public Player() {
         super(450, 400, 30, 60);
         loadSpriteSheet("player.png");
@@ -244,15 +239,6 @@ public class Player extends GameObject {
 
         attackTimer = System.currentTimeMillis() + 450;
 
-    }
-
-    public void activateFireball(){
-        this.fireballActivated = true;
-    }
-
-    public void resetFireball(){
-        this.fireballAlive = false;
-        fireballTimer = System.currentTimeMillis();
     }
 
     public void fireball(int x2, int y2){

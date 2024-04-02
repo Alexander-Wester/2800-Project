@@ -17,7 +17,7 @@ public class Portal extends Enemy{
     }
 
     public void tick(GameManager gm){
-        Player player = (Player) gm.gameObjects.get(0);
+        Player player = gm.player;
         if(portal.intersects(player.rect())){
             gm.currLevel = nextLevel;
             player.x = xAfter;

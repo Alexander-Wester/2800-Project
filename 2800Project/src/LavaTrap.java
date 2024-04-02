@@ -8,7 +8,7 @@ public class LavaTrap extends Enemy{
     }
 
     public void tick(GameManager gm){
-        Player player = (Player) gm.gameObjects.get(0);
+        Player player = gm.player;
         if(hitBox.intersects(player.rect())){
             //player.jumpAllowed = true; //variable is private
             player.jump();
