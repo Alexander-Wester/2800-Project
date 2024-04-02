@@ -8,7 +8,7 @@ public class GameManager {
 	
 	
 	public LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
-	Level currLevel = Level.levelStartUp();
+	Level currLevel = Level.level1();
 
 	Player player;
 
@@ -50,7 +50,7 @@ public class GameManager {
 	}
 
 	public void reset(){
-		currLevel = Level.levelStartUp();
+		currLevel = Level.level1();
 		//this is for death: currently just resets the whole game basically lol.
 	}
 }

@@ -13,6 +13,7 @@ public class EnemyGrimm extends Enemy {
     public ArrayList<Fireball> getFireballs() {
         return fireballs;
     }
+    private double fireballTimer = 0;
     
     public EnemyGrimm(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);
@@ -34,6 +35,13 @@ public class EnemyGrimm extends Enemy {
         }
         if (health <= 0) {
             isAlive = false;
+        }
+        if(System.currentTimeMillis() > fireballTimer){
+            fireballs.add(new Fireball((int)(this.x + width/2), (int)(this.y + height/2)));
+            fireballTimer = System.currentTimeMillis() + 1000;
+        }
+        for(Fireball fireball : fireballs){
+            fireball.tick(gm);
         }
     }
 

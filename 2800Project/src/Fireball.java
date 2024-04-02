@@ -14,9 +14,9 @@ public class Fireball extends Enemy {
     private double angle; // Angle in radians
     private double speed = 2.0; // Speed of the fireball
 
-    public Fireball() {
+    public Fireball(int x, int y) {
         // Fireballs don't need width, height, or health, so we pass 0 for these parameters
-        super(0, 0, 0, 0, 0);
+        super(x, y, 0, 0, 0);
         isInvincible = true;
         hitBox = new Rectangle(fixedX, fixedY, FIREBALL_SIZE, FIREBALL_SIZE);
         createVisualCircle();
@@ -35,7 +35,7 @@ public class Fireball extends Enemy {
     }
 
     private void createVisualCircle() {
-        visualCircle = new Ellipse2D.Double(fixedX, fixedY, FIREBALL_SIZE, FIREBALL_SIZE);
+        visualCircle = new Ellipse2D.Double(x, y, FIREBALL_SIZE, FIREBALL_SIZE);
     }
 
     // Generate a random angle for the fireball's movement direction
