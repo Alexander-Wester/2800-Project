@@ -45,7 +45,7 @@ public class Player extends GameObject {
 
     private long deathMessageTimer; //calcs how long to display "you died" message
 
-    private boolean fireballActivated = true; // one of the abilities that you unlock
+    private boolean fireballActivated = false; // one of the abilities that you unlock
     private PlayerFireball playerFireball;
     private boolean fireballAlive = false;
     private double fireballTimer = 0;

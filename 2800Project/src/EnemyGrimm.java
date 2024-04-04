@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Color;
@@ -32,15 +33,18 @@ public class EnemyGrimm extends Enemy {
                     isBeingHit = false;
                 }
             }
-            if(System.currentTimeMillis() > fireballTimer){
-                fireballs.add(new Fireball((int)(this.x + width/2), (int)(this.y + height/2)));
-                fireballTimer = System.currentTimeMillis() + 1000;
-            }
         }
-        if (health <= 0) {
+        if (health == 0) {
+            health = -1;
             isAlive = false;
+            //Since this is a miniboss type enemy and it uses fireballs killing it lets the player use fireballs
+            gm.player.activateFireball();
+            JOptionPane.showMessageDialog(null, "You have unlocked the ability to use the fireball (right click to use)");
         }
-       
+        if(System.currentTimeMillis() > fireballTimer && isAlive){
+            fireballs.add(new Fireball((int)(this.x + width/2), (int)(this.y + height/2)));
+            fireballTimer = System.currentTimeMillis() + 500;
+        }
         for(Fireball fireball : fireballs){
             fireball.tick(gm);
         }

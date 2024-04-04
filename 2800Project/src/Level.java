@@ -35,7 +35,7 @@ public class Level {
     
     //has a level string for title for tracking, may or may not be deleted later. 
     
-/* 
+/*
 
 //OLD TESTING STUFF KEEPING JUST IN CASE
 
@@ -87,7 +87,7 @@ public class Level {
         return startingLevel;
     }
     */
-    
+
 
     public static Level level1(GameManager gm){
         ArrayList<Level> levelList = new ArrayList<Level>();
@@ -102,6 +102,7 @@ public class Level {
 
         enemyArr.add(new JumpingEnemy(600,380,50,100,2));
         enemyArr.add(new JumpingEnemy(830,200,50,100,2));
+        enemyArr.add(new HealingFountain(340, 350,200,150));
         enemyArr.add(new BossDoor(250, 50, 100, 200));
 
         Level roomOne = new Level(null,null, colArr, "Room1" ,enemyArr);
@@ -179,18 +180,31 @@ public class Level {
         colArr5.add(new Rectangle(0,450,125,100));
         colArr5.add(new Rectangle(300,450,360,100));
         colArr5.add(new Rectangle(835, 450, 125,100));
-        colArr5.add(new Rectangle(125,255,175,20));
-        colArr5.add(new Rectangle(660,255,175,20));
-        enemyArr5.add(new EnemyGrimm(480,100,100,100,10));
+        colArr5.add(new Rectangle(125,265,175,20));
+        colArr5.add(new Rectangle(660,265,175,20));
+        Enemy miniBoss1 = new EnemyGrimm(480,100,100,100,10);
+        enemyArr5.add(miniBoss1);
+        enemyArr5.add(new Portal(455, 150, roomOne, 430,300, miniBoss1));
+        Level roomFive = new Level(roomFour,null, colArr5, "Boss Room" ,enemyArr5);
+        roomFour.rightLevel = roomFive;
+        enemyArr.add(new Portal(495,250, roomFive, 455,350,miniBoss1));
 
-        Level room5 = new Level(roomFour,null, colArr5, "Boss Room" ,enemyArr5);
-        roomFour.rightLevel = room5;
 
+        ArrayList<Rectangle> colArr6 = new ArrayList<>();
+        ArrayList<Enemy> enemyArr6 = new ArrayList<Enemy>();
+        colArr6.add(new Rectangle(0,450,960,100));
+        colArr6.add(new Rectangle(900,0,50,300));
+        Enemy button1 = new Button(100,0,50,50);
+        enemyArr6.add(button1);
+        Enemy unlockableDoor1 = new UnlockableDoor(900,300,50,150, button1);
+        enemyArr6.add(unlockableDoor1);
+        colArr6.add(unlockableDoor1.hitBox);
 
-
+        Level roomSix = new Level(roomFive, null, colArr6, "Room Six", enemyArr6);
+        roomFive.rightLevel = roomSix;
 
         ArrayList<Rectangle> colArrBossMain = new ArrayList<>();
-        colArrBossMain.add(new Rectangle(0,500,960,60)); 
+        colArrBossMain.add(new Rectangle(0,500,960,60));
         colArrBossMain.add(new Rectangle(100,400,700,10));
         colArrBossMain.add(new Rectangle(940,0,20,400));
 
@@ -198,21 +212,21 @@ public class Level {
         ArrayList<Enemy> enemyArrBossMain = new ArrayList<Enemy>();
         enemyArrBossMain.add(new Boss());
         Level levelBossMain = new Level(null, null, colArrBossMain, "BossMain", enemyArrBossMain);
-    
+
         ArrayList<Enemy> enemyArrBossRight1 = new ArrayList<Enemy>();
         ArrayList<Enemy> enemyArrBossLeft1 = new ArrayList<Enemy>();
-     
-    
+
+
         ArrayList<Rectangle> colArrBossRight1 = new ArrayList<>();
-       colArrBossRight1.add(new Rectangle(0,500,960,60)); 
+       colArrBossRight1.add(new Rectangle(0,500,960,60));
         colArrBossRight1.add(new Rectangle(0,350,800,20));
         colArrBossRight1.add(new Rectangle(100,200,800,20));
         colArrBossRight1.add(new Rectangle(0,0,5,400));
          enemyArrBossRight1.add(new BossOrbGenerator(700, 190, Color.blue));
-       
-    
+
+
         ArrayList<Rectangle> colArrBossLeft1 = new ArrayList<>();
-        colArrBossLeft1.add(new Rectangle(0,500,960,60)); 
+        colArrBossLeft1.add(new Rectangle(0,500,960,60));
         colArrBossLeft1.add(new Rectangle(200,350,100,40));
         colArrBossLeft1.add(new Rectangle(500,200,100,20));
         colArrBossLeft1.add(new Rectangle(700,100,100,20));
@@ -220,10 +234,10 @@ public class Level {
 
         Level levelBossLeft1 = new Level(null, levelBossMain, colArrBossLeft1, "LEFT", enemyArrBossLeft1);
         Level levelBossRight1 = new Level(levelBossMain, null, colArrBossRight1, "RIGHT", enemyArrBossRight1);
-    
+
         levelBossMain.leftLevel = levelBossLeft1;
         levelBossMain.rightLevel = levelBossRight1;
-    
+
         // Ensure that both left and right levels receive the same enemy list
         levelBossLeft1.enemyList = enemyArrBossLeft1;
         levelBossLeft1.enemyList = enemyArrBossRight1;
@@ -232,7 +246,7 @@ public class Level {
         levelList.add(roomTwo);
         levelList.add(roomThree);
         levelList.add(roomFour);
-        levelList.add(room5);
+        levelList.add(roomFive);
         levelList.add(levelBossMain);
         levelList.add(levelBossLeft1);
         levelList.add(levelBossRight1);
