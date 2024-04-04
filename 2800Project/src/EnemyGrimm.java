@@ -32,14 +32,15 @@ public class EnemyGrimm extends Enemy {
                     isBeingHit = false;
                 }
             }
+            if(System.currentTimeMillis() > fireballTimer){
+                fireballs.add(new Fireball((int)(this.x + width/2), (int)(this.y + height/2)));
+                fireballTimer = System.currentTimeMillis() + 1000;
+            }
         }
         if (health <= 0) {
             isAlive = false;
         }
-        if(System.currentTimeMillis() > fireballTimer){
-            fireballs.add(new Fireball((int)(this.x + width/2), (int)(this.y + height/2)));
-            fireballTimer = System.currentTimeMillis() + 1000;
-        }
+       
         for(Fireball fireball : fireballs){
             fireball.tick(gm);
         }
