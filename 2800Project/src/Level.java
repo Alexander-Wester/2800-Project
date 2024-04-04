@@ -194,14 +194,132 @@ public class Level {
         ArrayList<Enemy> enemyArr6 = new ArrayList<Enemy>();
         colArr6.add(new Rectangle(0,450,960,100));
         colArr6.add(new Rectangle(900,0,50,300));
-        Enemy button1 = new Button(100,0,50,50);
+        Button button1 = new Button(425,0,50,50);
         enemyArr6.add(button1);
         Enemy unlockableDoor1 = new UnlockableDoor(900,300,50,150, button1);
         enemyArr6.add(unlockableDoor1);
         colArr6.add(unlockableDoor1.hitBox);
-
+        for(int i = 0; i < random.nextInt(10) + 10; i ++) {
+            randomInt = random.nextInt(900);
+            enemyArr6.add(new VengeflyEnemy(randomInt, 0, 20, 20, 2));
+        }
         Level roomSix = new Level(roomFive, null, colArr6, "Room Six", enemyArr6);
         roomFive.rightLevel = roomSix;
+
+        ArrayList<Rectangle> colArr7 = new ArrayList<>();
+        ArrayList<Enemy> enemyArr7 = new ArrayList<Enemy>();
+        colArr7.add(new Rectangle(0,500,1000,40));
+        colArr7.add(new Rectangle(900,0,50,300));
+        colArr7.add(new Rectangle(900,450,50,100));
+        enemyArr7.add(new LavaTrap(0,480,1000,40));
+        Button room7Btn1 = new Button(50, 0 ,50,50);
+        enemyArr7.add(room7Btn1);
+        Button room7Btn2 = new Button(125, 0 ,50,50);
+        enemyArr7.add(room7Btn2);
+        Button room7Btn3 = new Button(200, 0 ,50,50);
+        enemyArr7.add(room7Btn3);
+        Button room7Btn4 = new Button(275, 0 ,50,50);
+        enemyArr7.add(room7Btn4);
+        Button room7Btn5 = new Button(350, 0 ,50,50);
+        enemyArr7.add(room7Btn5);
+        Button room7Btn6 = new Button(425, 0 ,50,50);
+        enemyArr7.add(room7Btn6);
+        Button room7Btn7 = new Button(500, 0 ,50,50);
+        enemyArr7.add(room7Btn7);
+        Button room7Btn8 = new Button(575, 0 ,50,50);
+        enemyArr7.add(room7Btn8);
+        Button room7Btn9 = new Button(650, 0 ,50,50);
+        enemyArr7.add(room7Btn9);
+        Button room7Btn10 = new Button(725, 0 ,50,50);
+        enemyArr7.add(room7Btn10);
+        Button room7Btn11 = new Button(800, 0 ,50,50);
+        enemyArr7.add(room7Btn11);
+
+        UnlockableDoor trapFloor1 = new UnlockableDoor(0,450,100,50,room7Btn4);
+        colArr7.add(trapFloor1.hitBox);
+        enemyArr7.add(trapFloor1);
+        UnlockableDoor trapFloor2 = new UnlockableDoor(100,450,100,50, room7Btn8);
+        colArr7.add(trapFloor2.hitBox);
+        enemyArr7.add(trapFloor2);
+        UnlockableDoor trapFloor3 = new UnlockableDoor(200,450,100,50, room7Btn2);
+        colArr7.add(trapFloor3.hitBox);
+        enemyArr7.add(trapFloor3);
+        UnlockableDoor trapFloor4 = new UnlockableDoor(300,450,100,50, room7Btn11);
+        colArr7.add(trapFloor4.hitBox);
+        enemyArr7.add(trapFloor4);
+        UnlockableDoor trapFloor5 = new UnlockableDoor(400,450,100,50, room7Btn3);
+        colArr7.add(trapFloor5.hitBox);
+        enemyArr7.add(trapFloor5);
+        UnlockableDoor trapFloor6 = new UnlockableDoor(500,450,100,50,room7Btn6);
+        colArr7.add(trapFloor6.hitBox);
+        enemyArr7.add(trapFloor6);
+        UnlockableDoor trapFloor7 = new UnlockableDoor(600,450,100,50,room7Btn5);
+        colArr7.add(trapFloor7.hitBox);
+        enemyArr7.add(trapFloor7);
+        UnlockableDoor trapFloor8 = new UnlockableDoor(700,450,100,50,room7Btn9);
+        colArr7.add(trapFloor8.hitBox);
+        enemyArr7.add(trapFloor8);
+        UnlockableDoor trapFloor9 = new UnlockableDoor(800,450,900,50,room7Btn1);
+        colArr7.add(trapFloor9.hitBox);
+        enemyArr7.add(trapFloor9);
+        UnlockableDoor exitDoor = new UnlockableDoor(900,300,50,150,room7Btn7);
+        colArr7.add(exitDoor.hitBox);
+        enemyArr7.add(exitDoor);
+
+        Level roomSeven = new Level(roomSix, null, colArr7, "Room Seven", enemyArr7);
+        roomSix.rightLevel = roomSeven;
+
+        ArrayList<Rectangle> colArr8 = new ArrayList<>();
+        ArrayList<Enemy> enemyArr8 = new ArrayList<Enemy>();
+        colArr8.add(new Rectangle(0,500,900,20));
+        enemyArr8.add(new LavaTrap(0,480,960,40));
+        colArr8.add(new Rectangle(0,450,100,50));
+        colArr8.add(new Rectangle(850,450,200,50));
+        MovingPlatform roomEightplatform1 = new MovingPlatform(100,450,150,10,100,700,2,false);
+        colArr8.add(roomEightplatform1.hitBox);
+        enemyArr8.add(roomEightplatform1);
+        colArr8.add(new Rectangle(455,0,10,50));
+        colArr8.add(new Rectangle(515,0,10,50));
+        Button roomEightButton = new Button(465,0,50,50);
+        MovingPlatform roomEightPlatform2 = new MovingPlatform(400,50,20,10,400,550,2,false);
+        colArr8.add(roomEightPlatform2.hitBox);
+        enemyArr8.add(roomEightPlatform2);
+        enemyArr8.add(roomEightButton);
+        UnlockableDoor roomEightDoor = new UnlockableDoor(900,300,50,150,roomEightButton);
+        colArr8.add(roomEightDoor.hitBox);
+        enemyArr8.add(roomEightDoor);
+        colArr8.add(new Rectangle(900,0,50,300));
+        for(int i = 0; i < random.nextInt(10) + 5; i ++) {
+            randomInt = random.nextInt(900);
+            enemyArr8.add(new VengeflyEnemy(randomInt, 0, 20, 20, 2));
+        }
+        Level roomEight = new Level(roomSeven, null, colArr8, "Room Eight", enemyArr8);
+        roomSeven.rightLevel = roomEight;
+
+
+        ArrayList<Rectangle> colArr9 = new ArrayList<>();
+        ArrayList<Enemy> enemyArr9 = new ArrayList<Enemy>();
+        colArr9.add(new Rectangle(0,500,960,50));
+        enemyArr9.add(new LavaTrap(0,480,960,50));
+        colArr9.add(new Rectangle(0,450,100,50));
+        colArr9.add(new Rectangle(280,400,400,20));
+        colArr9.add(new Rectangle(860,450,100,50));
+        Level roomNine = new Level(roomEight, null, colArr9, "Room Nine", enemyArr9);
+        roomEight.rightLevel = roomNine;
+
+        ArrayList<Rectangle> colArr10 = new ArrayList<>();
+        ArrayList<Enemy> enemyArr10 = new ArrayList<Enemy>();
+        colArr10.add(new Rectangle(0,450,960,100));
+        colArr10.add(new Rectangle(180,420,600,100));
+        colArr10.add(new Rectangle(280,390,400,100));
+        colArr10.add(new Rectangle(380,360,200,100));
+        enemyArr10.add(new Portal(470,100, roomOne,430,300));
+        Level roomTen = new Level(roomNine, null, colArr10, "Room Ten", enemyArr10);
+        roomNine.rightLevel = roomTen;
+
+
+
+
 
         ArrayList<Rectangle> colArrBossMain = new ArrayList<>();
         colArrBossMain.add(new Rectangle(0,500,960,60));
@@ -250,6 +368,11 @@ public class Level {
         levelList.add(levelBossMain);
         levelList.add(levelBossLeft1);
         levelList.add(levelBossRight1);
+        levelList.add(roomSix);
+        levelList.add(roomSeven);
+        levelList.add(roomEight);
+        levelList.add(roomNine);
+        levelList.add(roomTen);
 
         gm.setLevelList(levelList);
 
