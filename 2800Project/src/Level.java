@@ -317,10 +317,6 @@ public class Level {
         Level roomTen = new Level(roomNine, null, colArr10, "Room Ten", enemyArr10);
         roomNine.rightLevel = roomTen;
 
-
-
-
-
         ArrayList<Rectangle> colArrBossMain = new ArrayList<>();
         colArrBossMain.add(new Rectangle(0,500,960,60));
         colArrBossMain.add(new Rectangle(100,400,700,10));
@@ -405,11 +401,9 @@ public class Level {
         int fiveSecondCounter = tickCounter / 50; // Since you're incrementing tickCounter every tick, 50 ticks = 1 second
     
         // Check if 5 seconds have passed
-        if (gm.getCurrentLevel() instanceof Level && ((Level) gm.getCurrentLevel()).leftLevel == null
-        && this == gm.getCurrentLevel() && fiveSecondCounter % 5 == 0) {
+        if (gm.getCurrentLevel() instanceof Level && this == gm.getCurrentLevel() && fiveSecondCounter % 5 == 0) {
             // If 5 seconds have passed, stop fireball generation for 1 second
-            if (gm.getCurrentLevel() instanceof Level && ((Level) gm.getCurrentLevel()).leftLevel == null
-            && this == gm.getCurrentLevel() && tickCounter % 20 == 0) {
+            if (gm.getCurrentLevel() instanceof Level && this == gm.getCurrentLevel() && tickCounter % 20 == 0) {
                 // Generate new fireball only if the EnemyGrimm is alive
                 if (isEnemyGrimmAlive()) {
                     generateNewFireball();
@@ -417,8 +411,7 @@ public class Level {
             }
         } else {
             // Generate new fireball every 10 ticks (0.1 seconds) outside of the 1-second pause
-            if (gm.getCurrentLevel() instanceof Level && ((Level) gm.getCurrentLevel()).leftLevel == null
-                    && this == gm.getCurrentLevel() && tickCounter % 20 == 0) {
+            if (gm.getCurrentLevel() instanceof Level && this == gm.getCurrentLevel() && tickCounter % 20 == 0) {
                 // Generate new fireball only if the EnemyGrimm is alive
                 if (isEnemyGrimmAlive()) {
                     generateNewFireball();
@@ -441,10 +434,9 @@ public class Level {
         return false;
     }
     
-    
     private void generateNewFireball() {
         // Generate and add a new fireball to the enemy list
-        enemyList.add(new Fireball(10, 20));
+        enemyList.add(new Fireball());
     }
     
 }

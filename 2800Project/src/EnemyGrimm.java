@@ -14,7 +14,6 @@ public class EnemyGrimm extends Enemy {
     public ArrayList<Fireball> getFireballs() {
         return fireballs;
     }
-    private double fireballTimer = 0;
     
     public EnemyGrimm(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);
@@ -41,31 +40,46 @@ public class EnemyGrimm extends Enemy {
             gm.player.activateFireball();
             JOptionPane.showMessageDialog(null, "You have unlocked the ability to use the fireball (right click to use)");
         }
-        if(System.currentTimeMillis() > fireballTimer && isAlive){
-            fireballs.add(new Fireball((int)(this.x + width/2), (int)(this.y + height/2)));
-            fireballTimer = System.currentTimeMillis() + 500;
-        }
-        for(Fireball fireball : fireballs){
-            fireball.tick(gm);
-        }
     }
 
     @Override
-    public void render(Graphics2D g2d) {
-        super.render(g2d); // Call superclass render method to render the square
+public void render(Graphics2D g2d) {
+    super.render(g2d); // Call superclass render method to render the square
 
-        if (isAlive) {
-            if (isBeingHit) {
-                g2d.setColor(Color.red);
-            } else {
-                g2d.setColor(Color.orange);
-            }
-            g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
-        }
+    int healthBarWidth = 50;
+    int healthBarHeight = 10;
+    int healthBarX = (int) x;
+    int healthBarY = (int) y - healthBarHeight - 5; // Place health bar above the EnemyGrimm
 
-        for (Fireball fireball : fireballs) {
-            fireball.render(g2d);
-        }
+    // Calculate health bar color based on current health
+    Color healthBarColor = Color.GREEN;
+    double healthPercentage = (double) health / 10;
+    if (healthPercentage <= 0.5) {
+        healthBarColor = Color.YELLOW;
     }
+    if (healthPercentage <= 0.2) {
+        healthBarColor = Color.RED;
+    }
+
+    g2d.setColor(Color.BLACK);
+    g2d.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight); // Outline
+    g2d.setColor(healthBarColor);
+    int barWidth = (int) (healthBarWidth * healthPercentage);
+    g2d.fillRect(healthBarX, healthBarY, barWidth, healthBarHeight); // Fill
+
+    if (isAlive) {
+        if (isBeingHit) {
+            g2d.setColor(Color.RED);
+        } else {
+            g2d.setColor(Color.ORANGE);
+        }
+        g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
+    }
+
+    for (Fireball fireball : fireballs) {
+        fireball.render(g2d);
+    }
+}
+
     
 }
