@@ -132,16 +132,29 @@ public class GameCanvas extends Canvas implements Runnable {
 		public void keyPressed(KeyEvent e) {
 
 			if (e.getKeyCode() == KeyEvent.VK_A){
-				player.playerInputVeloX(-5);
+				if(player.isRunning()){
+					player.playerInputVeloX(-10);
+				} else {
+					player.playerInputVeloX(-5);
+				}
 				player.setKeyA(true);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_D){
-				player.playerInputVeloX(5);
+				if(player.isRunning()){
+					player.playerInputVeloX(10);
+				} else {
+					player.playerInputVeloX(5);
+				}
 				player.setKeyD(true);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_SPACE){
 				player.jump();
 				
+			}
+			if (e.getKeyCode() == KeyEvent.VK_SHIFT){
+				if(player.canRun()){
+					player.playerRun(true);
+				}
 			}
 		}
 	
@@ -163,7 +176,10 @@ public class GameCanvas extends Canvas implements Runnable {
 				if(!player.getKeyA()){
 				player.playerInputVeloX(0);
 				}
-			} 
+			}
+			if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+				player.playerRun(false);
+			}
 		}
 	
 	}

@@ -58,6 +58,9 @@ public class Player extends GameObject {
     int bossSwordKnockbackDirection=0; //-1 left, 1 right;
     long bossSwordKnockbackTimer;
 
+    boolean runningActivated = true;
+    boolean running = false;
+
     public Player() {
         super(450, 400, 30, 60);
         loadSpriteSheet("player.png");
@@ -254,7 +257,16 @@ public class Player extends GameObject {
     public void activateFireball() {
         this.fireballActivated = true;
     }
-
+    public void activateRunning(){this.runningActivated = true;}
+    public boolean canRun(){
+        return runningActivated;
+    }
+    public boolean isRunning(){
+        return running;
+    }
+    public void playerRun(boolean running){
+        this.running = running;
+    }
     public void resetFireball() {
         this.fireballAlive = false;
         fireballTimer = System.currentTimeMillis();
