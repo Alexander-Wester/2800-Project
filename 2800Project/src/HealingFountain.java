@@ -32,7 +32,8 @@ public class HealingFountain extends Enemy{
 
     public void loadImage(){
         try{
-            image = ImageIO.read(new File("2800Project/src/fountain.png"));
+           File input = new File("./lib/fountain.png");
+            image = ImageIO.read(input);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
