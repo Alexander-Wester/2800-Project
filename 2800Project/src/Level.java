@@ -400,6 +400,8 @@ public class Level {
         levelList.add(roomEight);
         levelList.add(roomNine);
         levelList.add(roomTen);
+        levelList.add(levelBossRight2);
+        levelList.add(levelBossRight3);
 
         gm.setLevelList(levelList);
 
