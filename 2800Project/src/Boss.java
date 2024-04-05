@@ -50,8 +50,9 @@ public class Boss extends Enemy{
     if(isAlive && gm.player.getIsAttackOnline()){
         if(gm.player.getAttackTriangle().intersects(hitBox)){
             if(gm.player.orbActive){
-                if(gm.player.orbColor==Color.blue){
+                if(gm.player.orbColor==Color.blue && blueCrystalAlive){
                     this.blueCrystalAlive=false;
+                    gm.currLevel.enemyList.add(new BossBeamAttack(true, 0));
                 }
                 if(gm.player.orbColor==Color.orange){
                     this.orangeCrystalAlive=false;

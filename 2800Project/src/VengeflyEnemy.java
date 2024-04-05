@@ -39,7 +39,7 @@ public class VengeflyEnemy extends Enemy {
     }
 
     private void chasePlayer(GameManager gm) {
-        GameObject player = gm.player; // Assuming player is at index 0
+        Player player = gm.player; 
 
         double dx = player.x - x;
         double dy = player.y - y;
@@ -58,7 +58,7 @@ public class VengeflyEnemy extends Enemy {
 
 
     private boolean isNearPlayer(GameManager gm) {
-        GameObject player = gm.player;
+        Player player = gm.player; 
         
         // Calculate distance between enemy and player using Pythagoras' theorem
         double dx = Math.abs(player.x - x);

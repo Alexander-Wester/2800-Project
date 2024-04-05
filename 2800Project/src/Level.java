@@ -336,9 +336,37 @@ public class Level {
         colArrBossRight1.add(new Rectangle(0,350,800,20));
         colArrBossRight1.add(new Rectangle(100,200,800,20));
         colArrBossRight1.add(new Rectangle(0,0,5,400));
-         enemyArrBossRight1.add(new BossOrbGenerator(700, 190, Color.blue));
+        colArrBossRight1.add(new Rectangle(940,100,20,400));
+         enemyArrBossRight1.add(new BossBeamAttack(true,0));
+
+         ArrayList<Enemy> enemyArrBossRight2 = new ArrayList<Enemy>();
+         ArrayList<Rectangle> colArrBossRight2 = new ArrayList<>();
+         colArrBossRight2.add(new Rectangle(0,500,960,60)); 
+         colArrBossRight2.add(new Rectangle(0,100,5,400));
+         colArrBossRight2.add(new Rectangle(0,250,50,20));
+         colArrBossRight2.add(new Rectangle(940,0,20,200));
+         colArrBossRight2.add(new Rectangle(800,350,150,200));
+         enemyArrBossRight2.add(new DummyEnemy(920,250,40,100,5));
+         enemyArrBossRight2.add(new VengeflyEnemy(100,100,20,20,4));
+         enemyArrBossRight2.add(new VengeflyEnemy(600,100,20,20,4));
+         Level levelBossRight2 = new Level(null, null, colArrBossRight2, "right2", enemyArrBossRight2);
 
 
+         ArrayList<Rectangle> colArrBossRight3 = new ArrayList<>();
+         ArrayList<Enemy> enemyArrBossRight3 = new ArrayList<Enemy>();
+ 
+         colArrBossRight3.add(new Rectangle(0,350,150,200));
+         enemyArrBossRight3.add(new LavaTrap(0,485,960,30));
+         enemyArrBossRight3.add(new BossBeamAttack(true, 0));
+         colArrBossRight3.add(new Rectangle(0,500,960,20));
+         colArrBossRight3.add(new Rectangle(280,450,80,50));
+         colArrBossRight3.add(new Rectangle(480,450,80,50));
+         colArrBossRight3.add(new Rectangle(680,450,200,150));
+         enemyArrBossRight3.add(new BossOrbGenerator(700, 445, Color.blue));
+         enemyArrBossRight3.add(new Portal(780,360,levelBossMain,150,400));
+
+         Level levelBossRight3 = new Level(levelBossRight2, null,colArrBossRight3,"Right3",enemyArrBossRight3);
+         
         ArrayList<Rectangle> colArrBossLeft1 = new ArrayList<>();
         colArrBossLeft1.add(new Rectangle(0,500,960,60));
         colArrBossLeft1.add(new Rectangle(200,350,100,40));
@@ -347,11 +375,14 @@ public class Level {
         enemyArrBossLeft1.add(new BossOrbGenerator(700, 95, Color.orange));
 
         Level levelBossLeft1 = new Level(null, levelBossMain, colArrBossLeft1, "LEFT", enemyArrBossLeft1);
-        Level levelBossRight1 = new Level(levelBossMain, null, colArrBossRight1, "RIGHT", enemyArrBossRight1);
-
+        Level levelBossRight1 = new Level(levelBossMain, levelBossRight2, colArrBossRight1, "RIGHT", enemyArrBossRight1);
+    
         levelBossMain.leftLevel = levelBossLeft1;
         levelBossMain.rightLevel = levelBossRight1;
+        levelBossRight2.leftLevel=levelBossRight1;
+        levelBossRight2.rightLevel=levelBossRight3;
 
+    
         // Ensure that both left and right levels receive the same enemy list
         levelBossLeft1.enemyList = enemyArrBossLeft1;
         levelBossLeft1.enemyList = enemyArrBossRight1;
