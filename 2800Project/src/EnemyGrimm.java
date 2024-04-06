@@ -62,10 +62,10 @@ public void render(Graphics2D g2d) {
     }
 
     g2d.setColor(Color.BLACK);
-    g2d.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight); // Outline
+    g2d.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
     g2d.setColor(healthBarColor);
     int barWidth = (int) (healthBarWidth * healthPercentage);
-    g2d.fillRect(healthBarX, healthBarY, barWidth, healthBarHeight); // Fill
+    g2d.fillRect(healthBarX, healthBarY, barWidth, healthBarHeight);
 
     if (isAlive) {
         if (isBeingHit) {

@@ -18,7 +18,7 @@ public class HealingFountain extends Enemy{
 
     public void tick(GameManager gm){
         if(System.currentTimeMillis() > healingTimer && hitBox.intersects(gm.player.rect())){
-            if(gm.player.health < 3) {
+            if(gm.player.health < 5) {
                 gm.player.health++;
                 healingTimer = (System.currentTimeMillis() + 1000);
             }
@@ -32,8 +32,7 @@ public class HealingFountain extends Enemy{
 
     public void loadImage(){
         try{
-           File input = new File("./lib/fountain.png");
-            image = ImageIO.read(input);
+            image = ImageIO.read(new File("src/fountain.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

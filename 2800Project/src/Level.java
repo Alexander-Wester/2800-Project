@@ -212,7 +212,6 @@ public class Level {
         colArr7.add(new Rectangle(0,500,1000,40));
         colArr7.add(new Rectangle(900,0,50,300));
         colArr7.add(new Rectangle(900,450,50,100));
-        enemyArr7.add(new LavaTrap(0,480,1000,40));
         Button room7Btn1 = new Button(50, 0 ,50,50);
         enemyArr7.add(room7Btn1);
         Button room7Btn2 = new Button(125, 0 ,50,50);
@@ -276,6 +275,12 @@ public class Level {
         enemyArr8.add(new LavaTrap(0,480,960,40));
         colArr8.add(new Rectangle(0,450,100,50));
         colArr8.add(new Rectangle(850,450,200,50));
+        colArr8.add(new Rectangle(0,0,300,50));
+        colArr8.add(new Rectangle(600,0,1000,50));
+        colArr8.add(new Rectangle(150,250,100,50));
+        colArr8.add(new Rectangle(350,250,100,50));
+        colArr8.add(new Rectangle(200,300,60,50));
+
         MovingPlatform roomEightplatform1 = new MovingPlatform(100,450,150,10,100,700,2,false);
         colArr8.add(roomEightplatform1.hitBox);
         enemyArr8.add(roomEightplatform1);
@@ -315,6 +320,7 @@ public class Level {
         colArr10.add(new Rectangle(280,390,400,100));
         colArr10.add(new Rectangle(380,360,200,100));
         enemyArr10.add(new Portal(470,100, roomOne,430,300));
+        enemyArr10.add(new Boss2(400,100,100,100,10));
         Level roomTen = new Level(roomNine, null, colArr10, "Room Ten", enemyArr10);
         roomNine.rightLevel = roomTen;
 
@@ -337,7 +343,6 @@ public class Level {
         enemyArr11.add(new VengeflyEnemy(400,400,20,20,2));
         Level roomEleven = new Level(null, roomOne, colArr11, "LeftRoomOne", enemyArr11);
         roomOne.leftLevel = roomEleven;
-
 
         ArrayList<Rectangle> colArr12 = new ArrayList<>();
         ArrayList<Enemy> enemyArr12 = new ArrayList<Enemy>();
@@ -521,12 +526,12 @@ public class Level {
 
 
         ArrayList<Rectangle> colArrBossRight1 = new ArrayList<>();
-       colArrBossRight1.add(new Rectangle(0,500,960,60));
+        colArrBossRight1.add(new Rectangle(0,500,960,60));
         colArrBossRight1.add(new Rectangle(0,350,800,20));
         colArrBossRight1.add(new Rectangle(100,200,800,20));
         colArrBossRight1.add(new Rectangle(0,0,5,400));
         colArrBossRight1.add(new Rectangle(940,100,20,400));
-         enemyArrBossRight1.add(new BossBeamAttack(true,0));
+        // enemyArrBossRight1.add(new BossBeamAttack(true,0));
 
          ArrayList<Enemy> enemyArrBossRight2 = new ArrayList<Enemy>();
          ArrayList<Rectangle> colArrBossRight2 = new ArrayList<>();
@@ -546,7 +551,7 @@ public class Level {
  
          colArrBossRight3.add(new Rectangle(0,350,150,200));
          enemyArrBossRight3.add(new LavaTrap(0,485,960,30));
-         enemyArrBossRight3.add(new BossBeamAttack(true, 0));
+         //enemyArrBossRight3.add(new BossBeamAttack(true, 0));
          colArrBossRight3.add(new Rectangle(0,500,960,20));
          colArrBossRight3.add(new Rectangle(280,450,80,50));
          colArrBossRight3.add(new Rectangle(480,450,80,50));
@@ -555,7 +560,9 @@ public class Level {
          enemyArrBossRight3.add(new Portal(780,360,levelBossMain,150,400));
 
          Level levelBossRight3 = new Level(levelBossRight2, null,colArrBossRight3,"Right3",enemyArrBossRight3);
-         
+        enemyArrBossRight1.add(new BossOrbGenerator(700, 190, Color.blue));
+
+
         ArrayList<Rectangle> colArrBossLeft1 = new ArrayList<>();
         colArrBossLeft1.add(new Rectangle(0,500,960,60));
         colArrBossLeft1.add(new Rectangle(200,350,100,40));
@@ -564,14 +571,11 @@ public class Level {
         enemyArrBossLeft1.add(new BossOrbGenerator(700, 95, Color.orange));
 
         Level levelBossLeft1 = new Level(null, levelBossMain, colArrBossLeft1, "LEFT", enemyArrBossLeft1);
-        Level levelBossRight1 = new Level(levelBossMain, levelBossRight2, colArrBossRight1, "RIGHT", enemyArrBossRight1);
-    
+        Level levelBossRight1 = new Level(levelBossMain, null, colArrBossRight1, "RIGHT", enemyArrBossRight1);
+
         levelBossMain.leftLevel = levelBossLeft1;
         levelBossMain.rightLevel = levelBossRight1;
-        levelBossRight2.leftLevel=levelBossRight1;
-        levelBossRight2.rightLevel=levelBossRight3;
 
-    
         // Ensure that both left and right levels receive the same enemy list
         levelBossLeft1.enemyList = enemyArrBossLeft1;
         levelBossLeft1.enemyList = enemyArrBossRight1;
@@ -589,8 +593,6 @@ public class Level {
         levelList.add(roomEight);
         levelList.add(roomNine);
         levelList.add(roomTen);
-        levelList.add(levelBossRight2);
-        levelList.add(levelBossRight3);
 
         gm.setLevelList(levelList);
 
@@ -640,6 +642,24 @@ public class Level {
                 }
             }
         }
+
+        if (gm.getCurrentLevel() instanceof Level && this == gm.getCurrentLevel() && fiveSecondCounter % 5 == 0) {
+            // If 5 seconds have passed, stop fireball generation for 1 second
+            if (gm.getCurrentLevel() instanceof Level && this == gm.getCurrentLevel() && tickCounter % 80 == 0) {
+                // Generate new fireball2 only if the Boss2 is alive
+                if (isBoss2Alive()) {
+                    generateNewFireball2(gm);
+                }
+            }
+        } else {
+            // Generate new fireball2 every 10 ticks (0.1 seconds) outside of the 1-second pause
+            if (gm.getCurrentLevel() instanceof Level && this == gm.getCurrentLevel() && tickCounter % 80 == 0) {
+                // Generate new fireball only if the Boss2 is alive
+                if (isBoss2Alive()) {
+                    generateNewFireball2(gm);
+                }
+            }
+        }
     
         // Rest of the tick method
         for (int i = 0; i < enemyList.size(); i++) {
@@ -655,10 +675,25 @@ public class Level {
         }
         return false;
     }
+
+    private boolean isBoss2Alive() {
+        for (Enemy enemy : enemyList) {
+            if (enemy instanceof Boss2 && enemy.isAlive()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     
     private void generateNewFireball() {
         // Generate and add a new fireball to the enemy list
         enemyList.add(new Fireball());
+    }
+    
+    private void generateNewFireball2(GameManager gm) {
+        // Generate and add a new fireball to the enemy list
+        enemyList.add(new Fireball2(gm));
     }
     
 }

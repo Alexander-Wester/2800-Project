@@ -38,7 +38,7 @@ public class Player extends GameObject {
     private boolean jumpActive = false;
     private boolean jumpAllowed = true;
 
-    public int health=3;   //health stuff
+    public int health=5;   //health stuff
      long IFrames;
      boolean canBeHit = true;    //temp invincibility after being hit
     private Rectangle hitBox;
