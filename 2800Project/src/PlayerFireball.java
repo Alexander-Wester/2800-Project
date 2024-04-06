@@ -21,7 +21,6 @@ public class PlayerFireball {
     private final int NUM_FRAMES_FIREBALL = FIRE_SPRITE_COLUMNS * FIRE_SPRITE_ROWS;
     private static final int ANIMATION_DELAY = 100; // Delay between each frame (milliseconds)
     private int fireballCurrentFrame = 0;
-    private long fireballLastFrameTime;
     private int currentFrame = 0;
     private long lastFrameTime;
 
@@ -78,15 +77,15 @@ public class PlayerFireball {
     }
 
     public void render(Graphics2D g2d) {
-        g2d.setColor(Color.orange);
-        g2d.fill(hitBox);
+        // g2d.setColor(Color.orange);
+        // g2d.fill(hitBox);
 
         int fireballSpriteWidth = fireSpriteSheet.getWidth() / FIRE_SPRITE_COLUMNS;
         int fireballSpriteHeight = fireSpriteSheet.getHeight() / FIRE_SPRITE_ROWS;
 
         // Increase the size of the fireball
-        int scaledFireballWidth = (int) (fireballSpriteWidth * 3);
-        int scaledFireballHeight = (int) (fireballSpriteHeight * 3);
+        int scaledFireballWidth = (int) (fireballSpriteWidth * 3.5);
+        int scaledFireballHeight = (int) (fireballSpriteHeight * 3.5);
 
         int fireSrcX = (fireballCurrentFrame % FIRE_SPRITE_COLUMNS) * fireballSpriteWidth;
         int fireSrcY = (fireballCurrentFrame / FIRE_SPRITE_COLUMNS) * fireballSpriteHeight;
@@ -96,7 +95,7 @@ public class PlayerFireball {
                 fireSrcX, fireSrcY, fireSrcX + fireballSpriteWidth, fireSrcY + fireballSpriteHeight, null);
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastFrameTime >= ANIMATION_DELAY) {
-            currentFrame = (currentFrame + 1) % 3;
+            currentFrame = (currentFrame + 1) % NUM_FRAMES_FIREBALL;
             lastFrameTime = currentTime; // Update lastFrameTime
         }
     }

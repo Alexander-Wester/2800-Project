@@ -11,7 +11,6 @@ public class Player extends GameObject {
     private final int SPRITE_COLUMNS = 8; // Number of columns in the spritesheet
     private final int SPRITE_ROWS = 4; // Number of rows in the spritesheet
     private final int SWORD_SPRITE_COLUMNS = 3; // Number of columns in the sword spritesheet
-    private final int SWORD_SPRITE_ROWS = 2; // Number of rows in the sword spritesheet
     private final int FIRE_SPRITE_COLUMNS = 3;
     private final int FIRE_SPRITE_ROWS = 5;
     private static final int NUM_FRAMES_WALKING = 8; // frames to walk
@@ -132,23 +131,6 @@ public class Player extends GameObject {
             int spriteHeight = spriteSheet.getHeight() / SPRITE_ROWS;
 
             int srcX, srcY;
-
-            // if (!keyA) {
-            // // Calculate the position of the idle frame in the spritesheet
-            // srcX = IDLE_FRAME_COLUMN * spriteWidth;
-            // srcY = IDLE_FRAME_ROW * spriteHeight;
-
-            // g2d.drawImage(spriteSheet, (int) x, (int) y, (int) x + spriteWidth, (int) y +
-            // spriteHeight,
-            // srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
-            // } else {
-            // srcX = IDLE_FRAME_COLUMN + 1 * spriteWidth;
-            // srcY = IDLE_FRAME_ROW * spriteHeight;
-
-            // g2d.drawImage(spriteSheet, (int) x, (int) y, (int) x + spriteWidth, (int) y +
-            // spriteHeight,
-            // srcX, srcY, -srcX + spriteWidth, srcY + spriteHeight, null);
-            // }
 
             if (jumpActive) {
                 srcY = spriteHeight * 0;
