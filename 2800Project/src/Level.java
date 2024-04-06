@@ -606,7 +606,10 @@ public class Level {
         MovingPlatform movingPlatformBossLeft3 = new MovingPlatform(220, 200, 150, 20, 219, 700,2, false);
         colArrBossLeft3.add(movingPlatformBossLeft3.hitBox);
         enemyArrBossLeft3.add(movingPlatformBossLeft3);
-        enemyArrBossLeft3.add(new EnemyGrimm(250, 300, 50, 50, 10));
+        for(int i = 0; i < random.nextInt(5) + 10; i ++) {
+            randomInt = random.nextInt(661) + 150;
+            enemyArrBossLeft3.add(new StalagtiteTrap(randomInt, 0, 0, 0, 0));
+        }
         enemyArrBossLeft3.add(new Portal(10, 100, levelBossMain, 800, 420));
         enemyArrBossLeft3.add(new BossOrbGenerator(190, 50, Color.orange));
         enemyArrBossLeft3.add(new LavaTrap(0,485,820,30));

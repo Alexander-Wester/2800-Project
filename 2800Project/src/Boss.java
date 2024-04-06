@@ -11,7 +11,7 @@ public class Boss extends Enemy{
     BossSwordAttack sword = null;
 
     public Boss(){
-        super(960/2-50,200,100,200,5);
+        super(960/2-50,200,100,200,10);
     hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
 
     }
@@ -21,6 +21,9 @@ public class Boss extends Enemy{
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
 
         if(isAlive){
+
+            if(gm.player.y<465){
+                this.isInvincible=true;            }
 
         if(gm.player.x>x-140 && gm.player.x<x+width+140){
             if(System.currentTimeMillis()>attackCooldownTimer){
@@ -50,8 +53,9 @@ public class Boss extends Enemy{
     if(isAlive && gm.player.getIsAttackOnline()){
         if(gm.player.getAttackTriangle().intersects(hitBox)){
             if(gm.player.orbActive){
-                if(gm.player.orbColor==Color.blue){
+                if(gm.player.orbColor==Color.blue && blueCrystalAlive){
                     this.blueCrystalAlive=false;
+                    gm.currLevel.enemyList.add(new BossBeamAttack(true,0));
                 }
                 if(gm.player.orbColor==Color.orange && orangeCrystalAlive){
                     this.orangeCrystalAlive=false;
@@ -93,7 +97,7 @@ public class Boss extends Enemy{
         g2d.fillRect(440,150,80,20);
 
         g2d.setColor(Color.red);
-        g2d.fillRect(442, 152, 15 * health, 16);
+        g2d.fillRect(442, 152, 8 * health, 16);
 
         
        //g2d.setColor(Color.white);

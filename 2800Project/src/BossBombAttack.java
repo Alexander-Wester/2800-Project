@@ -18,7 +18,7 @@ public class BossBombAttack extends Enemy{
         isInvincible=true;
         doesDamageOnCollision=false;
         isAlive=true;
-        actualEnemy=false;
+        this.actualEnemy=false;
        
         hitBox = new Rectangle((int)x-(int)width/2,(int)(y-width/2),(int)width,(int)height);
     }

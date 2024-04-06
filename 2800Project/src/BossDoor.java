@@ -14,7 +14,7 @@ public class BossDoor extends Enemy {
 
     @Override
     public void tick(GameManager gm) {
-        if (hitBox.intersects(gm.player.getHitBox()) && gm.player.keyAmount() >= 2){
+        if (hitBox.intersects(gm.player.getHitBox()) ){//&& gm.player.keyAmount() >= 2 DISABLED FOR TESTING
             gm.currLevel = gm.levelList.get(5);
             gm.player.x = 450;
             gm.player.y = 400;
