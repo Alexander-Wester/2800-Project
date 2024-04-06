@@ -71,7 +71,7 @@ public class BossBeamAttack extends Enemy{
             damageState=true;
             doesDamageOnCollision=true;
         }
-        else if(damageState && System.currentTimeMillis()>timer+6500){
+        else if(damageState && System.currentTimeMillis()>timer+6000){
            reposisitionThisCylcle=false;
             damageState=false;
             doesDamageOnCollision=false;
@@ -97,7 +97,7 @@ public class BossBeamAttack extends Enemy{
     }
 
     public void fixPositions(GameManager gm){
-        this.x = gm.player.x + 150*position;
+        this.x = gm.player.x + 200*position;
     }
 
     public void render(Graphics2D g2d){

@@ -372,6 +372,8 @@ public class Player extends GameObject {
         x = 450;
         y = 400;
         deathMessageTimer = System.currentTimeMillis() + 3000;
+        orbActive=false;
+        orbColor=null;
     }
 
     public Polygon getAttackTriangle(){

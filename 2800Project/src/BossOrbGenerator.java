@@ -6,7 +6,7 @@ public class BossOrbGenerator extends Enemy{
     
 
     public BossOrbGenerator(int x, int y, Color c){
-        super(x, y, 100, 5, 10);
+        super(x, y, 100, 10, 10);
         thisColor = c;
         isInvincible=true;
         doesDamageOnCollision=false;

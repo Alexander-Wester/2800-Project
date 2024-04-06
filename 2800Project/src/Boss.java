@@ -53,8 +53,9 @@ public class Boss extends Enemy{
                 if(gm.player.orbColor==Color.blue){
                     this.blueCrystalAlive=false;
                 }
-                if(gm.player.orbColor==Color.orange){
+                if(gm.player.orbColor==Color.orange && orangeCrystalAlive){
                     this.orangeCrystalAlive=false;
+                    gm.currLevel.enemyList.add(new BossBombAttack());
                 }
             }
         }
