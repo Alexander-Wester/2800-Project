@@ -8,7 +8,6 @@ import java.io.InputStream;
 public class Player extends GameObject {
     private BufferedImage spriteSheet;
     private BufferedImage swordSpriteSheet;
-    private BufferedImage fireSpriteSheet;
     private final int SPRITE_COLUMNS = 8; // Number of columns in the spritesheet
     private final int SPRITE_ROWS = 4; // Number of rows in the spritesheet
     private final int SWORD_SPRITE_COLUMNS = 3; // Number of columns in the sword spritesheet
@@ -74,7 +73,6 @@ public class Player extends GameObject {
             if (inputStream != null) {
                 spriteSheet = ImageIO.read(inputStream);
                 swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("sword.png"));
-                fireSpriteSheet = ImageIO.read(getClass().getResourceAsStream("fireball.png"));
             } else {
                 throw new IOException("Resource not found: " + path);
             }
@@ -200,23 +198,6 @@ public class Player extends GameObject {
             g2d.drawImage(spriteSheet, (int) x, (int) y, (int) x + spriteWidth, (int) y +
                     spriteHeight,
                     srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
-
-            if (fireballAlive) {
-                int fireballSpriteWidth = fireSpriteSheet.getWidth() / FIRE_SPRITE_COLUMNS;
-                int fireballSpriteHeight = fireSpriteSheet.getHeight() / FIRE_SPRITE_ROWS;
-
-                int fireSrcX = (fireballCurrentFrame % FIRE_SPRITE_COLUMNS) * fireballSpriteWidth;
-                int fireSrcY = (fireballCurrentFrame / FIRE_SPRITE_COLUMNS) * fireballSpriteHeight;
-
-                g2d.drawImage(fireSpriteSheet, (int) x, (int) y,
-                        (int) x + fireballSpriteWidth, (int) y + fireballSpriteHeight,
-                        fireSrcX, fireSrcY, fireSrcX + fireballSpriteWidth, fireSrcY + fireballSpriteHeight, null);
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastFrameTime >= ANIMATION_DELAY) {
-                    currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
-                    lastFrameTime = currentTime; // Update lastFrameTime
-                }
-            }
 
             if (isAttackOnline)
 
