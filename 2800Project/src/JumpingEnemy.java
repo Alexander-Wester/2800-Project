@@ -104,15 +104,15 @@ public class JumpingEnemy extends Enemy {
 
                 // Calculate scaled sprite width and height
                 int scaledSpriteWidth = (int) (spriteWidth * 5);
-                int scaledSpriteHeight = (int) (spriteHeight * 5.5);
+                int scaledSpriteHeight = (int) (spriteHeight * 6);
 
                 // Calculate source coordinates for current frame
                 int srcX = currentFrame * spriteWidth;
                 int srcY = 0; // Since there's only one row in the spritesheet
 
                 // Draw the current frame
-                g2d.drawImage(enemySpriteSheetRed, (int) x, (int) y - 75, (int) x + scaledSpriteWidth,
-                        (int) y - 75 + scaledSpriteHeight,
+                g2d.drawImage(enemySpriteSheetRed, (int) x, (int) y - 95, (int) x + scaledSpriteWidth,
+                        (int) y - 95 + scaledSpriteHeight,
                         srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
                 // Update the frame if enough time has elapsed
@@ -128,15 +128,15 @@ public class JumpingEnemy extends Enemy {
 
                 // Calculate scaled sprite width and height
                 int scaledSpriteWidth = (int) (spriteWidth * 5);
-                int scaledSpriteHeight = (int) (spriteHeight * 5.5);
+                int scaledSpriteHeight = (int) (spriteHeight * 6);
 
                 // Calculate source coordinates for current frame
                 int srcX = currentFrame * spriteWidth;
                 int srcY = 0; // Since there's only one row in the spritesheet
 
                 // Draw the current frame
-                g2d.drawImage(enemySpriteSheetGreen, (int) x, (int) y - 75, (int) x + scaledSpriteWidth,
-                        (int) y - 75 + scaledSpriteHeight,
+                g2d.drawImage(enemySpriteSheetGreen, (int) x, (int) y - 95, (int) x + scaledSpriteWidth,
+                        (int) y - 95 + scaledSpriteHeight,
                         srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
                 // Update the frame if enough time has elapsed

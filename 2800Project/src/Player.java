@@ -130,6 +130,9 @@ public class Player extends GameObject {
             int spriteWidth = spriteSheet.getWidth() / SPRITE_COLUMNS;
             int spriteHeight = spriteSheet.getHeight() / SPRITE_ROWS;
 
+            int scaledSpriteWidth = (int) (spriteWidth * 1.5); // Adjusted sword width
+            int scaledSpriteHeight = (int) (spriteHeight * 1.5); // Adjusted sword height
+
             int srcX, srcY;
 
             if (jumpActive) {
@@ -177,8 +180,8 @@ public class Player extends GameObject {
                 }
 
             }
-            g2d.drawImage(spriteSheet, (int) x, (int) y, (int) x + spriteWidth, (int) y +
-                    spriteHeight,
+            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 13, (int) x - 20 + scaledSpriteWidth, (int) y - 13 +
+                    scaledSpriteHeight,
                     srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
             if (isAttackOnline)
