@@ -61,6 +61,8 @@ public class Player extends GameObject {
     boolean runningActivated = true;
     boolean running = false;
 
+    private int keys = 0;
+
     public Player() {
         super(450, 400, 30, 60);
         loadSpriteSheet("player.png");
@@ -270,6 +272,12 @@ public class Player extends GameObject {
     public void resetFireball() {
         this.fireballAlive = false;
         fireballTimer = System.currentTimeMillis();
+    }
+    public void collectKey(){
+        keys++;
+    }
+    public int keyAmount(){
+        return keys;
     }
 
 

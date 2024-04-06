@@ -100,11 +100,13 @@ public class Level {
         colArr.add(new Rectangle(810,400,150,50));
         colArr.add(new Rectangle(900,350,60,50));
         colArr.add(new Rectangle(0,0,5,400));
+        colArr.add(new Rectangle(345,200,200,10));
+        colArr.add(new Rectangle(125,325,150,10));
 
         enemyArr.add(new JumpingEnemy(600,380,50,100,2));
         enemyArr.add(new JumpingEnemy(830,200,50,100,2));
         enemyArr.add(new HealingFountain(340, 350,200,150));
-        enemyArr.add(new BossDoor(250, 50, 100, 200));
+        enemyArr.add(new BossDoor(395, 50, 100, 150));
 
         Level roomOne = new Level(null,null, colArr, "Room1" ,enemyArr);
 
@@ -170,7 +172,7 @@ public class Level {
             randomInt = random.nextInt(661) + 150;
             enemyArr4.add(new StalagtiteTrap(randomInt, 20, 0, 0, 0));
         }
-        enemyArr4.add(new Portal(150,400,roomOne,200,200));
+        enemyArr4.add(new Portal(150,400,roomOne,465,350));
         Level roomFour = new Level(roomThree,null, colArr4, "Room4" ,enemyArr4);
         roomThree.rightLevel = roomFour;
 
@@ -182,13 +184,12 @@ public class Level {
         colArr5.add(new Rectangle(300,450,360,100));
         colArr5.add(new Rectangle(835, 450, 125,100));
         colArr5.add(new Rectangle(125,265,175,20));
-        colArr5.add(new Rectangle(660,265,175,20));
         Enemy miniBoss1 = new EnemyGrimm(480,100,100,100,10);
         enemyArr5.add(miniBoss1);
         enemyArr5.add(new Portal(455, 150, roomOne, 430,300, miniBoss1));
         Level roomFive = new Level(roomFour,null, colArr5, "Boss Room" ,enemyArr5);
         roomFour.rightLevel = roomFive;
-        enemyArr.add(new Portal(495,250, roomFive, 455,350,miniBoss1));
+        enemyArr.add(new Portal(485,250, roomFive, 455,350,miniBoss1));
 
 
         ArrayList<Rectangle> colArr6 = new ArrayList<>();
@@ -275,11 +276,6 @@ public class Level {
         enemyArr8.add(new LavaTrap(0,480,960,40));
         colArr8.add(new Rectangle(0,450,100,50));
         colArr8.add(new Rectangle(850,450,200,50));
-        colArr8.add(new Rectangle(0,0,300,50));
-        colArr8.add(new Rectangle(600,0,1000,50));
-        colArr8.add(new Rectangle(150,250,100,50));
-        colArr8.add(new Rectangle(350,250,100,50));
-        colArr8.add(new Rectangle(200,300,60,50));
 
         MovingPlatform roomEightplatform1 = new MovingPlatform(100,450,150,10,100,700,2,false);
         colArr8.add(roomEightplatform1.hitBox);
@@ -319,6 +315,7 @@ public class Level {
         colArr10.add(new Rectangle(180,420,600,100));
         colArr10.add(new Rectangle(280,390,400,100));
         colArr10.add(new Rectangle(380,360,200,100));
+        enemyArr10.add(new Key(480,300));
         enemyArr10.add(new Portal(470,100, roomOne,430,300));
         enemyArr10.add(new Boss2(400,100,100,100,10));
         Level roomTen = new Level(roomNine, null, colArr10, "Room Ten", enemyArr10);
@@ -424,8 +421,9 @@ public class Level {
         colArr15.add(new Rectangle(535,325,200,10));
         colArr15.add(new Rectangle(940,0,10,350));
         colArr15.add(new Rectangle(380,150,200,10));
-        enemyArr15.add(new Portal(460,50,roomOne, 430, 300));
+        enemyArr15.add(new Portal(460,250,roomOne, 430, 300));
         Level roomFifteen = new Level(null,roomFourteen,colArr15,"LeftMiniBossRoom", enemyArr15);
+        enemyArr.add(new Portal(350,250,roomFifteen,460,50/*, miniboss */));
         roomFourteen.leftLevel = roomFifteen;
 
         ArrayList<Rectangle> colArr16 = new ArrayList<>();
@@ -506,6 +504,7 @@ public class Level {
         colArr20.add(new Rectangle(180,420,600,100));
         colArr20.add(new Rectangle(280,390,400,100));
         colArr20.add(new Rectangle(380,360,200,100));
+        enemyArr20.add(new Key(480,300));
         enemyArr20.add(new Portal(470,100, roomOne,430,300));
 
         Level roomTwenty = new Level(null, roomNinteen, colArr20, "LeftRoom10", enemyArr20);
