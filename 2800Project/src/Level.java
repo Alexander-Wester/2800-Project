@@ -709,9 +709,6 @@ public class Level {
         g2d.drawImage(levelTitle, 250, 10, (int) (400 + textWidth * 0.001), (int) (100 + textHeight * 0.001), null);
         // g2d.drawString(levelTitle, 400, 100);
 
-        int groundWidth = ground.getWidth();
-        int groundHeight = ground.getHeight();
-
         if (name.equals("Room1")) {
             g2d.drawImage(ground, 0, 500, 960, 60, null);
             g2d.drawImage(ground, 720, 450, 240, 50, null);
