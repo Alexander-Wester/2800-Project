@@ -2,7 +2,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.geom.Ellipse2D;
 
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -22,8 +21,6 @@ public class Player extends GameObject {
     private static final int ANIMATION_DELAY = 100; // Delay between each frame (milliseconds)
     private int currentFrame = 0;
     private long lastFrameTime;
-    private final int swordOffsetX = 40;
-    private final int swordOffsetY = 10;
 
     private final int IDLE_FRAME_COLUMN = 0; // Column of the idle animation frame
     private final int IDLE_FRAME_ROW = 0; // Row of the idle animation frame
@@ -47,14 +44,15 @@ public class Player extends GameObject {
     private boolean isAttackOnline = false;
     private double attackAngle;
     private long attackTimer = 0;
+    private boolean direction = true; // attack direction
 
     private long jumpTimer;
     private boolean jumpActive = false;
     private boolean jumpAllowed = true;
 
-    public int health=5;   //health stuff
-     long IFrames;
-     boolean canBeHit = true;    //temp invincibility after being hit
+    public int health = 5; // health stuff
+    long IFrames;
+    boolean canBeHit = true; // temp invincibility after being hit
     private Rectangle hitBox;
 
     private long deathMessageTimer; //calcs how long to display "you died" message
@@ -63,23 +61,23 @@ public class Player extends GameObject {
     private PlayerFireball playerFireball;
     private boolean fireballAlive = false;
     private double fireballTimer = 0;
+    
+    boolean bossSwordKnockback = false;
+    int bossSwordKnockbackDirection = 0; // -1 left, 1 right;
+    long bossSwordKnockbackTimer;
+
+    boolean runningActivated = true;
+    boolean running = false;
+
+    private int keys = 0;
 
 
     public boolean orbActive = false;
     public Color orbColor;
 
-    boolean bossSwordKnockback = false;
-    int bossSwordKnockbackDirection=0; //-1 left, 1 right;
-    long bossSwordKnockbackTimer;
-
-    boolean runningActivated = false;
-    boolean running = false;
-
-    private int keys = 0;
-
     public Player() {
         super(450, 400, 30, 60);
-        loadSpriteSheet("player.png");
+        loadSpriteSheet("lib/player.png");
         lastFrameTime = System.currentTimeMillis();
     }
 
@@ -87,7 +85,7 @@ public class Player extends GameObject {
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
                 spriteSheet = ImageIO.read(inputStream);
-                swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("sword.png"));
+                swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("lib/sword.png"));
             } else {
                 throw new IOException("Resource not found: " + path);
             }
@@ -153,6 +151,7 @@ public class Player extends GameObject {
             int scaledSpriteHeight = (int) (spriteHeight * 1.8); // Adjusted sword height
 
             int srcX, srcY;
+            boolean invert = false;
 
             if (jumpActive) {
                 srcY = spriteHeight * 0;
@@ -160,6 +159,12 @@ public class Player extends GameObject {
                     srcX = spriteWidth * 6;
                 } else {
                     srcX = spriteWidth * 7;
+                }
+
+                if (keyA) {
+                    invert = true;
+                } else {
+                    invert = false;
                 }
             } else if (!keyA && !keyD) { // IDLE
                 // Calculate the position of the idle frame in the spritesheet
@@ -176,6 +181,26 @@ public class Player extends GameObject {
                     currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
                     lastFrameTime = currentTime; // Update lastFrameTime
                 }
+                if (keyA) {
+                    srcX = (currentFrame % NUM_FRAMES_WALKING + 1) * spriteWidth;
+                    invert = true;
+                } else {
+                    invert = false;
+                }
+            }
+
+            if (invert) {
+                g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 +
+                        scaledSpriteWidth,
+                        (int) y - 22 +
+                                scaledSpriteHeight,
+                        srcX, srcY, srcX - spriteWidth, srcY + spriteHeight, null);
+            } else {
+                g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 +
+                        scaledSpriteWidth,
+                        (int) y - 22 +
+                                scaledSpriteHeight,
+                        srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
             }
 
             if (isAttackOnline && swordSpriteSheet != null) {
@@ -184,39 +209,70 @@ public class Player extends GameObject {
                 int swordSpriteWidth = swordSpriteSheet.getWidth() / SWORD_SPRITE_COLUMNS;
                 int swordSpriteHeight = swordSpriteSheet.getWidth() / SWORD_FRAME_ROW;
 
-                int scaledSwordWidth = (int) (swordSpriteWidth * 2); // Adjusted sword width
+                int scaledSwordWidth = (int) (swordSpriteWidth * 2.5); // Adjusted sword width
                 int scaledSwordHeight = (int) (swordSpriteHeight * 2); // Adjusted sword height
 
-                int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS) * spriteWidth;
+                // int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS + 1) * spriteWidth;
                 int swordSrcY = SWORD_FRAME_ROW * spriteHeight;
 
-                int swordRenderX = (int) (x + swordOffsetX);
-                int swordRenderY = (int) (y + swordOffsetY);
+                // int swordRenderX = (int) (x + 40);
+                // int swordRenderY = (int) (y + 10);
 
-                g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
-                        swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
-                        swordSrcX, swordSrcY, swordSrcX + swordSpriteWidth, swordSrcY + swordSpriteHeight,
-                        null);
+                if (direction) {
+                    int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS) * spriteWidth;
+                    int swordRenderX = (int) (x + 40);
+                    int swordRenderY = (int) (y - 10);
+
+                    g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                            swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                            swordSrcX, swordSrcY, swordSrcX + swordSpriteWidth, swordSrcY +
+                                    swordSpriteHeight,
+                            null);
+                } else {
+                    int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS + 1) * spriteWidth;
+                    int swordRenderX = (int) (x - 120);
+                    int swordRenderY = (int) (y - 10);
+
+                    g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                            swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                            swordSrcX, swordSrcY, swordSrcX - swordSpriteWidth, swordSrcY +
+                                    swordSpriteHeight,
+                            null);
+                }
+
+                // g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                // swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                // swordSrcX, swordSrcY, swordSrcX + swordSpriteWidth, swordSrcY +
+                // swordSpriteHeight,
+                // null);
+
+                // g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                // swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                // swordSrcX, swordSrcY, swordSrcX - swordSpriteWidth, swordSrcY +
+                // swordSpriteHeight,
+                // null);
                 // Slow down the sword animation by increasing the delay
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - lastFrameTime >= ANIMATION_DELAY * 2) {
+                if (currentTime - lastFrameTime >= ANIMATION_DELAY) {
                     currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
                     lastFrameTime = currentTime; // Update lastFrameTime
                 }
 
             }
-            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 + scaledSpriteWidth, (int) y - 22 +
-                    scaledSpriteHeight,
-                    srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
-            if (isAttackOnline)
+            // g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 +
+            // scaledSpriteWidth, (int) y - 22 +
+            // scaledSpriteHeight,
+            // srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
-            {// print attack hitbox
-             // printing attack hitbox. the animation for the attack should eventually go
-             // here, likely.
-                g2d.setColor(Color.yellow);
-                g2d.fillPolygon(attackTriangle);
-            }
+            // if (isAttackOnline)
+
+            // {// print attack hitbox
+            // // printing attack hitbox. the animation for the attack should eventually go
+            // // here, likely.
+            // g2d.setColor(Color.yellow);
+            // g2d.fillPolygon(attackTriangle);
+            // }
             if (fireballAlive) {
                 playerFireball.render(g2d);
             }
@@ -230,16 +286,16 @@ public class Player extends GameObject {
                 g2d.setColor(Color.red);
                 g2d.drawString("YOU DIED", 400, 150);
 
+            }
+
+            if (orbActive) {
+                g2d.setColor(orbColor);
+                Ellipse2D.Double sphere = new Ellipse2D.Double(x + 40, y - 20, 10, 10);
+                g2d.fill(sphere);
+            }
+            // g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+
+            // bossSwordKnockbackDirection, 100, 120);
         }
-        
-        
-        if(orbActive){
-            g2d.setColor(orbColor);
-            Ellipse2D.Double sphere = new Ellipse2D.Double(x + 40, y - 20, 10, 10);
-            g2d.fill(sphere);
-        }
-        //g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+ bossSwordKnockbackDirection, 100, 120);
-    }
     }
 
     public void playerInputVeloX(int x) {// part of velo calc. I could probably find a way to skip this step but it
@@ -262,10 +318,10 @@ public class Player extends GameObject {
             playerVeloY += (int) (-5 * (-2 * (((double) (System.currentTimeMillis() - jumpTimer) / 500.0) - 1) + 2));// jump
                                                                                                                      // calc
         }
-        if(bossSwordKnockback){
+        if (bossSwordKnockback) {
             playerVeloX += 20 * bossSwordKnockbackDirection;
         }
-        playerVeloY+=8;//gravity
+        playerVeloY += 8;// gravity
     }
 
     public void swingSword(int x2, int y2) {// math to make a sword swing hitbox
@@ -275,18 +331,22 @@ public class Player extends GameObject {
 
         int diffX = ((int) x - x2 - 15) * -1;
         int diffY = ((int) y - y2 - 15);
-
+        direction = true;
         // System.out.println("diffx and y: " + diffX + " " + diffY);
 
         attackAngle = Math.atan((double) diffY / diffX);
         if (diffX < 0 && diffY > 0) {
             // System.out.println("here1");
             attackAngle = Math.PI + attackAngle;
+            direction = false;
+
         }
         if (diffX < 0 && diffY < 0) {
             attackAngle = Math.PI + attackAngle;
+            direction = false;
         } else if (diffX > 0 && diffY < 0) {
             attackAngle = 2 * Math.PI + attackAngle;
+            direction = true;
         }
 
         arcX = (int) (x + 15 + (25 * Math.cos(attackAngle)));
@@ -404,17 +464,18 @@ public class Player extends GameObject {
     public void detectHits(GameManager gm) {
         // if sword is in enemy hitbox, they take damage
         ArrayList<Enemy> tempEnemyList = gm.getCurrentLevel().enemyList;
-        for(int i=0;i<tempEnemyList.size();i++){
-            if (isAttackOnline && this.attackTriangle.intersects(tempEnemyList.get(i).getHitBox())){
+        for (int i = 0; i < tempEnemyList.size(); i++) {
+            if (isAttackOnline && this.attackTriangle.intersects(tempEnemyList.get(i).getHitBox())) {
                 tempEnemyList.get(i).hitLanded(gm);
             }
 
             if (System.currentTimeMillis() > IFrames) {
                 canBeHit = true;
             }
-           // System.out.println("i is " + i);
-           //if you are in enemy hitbox, you take damage
-            if(hitBox.intersects(tempEnemyList.get(i).getHitBox()) && canBeHit && tempEnemyList.get(i).isAlive && tempEnemyList.get(i).doesDamageOnCollision){
+            // System.out.println("i is " + i);
+            // if you are in enemy hitbox, you take damage
+            if (hitBox.intersects(tempEnemyList.get(i).getHitBox()) && canBeHit && tempEnemyList.get(i).isAlive
+                    && tempEnemyList.get(i).doesDamageOnCollision) {
                 tempEnemyList.get(i).hitLanded(gm);
                 health--;
                 if (health <= 0) {

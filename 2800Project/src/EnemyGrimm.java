@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.*;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -7,9 +8,9 @@ import javax.imageio.ImageIO;
 
 import java.awt.image.BufferedImage;
 import java.awt.*;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-
 // Boss Grimm:
 // Grimm has 10 HPs
 // it creates multiple fireballs to attack player, if hitted by fireballs, player will lose 1 health.
@@ -34,7 +35,7 @@ public class EnemyGrimm extends Enemy {
         isInvincible = false;
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
         fireballs = new ArrayList<>();
-        loadSpriteSheet("grimm.png");
+        loadSpriteSheet("lib/grimm.png");
         lastFrameTime = System.currentTimeMillis();
     }
 
@@ -77,29 +78,29 @@ public class EnemyGrimm extends Enemy {
     }
 
     @Override
-public void render(Graphics2D g2d) {
-    super.render(g2d); // Call superclass render method to render the square
+    public void render(Graphics2D g2d) {
+        super.render(g2d); // Call superclass render method to render the square
 
-    int healthBarWidth = 50;
-    int healthBarHeight = 10;
-    int healthBarX = (int) x;
-    int healthBarY = (int) y - healthBarHeight - 5; // Place health bar above the EnemyGrimm
+        int healthBarWidth = 50;
+        int healthBarHeight = 10;
+        int healthBarX = (int) x;
+        int healthBarY = (int) y - healthBarHeight - 5; // Place health bar above the EnemyGrimm
 
-    // Calculate health bar color based on current health
-    Color healthBarColor = Color.GREEN;
-    double healthPercentage = (double) health / 10;
-    if (healthPercentage <= 0.5) {
-        healthBarColor = Color.YELLOW;
-    }
-    if (healthPercentage <= 0.2) {
-        healthBarColor = Color.RED;
-    }
+        // Calculate health bar color based on current health
+        Color healthBarColor = Color.GREEN;
+        double healthPercentage = (double) health / 10;
+        if (healthPercentage <= 0.5) {
+            healthBarColor = Color.YELLOW;
+        }
+        if (healthPercentage <= 0.2) {
+            healthBarColor = Color.RED;
+        }
 
-    g2d.setColor(Color.BLACK);
-    g2d.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
-    g2d.setColor(healthBarColor);
-    int barWidth = (int) (healthBarWidth * healthPercentage);
-    g2d.fillRect(healthBarX, healthBarY, barWidth, healthBarHeight);
+        g2d.setColor(Color.BLACK);
+        g2d.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+        g2d.setColor(healthBarColor);
+        int barWidth = (int) (healthBarWidth * healthPercentage);
+        g2d.fillRect(healthBarX, healthBarY, barWidth, healthBarHeight);
 
         if (isAlive && spriteSheet != null && !isBeingHit) {
             int spriteWidth = spriteSheet.getWidth() / spriteColumns;
@@ -112,9 +113,9 @@ public void render(Graphics2D g2d) {
                 srcY = 5 * spriteHeight;
             } else {
                 // Otherwise, display the regular animation from the 3rd to 4th row
-                int currentAnimationFrame = currentFrame % (spriteColumns * 12); // End at the 4th row
+                int currentAnimationFrame = currentFrame % (spriteColumns - 5); // End at the 4th row
                 srcX = (currentAnimationFrame % spriteColumns) * spriteWidth;
-                srcY = ((currentAnimationFrame / spriteColumns) % 2 + 2) * spriteHeight; // Start from
+                srcY = ((currentAnimationFrame / spriteColumns) % 1 + 3) * spriteHeight; // Start from
                                                                                          // 3rd row, end
                                                                                          // at 4th row
             }

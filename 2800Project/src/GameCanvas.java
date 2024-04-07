@@ -24,9 +24,9 @@ public class GameCanvas extends Canvas implements Runnable {
 	Point mousePos;
 
 	public GameCanvas() {
-		//gameManager.addGameObject(player);
+		// gameManager.addGameObject(player);
 		gameManager.player = this.player;
-		loadBackgroundSprite("mountain-bg.png");
+		loadBackgroundSprite("lib/mountain-bg.png");
 	}
 
 	// This initalizes the buffering and starts the game thread.
@@ -150,16 +150,16 @@ public class GameCanvas extends Canvas implements Runnable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			if (e.getKeyCode() == KeyEvent.VK_A){
-				if(player.isRunning()){
+			if (e.getKeyCode() == KeyEvent.VK_A) {
+				if (player.isRunning()) {
 					player.playerInputVeloX(-10);
 				} else {
 					player.playerInputVeloX(-5);
 				}
 				player.setKeyA(true);
 			}
-			if (e.getKeyCode() == KeyEvent.VK_D){
-				if(player.isRunning()){
+			if (e.getKeyCode() == KeyEvent.VK_D) {
+				if (player.isRunning()) {
 					player.playerInputVeloX(10);
 				} else {
 					player.playerInputVeloX(5);
@@ -170,8 +170,8 @@ public class GameCanvas extends Canvas implements Runnable {
 				player.jump();
 
 			}
-			if (e.getKeyCode() == KeyEvent.VK_SHIFT){
-				if(player.canRun()){
+			if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+				if (player.canRun()) {
 					player.playerRun(true);
 				}
 			}
@@ -196,7 +196,7 @@ public class GameCanvas extends Canvas implements Runnable {
 					player.playerInputVeloX(0);
 				}
 			}
-			if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+			if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 				player.playerRun(false);
 			}
 		}

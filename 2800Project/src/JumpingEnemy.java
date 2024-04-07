@@ -26,7 +26,7 @@ public class JumpingEnemy extends Enemy {
 
     public JumpingEnemy(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);
-        loadEnemySpriteSheet("jumpEnemyGreen.png");
+        loadEnemySpriteSheet("lib/jumpEnemyGreen.png");
         isInvincible = false;
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
     }
@@ -35,7 +35,7 @@ public class JumpingEnemy extends Enemy {
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
                 enemySpriteSheetGreen = ImageIO.read(inputStream);
-                enemySpriteSheetRed = ImageIO.read(getClass().getResourceAsStream("jumpEnemyRed.png"));
+                enemySpriteSheetRed = ImageIO.read(getClass().getResourceAsStream("lib/jumpEnemyRed.png"));
             } else {
                 throw new IOException("Resource not found: " + path);
             }

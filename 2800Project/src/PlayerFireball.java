@@ -32,7 +32,7 @@ public class PlayerFireball {
         this.dx = Math.cos(direction) * speed;
         this.dy = Math.sin(direction) * speed;
         hitBox = new Ellipse2D.Double(this.x, this.y, 25, 25);
-        loadSpriteSheet("fireball.png");
+        loadSpriteSheet("lib/fireball.png");
     }
 
     private void loadSpriteSheet(String path) { // loading the spritesheet
@@ -65,6 +65,7 @@ public class PlayerFireball {
             if (hitBox.intersects(enemy.hitBox) && enemy.isAlive) {
                 enemy.hitLanded(gm);
                 Player player = gm.player;
+                enemy.hitLanded(gm);
                 player.resetFireball();
                 return;
             }
