@@ -14,7 +14,7 @@ public class BossDoor extends Enemy {
         isInvincible = true;
         doesDamageOnCollision = false;
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
-        loadSpriteSheet("./lib/doors.png");
+        loadSpriteSheet("lib/doors.png");
     }
 
     @Override
@@ -33,7 +33,7 @@ public class BossDoor extends Enemy {
                 int frameHeight = doorSheet.getHeight() / 10; // Assuming 7 rows in the spritesheet
                 int frameWidth = doorSheet.getWidth();
                 doorSprite = doorSheet.getSubimage(0, 0, frameWidth, frameHeight); // Extract 5th row
-                doorText = ImageIO.read(getClass().getResourceAsStream("./lib/doorToBoss.png"));
+                doorText = ImageIO.read(getClass().getResourceAsStream("lib/doorToBoss.png"));
             } else {
                 throw new IOException("Resource not found: " + path);
             }

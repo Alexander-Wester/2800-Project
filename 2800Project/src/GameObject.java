@@ -17,7 +17,7 @@ public class GameObject {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		loadSprite("./lib/health.png");
+		loadSprite("lib/health.png");
 	}
 
 	private void loadSprite(String path) {

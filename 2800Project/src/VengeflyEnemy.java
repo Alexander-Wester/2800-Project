@@ -27,7 +27,7 @@ public class VengeflyEnemy extends Enemy {
         hitBox = new Rectangle(x1, y1, w1, h1);
         // speed = 2; // Set the chasing speed
         // isChasing = false;
-        loadSpriteSheet("./lib/vengeFly.png");
+        loadSpriteSheet("lib/vengeFly.png");
     }
 
     private void loadSpriteSheet(String path) {

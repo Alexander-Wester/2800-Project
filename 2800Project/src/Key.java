@@ -31,7 +31,7 @@ public class Key extends Enemy {
 
     public void loadImage() {
         try {
-            image = ImageIO.read(new File("./lib/key.png"));
+            image = ImageIO.read(new File("lib/key.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -26,7 +26,7 @@ public class GameCanvas extends Canvas implements Runnable {
 	public GameCanvas() {
 		// gameManager.addGameObject(player);
 		gameManager.player = this.player;
-		loadBackgroundSprite("./lib/mountain-bg.png");
+		loadBackgroundSprite("lib/mountain-bg.png");
 	}
 
 	// This initalizes the buffering and starts the game thread.

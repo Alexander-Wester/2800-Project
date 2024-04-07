@@ -33,7 +33,7 @@ public class Level {
         levelTitle = title;
         enemyList = enArr;
         tickCounter = 0;
-        loadSpriteSheet("./lib/ground.png");
+        loadSpriteSheet("lib/ground.png");
     }
 
     private void loadSpriteSheet(String path) { // loading the spritesheet
@@ -136,7 +136,7 @@ public class Level {
         enemyArr.add(new HealingFountain(340, 350, 200, 150));
         enemyArr.add(new BossDoor(395, 50, 100, 150));
 
-        Level roomOne = new Level("Room1", null, null, colArr, loadImage("./lib/Room1.png"), enemyArr);
+        Level roomOne = new Level("Room1", null, null, colArr, loadImage("lib/Room1.png"), enemyArr);
 
         ArrayList<Rectangle> colArr2 = new ArrayList<>();
         ArrayList<Enemy> enemyArr2 = new ArrayList<Enemy>();
@@ -157,7 +157,7 @@ public class Level {
             enemyArr2.add(new StalagtiteTrap(randomInt, 20, 0, 0, 0));
         }
 
-        Level roomTwo = new Level("Room2", roomOne, null, colArr2, loadImage("./lib/Room2.png"), enemyArr2);
+        Level roomTwo = new Level("Room2", roomOne, null, colArr2, loadImage("lib/Room2.png"), enemyArr2);
         roomOne.rightLevel = roomTwo;
 
         ArrayList<Rectangle> colArr3 = new ArrayList<>();
@@ -179,7 +179,7 @@ public class Level {
         enemyArr3.add(new JumpingEnemy(390, 0, 50, 100, 2));
         enemyArr3.add(new JumpingEnemy(830, 0, 50, 100, 2));
 
-        Level roomThree = new Level("Room3", roomTwo, null, colArr3, loadImage("./lib/Room3.png"), enemyArr3);
+        Level roomThree = new Level("Room3", roomTwo, null, colArr3, loadImage("lib/Room3.png"), enemyArr3);
         roomTwo.rightLevel = roomThree;
 
         ArrayList<Rectangle> colArr4 = new ArrayList<>();
@@ -200,7 +200,8 @@ public class Level {
             enemyArr4.add(new StalagtiteTrap(randomInt, 20, 0, 0, 0));
         }
         enemyArr4.add(new Portal(150, 400, roomOne, 465, 350));
-        Level roomFour = new Level("Room4", roomThree, null, colArr4, loadImage("./lib/Room4.png"), enemyArr4);
+        Level roomFour = new Level("Room4", roomThree, null, colArr4, loadImage("lib/Room4.png"),
+                enemyArr4);
         roomThree.rightLevel = roomFour;
 
         ArrayList<Rectangle> colArr5 = new ArrayList<>();
@@ -214,7 +215,8 @@ public class Level {
         Enemy miniBoss1 = new EnemyGrimm(480, 100, 100, 100, 10);
         enemyArr5.add(miniBoss1);
         enemyArr5.add(new Portal(455, 150, roomOne, 430, 300, miniBoss1));
-        Level roomFive = new Level("BossRoom", roomFour, null, colArr5, loadImage("./lib/BossRoom.png"), enemyArr5);
+        Level roomFive = new Level("BossRoom", roomFour, null, colArr5, loadImage("lib/BossRoom.png"),
+                enemyArr5);
         roomFour.rightLevel = roomFive;
         enemyArr.add(new Portal(485, 250, roomFive, 455, 350, miniBoss1));
 
@@ -231,7 +233,7 @@ public class Level {
             randomInt = random.nextInt(900);
             enemyArr6.add(new VengeflyEnemy(randomInt, 0, 20, 20, 2));
         }
-        Level roomSix = new Level("Room6", roomFive, null, colArr6, loadImage("./lib/Room6.png"), enemyArr6);
+        Level roomSix = new Level("Room6", roomFive, null, colArr6, loadImage("lib/Room6.png"), enemyArr6);
         roomFive.rightLevel = roomSix;
 
         ArrayList<Rectangle> colArr7 = new ArrayList<>();
@@ -293,7 +295,7 @@ public class Level {
         colArr7.add(exitDoor.hitBox);
         enemyArr7.add(exitDoor);
 
-        Level roomSeven = new Level("Room7", roomSix, null, colArr7, loadImage("./lib/Room7.png"), enemyArr7);
+        Level roomSeven = new Level("Room7", roomSix, null, colArr7, loadImage("lib/Room7.png"), enemyArr7);
         roomSix.rightLevel = roomSeven;
 
         ArrayList<Rectangle> colArr8 = new ArrayList<>();
@@ -321,7 +323,8 @@ public class Level {
             randomInt = random.nextInt(900);
             enemyArr8.add(new VengeflyEnemy(randomInt, 0, 20, 20, 2));
         }
-        Level roomEight = new Level("Room8", roomSeven, null, colArr8, loadImage("./lib/Room8.png"), enemyArr8);
+        Level roomEight = new Level("Room8", roomSeven, null, colArr8, loadImage("lib/Room8.png"),
+                enemyArr8);
         roomSeven.rightLevel = roomEight;
 
         ArrayList<Rectangle> colArr9 = new ArrayList<>();
@@ -331,7 +334,8 @@ public class Level {
         colArr9.add(new Rectangle(0, 450, 100, 50));
         colArr9.add(new Rectangle(280, 400, 400, 20));
         colArr9.add(new Rectangle(860, 450, 100, 50));
-        Level roomNine = new Level("Room9", roomEight, null, colArr9, loadImage("./lib/Room9.png"), enemyArr9);
+        Level roomNine = new Level("Room9", roomEight, null, colArr9, loadImage("lib/Room9.png"),
+                enemyArr9);
         roomEight.rightLevel = roomNine;
 
         ArrayList<Rectangle> colArr10 = new ArrayList<>();
@@ -343,7 +347,8 @@ public class Level {
         enemyArr10.add(new Key(480, 300));
         enemyArr10.add(new Portal(470, 100, roomOne, 430, 300));
         enemyArr10.add(new Boss2(400, 100, 100, 100, 10));
-        Level roomTen = new Level("Room10", roomNine, null, colArr10, loadImage("./lib/Room10.png"), enemyArr10);
+        Level roomTen = new Level("Room10", roomNine, null, colArr10, loadImage("lib/Room10.png"),
+                enemyArr10);
         roomNine.rightLevel = roomTen;
 
         ArrayList<Rectangle> colArr11 = new ArrayList<>();
@@ -363,7 +368,8 @@ public class Level {
         enemyArr11.add(new VengeflyEnemy(250, 400, 20, 20, 2));
         enemyArr11.add(new VengeflyEnemy(350, 150, 20, 20, 2));
         enemyArr11.add(new VengeflyEnemy(400, 400, 20, 20, 2));
-        Level roomEleven = new Level("LeftRoomOne", null, roomOne, colArr11, loadImage("./lib/LeftRoomOne.png"),
+        Level roomEleven = new Level("LeftRoomOne", null, roomOne, colArr11,
+                loadImage("lib/LeftRoomOne.png"),
                 enemyArr11);
         roomOne.leftLevel = roomEleven;
 
@@ -390,7 +396,8 @@ public class Level {
             int randomInt2 = random.nextInt(450);
             enemyArr12.add(new VengeflyEnemy(randomInt, randomInt2, 20, 20, 2));
         }
-        Level roomTwelve = new Level("LeftRoomTwo", null, roomEleven, colArr12, loadImage("./lib/LeftRoomTwo.png"),
+        Level roomTwelve = new Level("LeftRoomTwo", null, roomEleven, colArr12,
+                loadImage("lib/LeftRoomTwo.png"),
                 enemyArr12);
         roomEleven.leftLevel = roomTwelve;
 
@@ -417,7 +424,7 @@ public class Level {
             enemyArr13.add(new StalagtiteTrap(randomInt, 0, 0, 0, 0));
         }
         Level roomThirteen = new Level("LeftRoomThree", null, roomTwelve, colArr13,
-                loadImage("./lib/LeftRoomThree.png"),
+                loadImage("lib/LeftRoomThree.png"),
                 enemyArr13);
         roomTwelve.leftLevel = roomThirteen;
 
@@ -439,7 +446,7 @@ public class Level {
             // disable for testing this is super hard lol
         }
         Level roomFourteen = new Level("LeftRoomFour", null, roomThirteen, colArr14,
-                loadImage("./lib/LeftRoomFour.png"),
+                loadImage("lib/LeftRoomFour.png"),
                 enemyArr14);
         roomThirteen.leftLevel = roomFourteen;
 
@@ -455,7 +462,7 @@ public class Level {
         colArr15.add(new Rectangle(380, 150, 200, 10));
         enemyArr15.add(new Portal(460, 250, roomOne, 430, 300));
         Level roomFifteen = new Level("LeftMiniBossRoom", null, roomFourteen, colArr15,
-                loadImage("./lib/LeftMiniBossRoom.png"),
+                loadImage("lib/LeftMiniBossRoom.png"),
                 enemyArr15);
         enemyArr.add(new Portal(350, 250, roomFifteen, 460, 50/* , miniboss */));
         roomFourteen.leftLevel = roomFifteen;
@@ -475,7 +482,8 @@ public class Level {
             randomInt = random.nextInt(560) + 200;
             enemyArr16.add(new StalagtiteTrap(randomInt, 0, 0, 0, 0));
         }
-        Level roomSixteen = new Level("LeftRoomSix", null, roomFifteen, colArr16, loadImage("./lib/LeftRoomSix.png"),
+        Level roomSixteen = new Level("LeftRoomSix", null, roomFifteen, colArr16,
+                loadImage("lib/LeftRoomSix.png"),
                 enemyArr16);
         roomFifteen.leftLevel = roomSixteen;
 
@@ -500,7 +508,7 @@ public class Level {
             enemyArr17.add(new VengeflyEnemy(randomInt, randomInt2, 20, 20, 2));
         }
         Level roomSeventeen = new Level("LeftRoomSeven", null, roomSixteen, colArr17,
-                loadImage("./lib/LeftRoomSeven.png"),
+                loadImage("lib/LeftRoomSeven.png"),
                 enemyArr17);
         roomSixteen.leftLevel = roomSeventeen;
 
@@ -517,7 +525,7 @@ public class Level {
         enemyArr18.add(new JumpingEnemy(175, 290, 50, 100, 2));
         enemyArr18.add(new JumpingEnemy(800, 100, 50, 100, 2));
         Level roomEighteen = new Level("LeftRoomEight", null, roomSeventeen, colArr18,
-                loadImage("./lib/LeftRoomEight.png"),
+                loadImage("lib/LeftRoomEight.png"),
                 enemyArr18);
         roomSeventeen.leftLevel = roomEighteen;
 
@@ -534,7 +542,8 @@ public class Level {
             int randomInt2 = random.nextInt(350);
             enemyArr19.add(new VengeflyEnemy(randomInt, randomInt2, 20, 20, 2));
         }
-        Level roomNinteen = new Level("LeftRoomNine", null, roomEighteen, colArr19, loadImage("./lib/LeftRoomNine.png"),
+        Level roomNinteen = new Level("LeftRoomNine", null, roomEighteen, colArr19,
+                loadImage("lib/LeftRoomNine.png"),
                 enemyArr19);
         roomEighteen.leftLevel = roomNinteen;
 
@@ -547,7 +556,8 @@ public class Level {
         enemyArr20.add(new Key(480, 300));
         enemyArr20.add(new Portal(470, 100, roomOne, 430, 300));
 
-        Level roomTwenty = new Level("LeftRoomTen", null, roomNinteen, colArr20, loadImage("./lib/LeftRoomTen.png"),
+        Level roomTwenty = new Level("LeftRoomTen", null, roomNinteen, colArr20,
+                loadImage("lib/LeftRoomTen.png"),
                 enemyArr20);
         roomNinteen.leftLevel = roomTwenty;
 
@@ -559,7 +569,8 @@ public class Level {
         // colArr.add(new Rectangle(500,300,100,20));
         ArrayList<Enemy> enemyArrBossMain = new ArrayList<Enemy>();
         enemyArrBossMain.add(new Boss());
-        Level levelBossMain = new Level("BossMain", null, null, colArrBossMain, loadImage("./lib/BossMain.png"),
+        Level levelBossMain = new Level("BossMain", null, null, colArrBossMain,
+                loadImage("lib/BossMain.png"),
                 enemyArrBossMain);
 
         ArrayList<Enemy> enemyArrBossRight1 = new ArrayList<Enemy>();
@@ -584,7 +595,8 @@ public class Level {
         enemyArrBossRight2.add(new VengeflyEnemy(100, 100, 20, 20, 4));
         enemyArrBossRight2.add(new VengeflyEnemy(600, 100, 20, 20, 4));
         enemyArrBossRight2.add(new BossBeamAttack(true, 0));
-        Level levelBossRight2 = new Level("RightTwo", null, null, colArrBossRight2, loadImage("./lib/RightTwo.png"),
+        Level levelBossRight2 = new Level("RightTwo", null, null, colArrBossRight2,
+                loadImage("lib/RightTwo.png"),
                 enemyArrBossRight2);
 
         ArrayList<Rectangle> colArrBossRight3 = new ArrayList<>();
@@ -601,7 +613,7 @@ public class Level {
         enemyArrBossRight3.add(new Portal(780, 360, levelBossMain, 150, 400));
 
         Level levelBossRight3 = new Level("RightThree", levelBossRight2, null, colArrBossRight3,
-                loadImage("./lib/RightThree.png"),
+                loadImage("lib/RightThree.png"),
                 enemyArrBossRight3);
         enemyArrBossRight1.add(new BossOrbGenerator(700, 190, Color.blue));
 
@@ -617,10 +629,11 @@ public class Level {
         colArrBossLeft1.add(new Rectangle(300, 100, 300, 20));
         // enemyArrBossLeft1.add(new BossOrbGenerator(700, 95, Color.orange));
         enemyArrBossLeft1.add(new BossBombAttack());
-        Level levelBossLeft1 = new Level("Left", null, levelBossMain, colArrBossLeft1, loadImage("./lib/Left.png"),
+        Level levelBossLeft1 = new Level("Left", null, levelBossMain, colArrBossLeft1,
+                loadImage("lib/Left.png"),
                 enemyArrBossLeft1);
         Level levelBossRight1 = new Level("Right", levelBossMain, levelBossRight2, colArrBossRight1,
-                loadImage("./lib/Right.png"),
+                loadImage("lib/Right.png"),
                 enemyArrBossRight1);
 
         ArrayList<Rectangle> colArrBossLeft2 = new ArrayList<>();
@@ -638,7 +651,7 @@ public class Level {
         enemyArrBossLeft2.add(new DeleteWallIfAllEnemiesDead());
 
         Level levelBossLeft2 = new Level("LeftTwo", null, levelBossLeft1, colArrBossLeft2,
-                loadImage("./lib/LeftTwo.png"),
+                loadImage("lib/LeftTwo.png"),
                 enemyArrBossLeft2);
         levelBossLeft1.leftLevel = levelBossLeft2;
 
@@ -662,7 +675,7 @@ public class Level {
         enemyArrBossLeft3.add(new LavaTrap(0, 485, 820, 30));
 
         Level levelBossLeft3 = new Level("LeftThree", null, levelBossLeft2, colArrBossLeft3,
-                loadImage("./lib/LeftThree.png"),
+                loadImage("lib/LeftThree.png"),
                 enemyArrBossLeft3);
         levelBossLeft2.leftLevel = levelBossLeft3;
 
@@ -708,6 +721,9 @@ public class Level {
         int textHeight = levelTitle.getHeight();
         g2d.drawImage(levelTitle, 250, 10, (int) (400 + textWidth * 0.001), (int) (100 + textHeight * 0.001), null);
         // g2d.drawString(levelTitle, 400, 100);
+
+        int groundWidth = ground.getWidth();
+        int groundHeight = ground.getHeight();
 
         if (name.equals("Room1")) {
             g2d.drawImage(ground, 0, 500, 960, 60, null);

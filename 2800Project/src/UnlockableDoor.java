@@ -15,7 +15,7 @@ public class UnlockableDoor extends Enemy {
         isInvincible = true;
         this.condition = condition;
         hitBox = new Rectangle(x, y, w, h);
-        loadSpriteSheet("./lib/doors.png");
+        loadSpriteSheet("lib/doors.png");
     }
 
     private void loadSpriteSheet(String path) {

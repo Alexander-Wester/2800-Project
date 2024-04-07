@@ -33,7 +33,7 @@ public class EnemyGrimm extends Enemy {
         isInvincible = false;
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
         fireballs = new ArrayList<>();
-        loadSpriteSheet("./lib/grimm.png");
+        loadSpriteSheet("lib/grimm.png");
         lastFrameTime = System.currentTimeMillis();
     }
 

@@ -25,7 +25,7 @@ public class MovingPlatform extends Enemy {
         movingUpper = true;
         this.speed = speed;
         this.upDown = upDown;
-        loadSprite("./lib/ground.png");
+        loadSprite("lib/ground.png");
     }
 
     private void loadSprite(String path) {

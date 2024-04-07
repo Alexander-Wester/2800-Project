@@ -22,7 +22,7 @@ public class StalagtiteTrap extends Enemy {
         super(x1, y1, w1, h1, h2);
         isInvincible = true;
         hitBox = new Rectangle((int) x + 5, (int) y, 10, 25);
-        loadSprite("./lib/fallingEnemy.png"); // Load the sprite
+        loadSprite("lib/fallingEnemy.png"); // Load the sprite
     }
 
     private void loadSprite(String path) {

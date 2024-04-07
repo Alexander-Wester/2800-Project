@@ -20,9 +20,9 @@ public class Boss extends Enemy {
     public Boss() {
         super(960 / 2 - 50, 200, 100, 200, 10);
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
-        orangeImage = loadImage("./lib/Topaz.png");
-        blueImage = loadImage("./lib/Sapphire.png");
-        image = loadImage("./lib/Golem.png");
+        orangeImage = loadImage("lib/Topaz.png");
+        blueImage = loadImage("lib/Sapphire.png");
+        image = loadImage("lib/Golem.png");
 
     }
 

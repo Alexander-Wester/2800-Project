@@ -29,7 +29,7 @@ public class Portal extends Enemy {
         hitBox = new Rectangle(0, 0, 0, 0);
         this.portal = new Ellipse2D.Double(x, y, width, height);
         active = true;
-        loadSpritesheet("./lib/portal.png");
+        loadSpritesheet("lib/portal.png");
     }
 
     public Portal(int x, int y, Level level, int xAfter, int yAfter, Enemy condition) {

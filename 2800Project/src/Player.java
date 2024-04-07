@@ -77,7 +77,7 @@ public class Player extends GameObject {
 
     public Player() {
         super(450, 400, 30, 60);
-        loadSpriteSheet("./lib/player.png");
+        loadSpriteSheet("lib/player.png");
         lastFrameTime = System.currentTimeMillis();
     }
 
@@ -85,7 +85,7 @@ public class Player extends GameObject {
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
                 spriteSheet = ImageIO.read(inputStream);
-                swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("./lib/sword.png"));
+                swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("lib/sword.png"));
             } else {
                 throw new IOException("Resource not found: " + path);
             }
@@ -152,6 +152,7 @@ public class Player extends GameObject {
             int scaledSpriteHeight = (int) (spriteHeight * 1.8); // Adjusted sword height
 
             int srcX, srcY;
+            boolean invert = false;
 
             if (jumpActive) {
                 srcY = spriteHeight * 0;
@@ -159,6 +160,12 @@ public class Player extends GameObject {
                     srcX = spriteWidth * 6;
                 } else {
                     srcX = spriteWidth * 7;
+                }
+
+                if (keyA) {
+                    invert = true;
+                } else {
+                    invert = false;
                 }
             } else if (!keyA && !keyD) { // IDLE
                 // Calculate the position of the idle frame in the spritesheet
@@ -175,6 +182,26 @@ public class Player extends GameObject {
                     currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
                     lastFrameTime = currentTime; // Update lastFrameTime
                 }
+                if (keyA) {
+                    srcX = (currentFrame % NUM_FRAMES_WALKING + 1) * spriteWidth;
+                    invert = true;
+                } else {
+                    invert = false;
+                }
+            }
+
+            if (invert) {
+                g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 +
+                        scaledSpriteWidth,
+                        (int) y - 22 +
+                                scaledSpriteHeight,
+                        srcX, srcY, srcX - spriteWidth, srcY + spriteHeight, null);
+            } else {
+                g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 +
+                        scaledSpriteWidth,
+                        (int) y - 22 +
+                                scaledSpriteHeight,
+                        srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
             }
 
             if (isAttackOnline && swordSpriteSheet != null) {
@@ -204,9 +231,10 @@ public class Player extends GameObject {
                 }
 
             }
-            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 + scaledSpriteWidth, (int) y - 22 +
-                    scaledSpriteHeight,
-                    srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
+            // g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 +
+            // scaledSpriteWidth, (int) y - 22 +
+            // scaledSpriteHeight,
+            // srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
             if (isAttackOnline)
 
@@ -267,9 +295,9 @@ public class Player extends GameObject {
         playerVeloY += 8;// gravity
     }
 
-    public void swingSword(int x2, int y2) {// math to make a sword swing hitbox
+    public int[] swingSword(int x2, int y2) {// math to make a sword swing hitbox
         if (isAttackOnCooldown) {
-            return;
+            return null;
         }
 
         int diffX = ((int) x - x2 - 15) * -1;
@@ -308,6 +336,8 @@ public class Player extends GameObject {
         attackTriangle = new Polygon(triangleXvalues, triangleYvalues, 3);
 
         attackTimer = System.currentTimeMillis() + 450;
+
+        return new int[] { arcX2, arcY2 };
 
     }
 

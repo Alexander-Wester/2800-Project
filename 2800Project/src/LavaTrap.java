@@ -12,7 +12,7 @@ public class LavaTrap extends Enemy {
         super(x, y, width, height, 0);
         isInvincible = true;
         hitBox = new Rectangle(x, y, width, height);
-        loadSpriteSheet("./lib/lava.png");
+        loadSpriteSheet("lib/lava.png");
     }
 
     private void loadSpriteSheet(String path) {
