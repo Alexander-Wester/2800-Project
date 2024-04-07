@@ -12,14 +12,12 @@ public class Level {
     public Level leftLevel;
     public Level rightLevel;
 
-    // private String name;
-    // private BufferedImage levelTitle;
-    // private BufferedImage ground;
+    private String name;
+    private BufferedImage levelTitle;
+    private BufferedImage ground;
 
     ArrayList<Enemy> enemyList;
     public ArrayList<Rectangle> collisionArray;
-
-    BufferedImage brick;
 
     // Add a tick counter for fireball generation
     private int tickCounter;
@@ -28,21 +26,20 @@ public class Level {
             ArrayList<Enemy> enArr) {// ADD
         // ENEMY
         // ARRAY
-        // this.name = name;
+        this.name = name;
         leftLevel = left;
         rightLevel = right;
         collisionArray = colArr;
-        // levelTitle = title;
+        levelTitle = title;
         enemyList = enArr;
         tickCounter = 0;
-        loadSpriteSheet("./lib/ground.png");
-        brick = loadImage("lib/brick3.png");
+        loadSpriteSheet("lib/ground.png");
     }
 
     private void loadSpriteSheet(String path) { // loading the spritesheet
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
-                // ground = ImageIO.read(inputStream);
+                ground = ImageIO.read(inputStream);
             } else {
                 throw new IOException("Resource not found: " + path);
             }
@@ -203,7 +200,8 @@ public class Level {
             enemyArr4.add(new StalagtiteTrap(randomInt, 20, 0, 0, 0));
         }
         enemyArr4.add(new Portal(150, 400, roomOne, 465, 350));
-        Level roomFour = new Level("Room4", roomThree, null, colArr4, loadImage("lib/Room4.png"), enemyArr4);
+        Level roomFour = new Level("Room4", roomThree, null, colArr4, loadImage("lib/Room4.png"),
+                enemyArr4);
         roomThree.rightLevel = roomFour;
 
         ArrayList<Rectangle> colArr5 = new ArrayList<>();
@@ -217,7 +215,8 @@ public class Level {
         Enemy miniBoss1 = new EnemyGrimm(480, 100, 100, 100, 10);
         enemyArr5.add(miniBoss1);
         enemyArr5.add(new Portal(455, 150, roomOne, 430, 300, miniBoss1));
-        Level roomFive = new Level("BossRoom", roomFour, null, colArr5, loadImage("lib/BossRoom.png"), enemyArr5);
+        Level roomFive = new Level("BossRoom", roomFour, null, colArr5, loadImage("lib/BossRoom.png"),
+                enemyArr5);
         roomFour.rightLevel = roomFive;
         enemyArr.add(new Portal(485, 250, roomFive, 455, 350, miniBoss1));
 
@@ -324,7 +323,8 @@ public class Level {
             randomInt = random.nextInt(900);
             enemyArr8.add(new VengeflyEnemy(randomInt, 0, 20, 20, 2));
         }
-        Level roomEight = new Level("Room8", roomSeven, null, colArr8, loadImage("lib/Room8.png"), enemyArr8);
+        Level roomEight = new Level("Room8", roomSeven, null, colArr8, loadImage("lib/Room8.png"),
+                enemyArr8);
         roomSeven.rightLevel = roomEight;
 
         ArrayList<Rectangle> colArr9 = new ArrayList<>();
@@ -334,7 +334,8 @@ public class Level {
         colArr9.add(new Rectangle(0, 450, 100, 50));
         colArr9.add(new Rectangle(280, 400, 400, 20));
         colArr9.add(new Rectangle(860, 450, 100, 50));
-        Level roomNine = new Level("Room9", roomEight, null, colArr9, loadImage("lib/Room9.png"), enemyArr9);
+        Level roomNine = new Level("Room9", roomEight, null, colArr9, loadImage("lib/Room9.png"),
+                enemyArr9);
         roomEight.rightLevel = roomNine;
 
         ArrayList<Rectangle> colArr10 = new ArrayList<>();
@@ -346,7 +347,8 @@ public class Level {
         enemyArr10.add(new Key(480, 300));
         enemyArr10.add(new Portal(470, 100, roomOne, 430, 300));
         enemyArr10.add(new Boss2(400, 100, 100, 100, 10));
-        Level roomTen = new Level("Room10", roomNine, null, colArr10, loadImage("lib/Room10.png"), enemyArr10);
+        Level roomTen = new Level("Room10", roomNine, null, colArr10, loadImage("lib/Room10.png"),
+                enemyArr10);
         roomNine.rightLevel = roomTen;
 
         ArrayList<Rectangle> colArr11 = new ArrayList<>();
@@ -366,7 +368,8 @@ public class Level {
         enemyArr11.add(new VengeflyEnemy(250, 400, 20, 20, 2));
         enemyArr11.add(new VengeflyEnemy(350, 150, 20, 20, 2));
         enemyArr11.add(new VengeflyEnemy(400, 400, 20, 20, 2));
-        Level roomEleven = new Level("LeftRoomOne", null, roomOne, colArr11, loadImage("lib/LeftRoomOne.png"),
+        Level roomEleven = new Level("LeftRoomOne", null, roomOne, colArr11,
+                loadImage("lib/LeftRoomOne.png"),
                 enemyArr11);
         roomOne.leftLevel = roomEleven;
 
@@ -393,7 +396,8 @@ public class Level {
             int randomInt2 = random.nextInt(450);
             enemyArr12.add(new VengeflyEnemy(randomInt, randomInt2, 20, 20, 2));
         }
-        Level roomTwelve = new Level("LeftRoomTwo", null, roomEleven, colArr12, loadImage("lib/LeftRoomTwo.png"),
+        Level roomTwelve = new Level("LeftRoomTwo", null, roomEleven, colArr12,
+                loadImage("lib/LeftRoomTwo.png"),
                 enemyArr12);
         roomEleven.leftLevel = roomTwelve;
 
@@ -478,7 +482,8 @@ public class Level {
             randomInt = random.nextInt(560) + 200;
             enemyArr16.add(new StalagtiteTrap(randomInt, 0, 0, 0, 0));
         }
-        Level roomSixteen = new Level("LeftRoomSix", null, roomFifteen, colArr16, loadImage("lib/LeftRoomSix.png"),
+        Level roomSixteen = new Level("LeftRoomSix", null, roomFifteen, colArr16,
+                loadImage("lib/LeftRoomSix.png"),
                 enemyArr16);
         roomFifteen.leftLevel = roomSixteen;
 
@@ -537,7 +542,8 @@ public class Level {
             int randomInt2 = random.nextInt(350);
             enemyArr19.add(new VengeflyEnemy(randomInt, randomInt2, 20, 20, 2));
         }
-        Level roomNinteen = new Level("LeftRoomNine", null, roomEighteen, colArr19, loadImage("lib/LeftRoomNine.png"),
+        Level roomNinteen = new Level("LeftRoomNine", null, roomEighteen, colArr19,
+                loadImage("lib/LeftRoomNine.png"),
                 enemyArr19);
         roomEighteen.leftLevel = roomNinteen;
 
@@ -550,7 +556,8 @@ public class Level {
         enemyArr20.add(new Key(480, 300));
         enemyArr20.add(new Portal(470, 100, roomOne, 430, 300));
 
-        Level roomTwenty = new Level("LeftRoomTen", null, roomNinteen, colArr20, loadImage("lib/LeftRoomTen.png"),
+        Level roomTwenty = new Level("LeftRoomTen", null, roomNinteen, colArr20,
+                loadImage("lib/LeftRoomTen.png"),
                 enemyArr20);
         roomNinteen.leftLevel = roomTwenty;
 
@@ -562,7 +569,8 @@ public class Level {
         // colArr.add(new Rectangle(500,300,100,20));
         ArrayList<Enemy> enemyArrBossMain = new ArrayList<Enemy>();
         enemyArrBossMain.add(new Boss());
-        Level levelBossMain = new Level("BossMain", null, null, colArrBossMain, loadImage("lib/BossMain.png"),
+        Level levelBossMain = new Level("BossMain", null, null, colArrBossMain,
+                loadImage("lib/BossMain.png"),
                 enemyArrBossMain);
 
         ArrayList<Enemy> enemyArrBossRight1 = new ArrayList<Enemy>();
@@ -587,7 +595,8 @@ public class Level {
         enemyArrBossRight2.add(new VengeflyEnemy(100, 100, 20, 20, 4));
         enemyArrBossRight2.add(new VengeflyEnemy(600, 100, 20, 20, 4));
         enemyArrBossRight2.add(new BossBeamAttack(true, 0));
-        Level levelBossRight2 = new Level("RightTwo", null, null, colArrBossRight2, loadImage("lib/RightTwo.png"),
+        Level levelBossRight2 = new Level("RightTwo", null, null, colArrBossRight2,
+                loadImage("lib/RightTwo.png"),
                 enemyArrBossRight2);
 
         ArrayList<Rectangle> colArrBossRight3 = new ArrayList<>();
@@ -620,7 +629,8 @@ public class Level {
         colArrBossLeft1.add(new Rectangle(300, 100, 300, 20));
         // enemyArrBossLeft1.add(new BossOrbGenerator(700, 95, Color.orange));
         enemyArrBossLeft1.add(new BossBombAttack());
-        Level levelBossLeft1 = new Level("Left", null, levelBossMain, colArrBossLeft1, loadImage("lib/Left.png"),
+        Level levelBossLeft1 = new Level("Left", null, levelBossMain, colArrBossLeft1,
+                loadImage("lib/Left.png"),
                 enemyArrBossLeft1);
         Level levelBossRight1 = new Level("Right", levelBossMain, levelBossRight2, colArrBossRight1,
                 loadImage("lib/Right.png"),
@@ -699,217 +709,204 @@ public class Level {
     }
 
     public void render(Graphics2D g2d) {
-        for (int i = 0; i < this.collisionArray.size(); i++) {
-            for (int j = collisionArray.get(i).x; j < collisionArray.get(i).x + collisionArray.get(i).width; j = j
-                    + 10) {
-                for (int k = collisionArray.get(i).y; k < collisionArray.get(i).y + collisionArray.get(i).height; k = k
-                        + 10) {
-                    g2d.drawImage(brick, j, k, 10, 10, null);
-                }
-            }
-        }
 
-        /*
-         * 
-         * // draws all rectangles in collision array.
-         * g2d.setColor(Color.BLACK);
-         * for (int i = 0; i < collisionArray.size(); i++) {
-         * g2d.fill(collisionArray.get(i));
-         * }
-         * g2d.setColor(Color.red);
-         * 
-         * int textWidth = levelTitle.getWidth();
-         * int textHeight = levelTitle.getHeight();
-         * g2d.drawImage(levelTitle, 250, 10, (int) (400 + textWidth * 0.001), (int)
-         * (100 + textHeight * 0.001), null);
-         * // g2d.drawString(levelTitle, 400, 100);
-         * 
-         * //int groundWidth = ground.getWidth();
-         * //int groundHeight = ground.getHeight();
-         * 
-         * if (name.equals("Room1")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 720, 450, 240, 50, null);
-         * g2d.drawImage(ground, 810, 400, 150, 50, null);
-         * g2d.drawImage(ground, 900, 350, 60, 50, null);
-         * g2d.drawImage(ground, 0, 0, 5, 400, null);
-         * g2d.drawImage(ground, 345, 200, 200, 10, null);
-         * g2d.drawImage(ground, 125, 325, 150, 10, null);
-         * 
-         * } else if (name.equals("Room2")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 0, 0, 960, 20, null);
-         * g2d.drawImage(ground, 0, 350, 150, 200, null);
-         * g2d.drawImage(ground, 810, 350, 150, 200, null);
-         * } else if (name.equals("Room3")) {
-         * g2d.drawImage(ground, 0, 350, 150, 200, null);
-         * g2d.drawImage(ground, 0, 500, 960, 20, null);
-         * g2d.drawImage(ground, 280, 250, 750, 20, null);
-         * g2d.drawImage(ground, 280, 450, 50, 50, null);
-         * g2d.drawImage(ground, 480, 450, 50, 50, null);
-         * g2d.drawImage(ground, 680, 450, 50, 50, null);
-         * g2d.drawImage(ground, 880, 450, 50, 50, null);
-         * } else if (name.equals("Room4")) {
-         * g2d.drawImage(ground, 0, 500, 960, 30, null);
-         * g2d.drawImage(ground, 0, 0, 960, 20, null);
-         * g2d.drawImage(ground, 0, 250, 100, 40, null);
-         * g2d.drawImage(ground, 0, 290, 200, 40, null);
-         * g2d.drawImage(ground, 0, 330, 300, 40, null);
-         * g2d.drawImage(ground, 200, 370, 210, 300, null);
-         * g2d.drawImage(ground, 530, 410, 200, 200, null);
-         * g2d.drawImage(ground, 850, 450, 200, 100, null);
-         * } else if (name.equals("BossRoom")) {
-         * g2d.drawImage(ground, 0, 500, 960, 40, null);
-         * g2d.drawImage(ground, 0, 450, 125, 100, null);
-         * g2d.drawImage(ground, 300, 450, 360, 100, null);
-         * g2d.drawImage(ground, 835, 450, 125, 100, null);
-         * g2d.drawImage(ground, 125, 265, 175, 20, null);
-         * } else if (name.equals("Room6")) {
-         * g2d.drawImage(ground, 0, 450, 960, 100, null);
-         * g2d.drawImage(ground, 900, 0, 50, 300, null);
-         * } else if (name.equals("Room8")) {
-         * g2d.drawImage(ground, 0, 500, 900, 20, null);
-         * g2d.drawImage(ground, 0, 450, 100, 50, null);
-         * g2d.drawImage(ground, 850, 450, 200, 50, null);
-         * g2d.drawImage(ground, 455, 0, 10, 50, null);
-         * g2d.drawImage(ground, 515, 0, 10, 50, null);
-         * } else if (name.equals("Room9")) {
-         * g2d.drawImage(ground, 0, 500, 960, 50, null);
-         * g2d.drawImage(ground, 0, 450, 100, 50, null);
-         * g2d.drawImage(ground, 280, 400, 400, 20, null);
-         * g2d.drawImage(ground, 860, 450, 100, 50, null);
-         * } else if (name.equals("Room10")) {
-         * g2d.drawImage(ground, 0, 450, 960, 100, null);
-         * g2d.drawImage(ground, 180, 420, 600, 100, null);
-         * g2d.drawImage(ground, 280, 390, 400, 100, null);
-         * g2d.drawImage(ground, 380, 360, 200, 100, null);
-         * } else if (name.equals("LeftRoomOne")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 0, 100, 5, 500, null);
-         * g2d.drawImage(ground, 940, 0, 5, 400, null);
-         * g2d.drawImage(ground, 50, 400, 910, 10, null);
-         * g2d.drawImage(ground, 0, 300, 890, 10, null);
-         * g2d.drawImage(ground, 50, 200, 910, 10, null);
-         * g2d.drawImage(ground, 0, 100, 890, 10, null);
-         * } else if (name.equals("LeftRoomTwo")) {
-         * g2d.drawImage(ground, 940, 100, 20, 400, null);
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 880, 100, 60, 40, null);
-         * g2d.drawImage(ground, 650, 125, 60, 20, null);
-         * g2d.drawImage(ground, 425, 175, 60, 20, null);
-         * g2d.drawImage(ground, 225, 100, 60, 20, null);
-         * g2d.drawImage(ground, 0, 225, 100, 20, null);
-         * g2d.drawImage(ground, 0, 225, 5, 400, null);
-         * g2d.drawImage(ground, 100, 460, 80, 80, null);
-         * g2d.drawImage(ground, 250, 460, 80, 80, null);
-         * g2d.drawImage(ground, 400, 460, 80, 80, null);
-         * g2d.drawImage(ground, 550, 460, 80, 80, null);
-         * } else if (name.equals("LeftRoomThree")) {
-         * g2d.drawImage(ground, 880, 225, 100, 400, null);
-         * g2d.drawImage(ground, 0, 500, 960, 20, null);
-         * g2d.drawImage(ground, 350, 325, 810, 60, null);
-         * g2d.drawImage(ground, 700, 275, 810, 60, null);
-         * g2d.drawImage(ground, 100, 375, 860, 50, null);
-         * g2d.drawImage(ground, 0, 0, 0, 0, null);
-         * g2d.drawImage(ground, 0, 200, 10, 500, null);
-         * g2d.drawImage(ground, 75, 225, 100, 20, null);
-         * } else if (name.equals("LeftRoomFour")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 890, 200, 60, 500, null);
-         * g2d.drawImage(ground, 0, 0, 10, 350, null);
-         * g2d.drawImage(ground, 0, 460, 80, 50, null);
-         * g2d.drawImage(ground, 300, 310, 120, 20, null);
-         * g2d.drawImage(ground, 570, 270, 120, 20, null);
-         * } else if (name.equals("LeftMiniBossRoom")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 760, 460, 200, 60, null);
-         * g2d.drawImage(ground, 0, 460, 200, 60, null);
-         * g2d.drawImage(ground, 225, 325, 200, 10, null);
-         * g2d.drawImage(ground, 535, 325, 200, 10, null);
-         * g2d.drawImage(ground, 940, 0, 10, 350, null);
-         * g2d.drawImage(ground, 380, 150, 200, 10, null);
-         * } else if (name.equals("LeftRoomSix")) {
-         * g2d.drawImage(ground, 760, 460, 200, 60, null);
-         * g2d.drawImage(ground, 760, 420, 100, 40, null);
-         * g2d.drawImage(ground, 760, 380, 50, 40, null);
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 0, 460, 200, 60, null);
-         * g2d.drawImage(ground, 100, 420, 100, 40, null);
-         * g2d.drawImage(ground, 150, 380, 50, 40, null);
-         * g2d.drawImage(ground, 0, 0, 10, 380, null);
-         * } else if (name.equals("LeftRoomSeven")) {
-         * g2d.drawImage(ground, 0, 460, 960, 100, null);
-         * g2d.drawImage(ground, 0, 0, 10, 380, null);
-         * g2d.drawImage(ground, 100, 380, 900, 10, null);
-         * g2d.drawImage(ground, 930, 0, 20, 380, null);
-         * g2d.drawImage(ground, 0, 280, 850, 10, null);
-         * g2d.drawImage(ground, 100, 180, 900, 10, null);
-         * g2d.drawImage(ground, 0, 0, 960, 10, null);
-         * g2d.drawImage(ground, 0, 80, 850, 10, null);
-         * } else if (name.equals("LeftRoomEight")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 800, 460, 200, 60, null);
-         * g2d.drawImage(ground, 930, 0, 20, 380, null);
-         * g2d.drawImage(ground, 0, 150, 10, 500, null);
-         * g2d.drawImage(ground, 100, 400, 200, 10, null);
-         * g2d.drawImage(ground, 700, 250, 300, 10, null);
-         * g2d.drawImage(ground, 0, 150, 100, 10, null);
-         * } else if (name.equals("LeftRoomNine")) {
-         * g2d.drawImage(ground, 850, 150, 200, 10, null);
-         * g2d.drawImage(ground, 940, 150, 10, 500, null);
-         * g2d.drawImage(ground, 0, 450, 960, 100, null);
-         * } else if (name.equals("LeftRoomTen")) {
-         * g2d.drawImage(ground, 0, 450, 960, 100, null);
-         * g2d.drawImage(ground, 180, 420, 600, 100, null);
-         * g2d.drawImage(ground, 280, 390, 400, 100, null);
-         * g2d.drawImage(ground, 380, 360, 200, 100, null);
-         * } else if (name.equals("BossMain")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 100, 400, 700, 10, null);
-         * g2d.drawImage(ground, 940, 0, 20, 400, null);
-         * } else if (name.equals("Right")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 0, 350, 800, 20, null);
-         * g2d.drawImage(ground, 100, 200, 800, 20, null);
-         * g2d.drawImage(ground, 0, 0, 5, 400, null);
-         * g2d.drawImage(ground, 940, 100, 20, 400, null);
-         * } else if (name.equals("RightTwo")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 0, 100, 5, 400, null);
-         * g2d.drawImage(ground, 0, 250, 50, 20, null);
-         * g2d.drawImage(ground, 940, 0, 20, 200, null);
-         * g2d.drawImage(ground, 800, 350, 150, 200, null);
-         * } else if (name.equals("RightThree")) {
-         * g2d.drawImage(ground, 0, 350, 150, 200, null);
-         * g2d.drawImage(ground, 0, 500, 960, 20, null);
-         * g2d.drawImage(ground, 280, 450, 80, 50, null);
-         * g2d.drawImage(ground, 480, 450, 80, 50, null);
-         * g2d.drawImage(ground, 680, 450, 200, 150, null);
-         * } else if (name.equals("Left")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 200, 350, 100, 40, null);
-         * g2d.drawImage(ground, 700, 250, 100, 40, null);
-         * g2d.drawImage(ground, 550, 250, 100, 40, null);
-         * g2d.drawImage(ground, 400, 250, 100, 20, null);
-         * g2d.drawImage(ground, 700, 100, 100, 20, null);
-         * g2d.drawImage(ground, 0, 100, 5, 400, null);
-         * g2d.drawImage(ground, 0, 100, 200, 20, null);
-         * g2d.drawImage(ground, 300, 100, 300, 20, null);
-         * } else if (name.equals("LeftTwo")) {
-         * g2d.drawImage(ground, 940, 100, 20, 400, null);
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 0, 0, 5, 400, null);
-         * g2d.drawImage(ground, 0, 480, 60, 100, null);
-         * g2d.drawImage(ground, 0, 380, 5, 100, null);
-         * } else if (name.equals("LeftThree")) {
-         * g2d.drawImage(ground, 0, 500, 960, 60, null);
-         * g2d.drawImage(ground, 940, 0, 20, 400, null);
-         * g2d.drawImage(ground, 860, 350, 40, 300, null);
-         * g2d.drawImage(ground, 820, 200, 40, 600, null);
-         * g2d.drawImage(ground, 900, 480, 60, 100, null);
-         * g2d.drawImage(ground, 0, 200, 150, 50, null);
-         * }
-         */
+        // draws all rectangles in collision array.
+        g2d.setColor(Color.BLACK);
+        for (int i = 0; i < collisionArray.size(); i++) {
+            g2d.fill(collisionArray.get(i));
+        }
+        g2d.setColor(Color.red);
+
+        int textWidth = levelTitle.getWidth();
+        int textHeight = levelTitle.getHeight();
+        g2d.drawImage(levelTitle, 250, 10, (int) (400 + textWidth * 0.001), (int) (100 + textHeight * 0.001), null);
+        // g2d.drawString(levelTitle, 400, 100);
+
+        int groundWidth = ground.getWidth();
+        int groundHeight = ground.getHeight();
+
+        if (name.equals("Room1")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 720, 450, 240, 50, null);
+            g2d.drawImage(ground, 810, 400, 150, 50, null);
+            g2d.drawImage(ground, 900, 350, 60, 50, null);
+            g2d.drawImage(ground, 0, 0, 5, 400, null);
+            g2d.drawImage(ground, 345, 200, 200, 10, null);
+            g2d.drawImage(ground, 125, 325, 150, 10, null);
+
+        } else if (name.equals("Room2")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 0, 0, 960, 20, null);
+            g2d.drawImage(ground, 0, 350, 150, 200, null);
+            g2d.drawImage(ground, 810, 350, 150, 200, null);
+        } else if (name.equals("Room3")) {
+            g2d.drawImage(ground, 0, 350, 150, 200, null);
+            g2d.drawImage(ground, 0, 500, 960, 20, null);
+            g2d.drawImage(ground, 280, 250, 750, 20, null);
+            g2d.drawImage(ground, 280, 450, 50, 50, null);
+            g2d.drawImage(ground, 480, 450, 50, 50, null);
+            g2d.drawImage(ground, 680, 450, 50, 50, null);
+            g2d.drawImage(ground, 880, 450, 50, 50, null);
+        } else if (name.equals("Room4")) {
+            g2d.drawImage(ground, 0, 500, 960, 30, null);
+            g2d.drawImage(ground, 0, 0, 960, 20, null);
+            g2d.drawImage(ground, 0, 250, 100, 40, null);
+            g2d.drawImage(ground, 0, 290, 200, 40, null);
+            g2d.drawImage(ground, 0, 330, 300, 40, null);
+            g2d.drawImage(ground, 200, 370, 210, 300, null);
+            g2d.drawImage(ground, 530, 410, 200, 200, null);
+            g2d.drawImage(ground, 850, 450, 200, 100, null);
+        } else if (name.equals("BossRoom")) {
+            g2d.drawImage(ground, 0, 500, 960, 40, null);
+            g2d.drawImage(ground, 0, 450, 125, 100, null);
+            g2d.drawImage(ground, 300, 450, 360, 100, null);
+            g2d.drawImage(ground, 835, 450, 125, 100, null);
+            g2d.drawImage(ground, 125, 265, 175, 20, null);
+        } else if (name.equals("Room6")) {
+            g2d.drawImage(ground, 0, 450, 960, 100, null);
+            g2d.drawImage(ground, 900, 0, 50, 300, null);
+        } else if (name.equals("Room8")) {
+            g2d.drawImage(ground, 0, 500, 900, 20, null);
+            g2d.drawImage(ground, 0, 450, 100, 50, null);
+            g2d.drawImage(ground, 850, 450, 200, 50, null);
+            g2d.drawImage(ground, 455, 0, 10, 50, null);
+            g2d.drawImage(ground, 515, 0, 10, 50, null);
+        } else if (name.equals("Room9")) {
+            g2d.drawImage(ground, 0, 500, 960, 50, null);
+            g2d.drawImage(ground, 0, 450, 100, 50, null);
+            g2d.drawImage(ground, 280, 400, 400, 20, null);
+            g2d.drawImage(ground, 860, 450, 100, 50, null);
+        } else if (name.equals("Room10")) {
+            g2d.drawImage(ground, 0, 450, 960, 100, null);
+            g2d.drawImage(ground, 180, 420, 600, 100, null);
+            g2d.drawImage(ground, 280, 390, 400, 100, null);
+            g2d.drawImage(ground, 380, 360, 200, 100, null);
+        } else if (name.equals("LeftRoomOne")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 0, 100, 5, 500, null);
+            g2d.drawImage(ground, 940, 0, 5, 400, null);
+            g2d.drawImage(ground, 50, 400, 910, 10, null);
+            g2d.drawImage(ground, 0, 300, 890, 10, null);
+            g2d.drawImage(ground, 50, 200, 910, 10, null);
+            g2d.drawImage(ground, 0, 100, 890, 10, null);
+        } else if (name.equals("LeftRoomTwo")) {
+            g2d.drawImage(ground, 940, 100, 20, 400, null);
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 880, 100, 60, 40, null);
+            g2d.drawImage(ground, 650, 125, 60, 20, null);
+            g2d.drawImage(ground, 425, 175, 60, 20, null);
+            g2d.drawImage(ground, 225, 100, 60, 20, null);
+            g2d.drawImage(ground, 0, 225, 100, 20, null);
+            g2d.drawImage(ground, 0, 225, 5, 400, null);
+            g2d.drawImage(ground, 100, 460, 80, 80, null);
+            g2d.drawImage(ground, 250, 460, 80, 80, null);
+            g2d.drawImage(ground, 400, 460, 80, 80, null);
+            g2d.drawImage(ground, 550, 460, 80, 80, null);
+        } else if (name.equals("LeftRoomThree")) {
+            g2d.drawImage(ground, 880, 225, 100, 400, null);
+            g2d.drawImage(ground, 0, 500, 960, 20, null);
+            g2d.drawImage(ground, 350, 325, 810, 60, null);
+            g2d.drawImage(ground, 700, 275, 810, 60, null);
+            g2d.drawImage(ground, 100, 375, 860, 50, null);
+            g2d.drawImage(ground, 0, 0, 0, 0, null);
+            g2d.drawImage(ground, 0, 200, 10, 500, null);
+            g2d.drawImage(ground, 75, 225, 100, 20, null);
+        } else if (name.equals("LeftRoomFour")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 890, 200, 60, 500, null);
+            g2d.drawImage(ground, 0, 0, 10, 350, null);
+            g2d.drawImage(ground, 0, 460, 80, 50, null);
+            g2d.drawImage(ground, 300, 310, 120, 20, null);
+            g2d.drawImage(ground, 570, 270, 120, 20, null);
+        } else if (name.equals("LeftMiniBossRoom")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 760, 460, 200, 60, null);
+            g2d.drawImage(ground, 0, 460, 200, 60, null);
+            g2d.drawImage(ground, 225, 325, 200, 10, null);
+            g2d.drawImage(ground, 535, 325, 200, 10, null);
+            g2d.drawImage(ground, 940, 0, 10, 350, null);
+            g2d.drawImage(ground, 380, 150, 200, 10, null);
+        } else if (name.equals("LeftRoomSix")) {
+            g2d.drawImage(ground, 760, 460, 200, 60, null);
+            g2d.drawImage(ground, 760, 420, 100, 40, null);
+            g2d.drawImage(ground, 760, 380, 50, 40, null);
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 0, 460, 200, 60, null);
+            g2d.drawImage(ground, 100, 420, 100, 40, null);
+            g2d.drawImage(ground, 150, 380, 50, 40, null);
+            g2d.drawImage(ground, 0, 0, 10, 380, null);
+        } else if (name.equals("LeftRoomSeven")) {
+            g2d.drawImage(ground, 0, 460, 960, 100, null);
+            g2d.drawImage(ground, 0, 0, 10, 380, null);
+            g2d.drawImage(ground, 100, 380, 900, 10, null);
+            g2d.drawImage(ground, 930, 0, 20, 380, null);
+            g2d.drawImage(ground, 0, 280, 850, 10, null);
+            g2d.drawImage(ground, 100, 180, 900, 10, null);
+            g2d.drawImage(ground, 0, 0, 960, 10, null);
+            g2d.drawImage(ground, 0, 80, 850, 10, null);
+        } else if (name.equals("LeftRoomEight")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 800, 460, 200, 60, null);
+            g2d.drawImage(ground, 930, 0, 20, 380, null);
+            g2d.drawImage(ground, 0, 150, 10, 500, null);
+            g2d.drawImage(ground, 100, 400, 200, 10, null);
+            g2d.drawImage(ground, 700, 250, 300, 10, null);
+            g2d.drawImage(ground, 0, 150, 100, 10, null);
+        } else if (name.equals("LeftRoomNine")) {
+            g2d.drawImage(ground, 850, 150, 200, 10, null);
+            g2d.drawImage(ground, 940, 150, 10, 500, null);
+            g2d.drawImage(ground, 0, 450, 960, 100, null);
+        } else if (name.equals("LeftRoomTen")) {
+            g2d.drawImage(ground, 0, 450, 960, 100, null);
+            g2d.drawImage(ground, 180, 420, 600, 100, null);
+            g2d.drawImage(ground, 280, 390, 400, 100, null);
+            g2d.drawImage(ground, 380, 360, 200, 100, null);
+        } else if (name.equals("BossMain")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 100, 400, 700, 10, null);
+            g2d.drawImage(ground, 940, 0, 20, 400, null);
+        } else if (name.equals("Right")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 0, 350, 800, 20, null);
+            g2d.drawImage(ground, 100, 200, 800, 20, null);
+            g2d.drawImage(ground, 0, 0, 5, 400, null);
+            g2d.drawImage(ground, 940, 100, 20, 400, null);
+        } else if (name.equals("RightTwo")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 0, 100, 5, 400, null);
+            g2d.drawImage(ground, 0, 250, 50, 20, null);
+            g2d.drawImage(ground, 940, 0, 20, 200, null);
+            g2d.drawImage(ground, 800, 350, 150, 200, null);
+        } else if (name.equals("RightThree")) {
+            g2d.drawImage(ground, 0, 350, 150, 200, null);
+            g2d.drawImage(ground, 0, 500, 960, 20, null);
+            g2d.drawImage(ground, 280, 450, 80, 50, null);
+            g2d.drawImage(ground, 480, 450, 80, 50, null);
+            g2d.drawImage(ground, 680, 450, 200, 150, null);
+        } else if (name.equals("Left")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 200, 350, 100, 40, null);
+            g2d.drawImage(ground, 700, 250, 100, 40, null);
+            g2d.drawImage(ground, 550, 250, 100, 40, null);
+            g2d.drawImage(ground, 400, 250, 100, 20, null);
+            g2d.drawImage(ground, 700, 100, 100, 20, null);
+            g2d.drawImage(ground, 0, 100, 5, 400, null);
+            g2d.drawImage(ground, 0, 100, 200, 20, null);
+            g2d.drawImage(ground, 300, 100, 300, 20, null);
+        } else if (name.equals("LeftTwo")) {
+            g2d.drawImage(ground, 940, 100, 20, 400, null);
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 0, 0, 5, 400, null);
+            g2d.drawImage(ground, 0, 480, 60, 100, null);
+            g2d.drawImage(ground, 0, 380, 5, 100, null);
+        } else if (name.equals("LeftThree")) {
+            g2d.drawImage(ground, 0, 500, 960, 60, null);
+            g2d.drawImage(ground, 940, 0, 20, 400, null);
+            g2d.drawImage(ground, 860, 350, 40, 300, null);
+            g2d.drawImage(ground, 820, 200, 40, 600, null);
+            g2d.drawImage(ground, 900, 480, 60, 100, null);
+            g2d.drawImage(ground, 0, 200, 150, 50, null);
+        }
 
         for (int i = 0; i < enemyList.size(); i++) {
             enemyList.get(i).render(g2d);

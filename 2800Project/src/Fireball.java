@@ -78,8 +78,7 @@ public class Fireball extends Enemy {
             int yPos = (int) hitBox.getY();
             int scaledWidth = (int) (frameWidth * 4);
             int scaledHeight = (int) (frameHeight * 4);
-            g2d.drawImage(fireballFrames[currentFrame], xPos, yPos-20, scaledWidth, scaledHeight, null);
-
+            g2d.drawImage(fireballFrames[currentFrame], xPos, yPos, scaledWidth, scaledHeight, null);
         } else {
             g2d.setColor(Color.RED);
             g2d.fill(hitBox);
