@@ -108,9 +108,9 @@ public class EnemyGrimm extends Enemy {
                 srcY = 5 * spriteHeight;
             } else {
                 // Otherwise, display the regular animation from the 3rd to 4th row
-                int currentAnimationFrame = currentFrame % (spriteColumns * 12); // End at the 4th row
+                int currentAnimationFrame = currentFrame % (spriteColumns - 5); // End at the 4th row
                 srcX = (currentAnimationFrame % spriteColumns) * spriteWidth;
-                srcY = ((currentAnimationFrame / spriteColumns) % 2 + 2) * spriteHeight; // Start from
+                srcY = ((currentAnimationFrame / spriteColumns) % 1 + 3) * spriteHeight; // Start from
                                                                                          // 3rd row, end
                                                                                          // at 4th row
             }

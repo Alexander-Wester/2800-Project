@@ -21,8 +21,6 @@ public class Player extends GameObject {
     private static final int ANIMATION_DELAY = 100; // Delay between each frame (milliseconds)
     private int currentFrame = 0;
     private long lastFrameTime;
-    private final int swordOffsetX = 40;
-    private final int swordOffsetY = 10;
 
     private final int IDLE_FRAME_COLUMN = 0; // Column of the idle animation frame
     private final int IDLE_FRAME_ROW = 0; // Row of the idle animation frame
@@ -46,6 +44,7 @@ public class Player extends GameObject {
     private boolean isAttackOnline = false;
     private double attackAngle;
     private long attackTimer = 0;
+    private boolean direction = true; // attack direction
 
     private long jumpTimer;
     private boolean jumpActive = false;
@@ -74,6 +73,7 @@ public class Player extends GameObject {
     boolean running = false;
 
     private int keys = 0;
+    private String swingDirection; // New variable to store sword swing direction
 
     public Player() {
         super(450, 400, 30, 60);
@@ -210,40 +210,70 @@ public class Player extends GameObject {
                 int swordSpriteWidth = swordSpriteSheet.getWidth() / SWORD_SPRITE_COLUMNS;
                 int swordSpriteHeight = swordSpriteSheet.getWidth() / SWORD_FRAME_ROW;
 
-                int scaledSwordWidth = (int) (swordSpriteWidth * 2); // Adjusted sword width
+                int scaledSwordWidth = (int) (swordSpriteWidth * 2.5); // Adjusted sword width
                 int scaledSwordHeight = (int) (swordSpriteHeight * 2); // Adjusted sword height
 
-                int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS) * spriteWidth;
+                // int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS + 1) * spriteWidth;
                 int swordSrcY = SWORD_FRAME_ROW * spriteHeight;
 
-                int swordRenderX = (int) (x + swordOffsetX);
-                int swordRenderY = (int) (y + swordOffsetY);
+                // int swordRenderX = (int) (x + 40);
+                // int swordRenderY = (int) (y + 10);
 
-                g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
-                        swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
-                        swordSrcX, swordSrcY, swordSrcX + swordSpriteWidth, swordSrcY + swordSpriteHeight,
-                        null);
+                if (direction) {
+                    int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS) * spriteWidth;
+                    int swordRenderX = (int) (x + 40);
+                    int swordRenderY = (int) (y - 10);
+
+                    g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                            swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                            swordSrcX, swordSrcY, swordSrcX + swordSpriteWidth, swordSrcY +
+                                    swordSpriteHeight,
+                            null);
+                } else {
+                    int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS + 1) * spriteWidth;
+                    int swordRenderX = (int) (x - 120);
+                    int swordRenderY = (int) (y - 10);
+
+                    g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                            swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                            swordSrcX, swordSrcY, swordSrcX - swordSpriteWidth, swordSrcY +
+                                    swordSpriteHeight,
+                            null);
+                }
+
+                // g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                // swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                // swordSrcX, swordSrcY, swordSrcX + swordSpriteWidth, swordSrcY +
+                // swordSpriteHeight,
+                // null);
+
+                // g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                // swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                // swordSrcX, swordSrcY, swordSrcX - swordSpriteWidth, swordSrcY +
+                // swordSpriteHeight,
+                // null);
                 // Slow down the sword animation by increasing the delay
                 long currentTime = System.currentTimeMillis();
-                if (currentTime - lastFrameTime >= ANIMATION_DELAY * 2) {
+                if (currentTime - lastFrameTime >= ANIMATION_DELAY) {
                     currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
                     lastFrameTime = currentTime; // Update lastFrameTime
                 }
 
             }
+
             // g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 +
             // scaledSpriteWidth, (int) y - 22 +
             // scaledSpriteHeight,
             // srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
-            if (isAttackOnline)
+            // if (isAttackOnline)
 
-            {// print attack hitbox
-             // printing attack hitbox. the animation for the attack should eventually go
-             // here, likely.
-                g2d.setColor(Color.yellow);
-                g2d.fillPolygon(attackTriangle);
-            }
+            // {// print attack hitbox
+            // // printing attack hitbox. the animation for the attack should eventually go
+            // // here, likely.
+            // g2d.setColor(Color.yellow);
+            // g2d.fillPolygon(attackTriangle);
+            // }
             if (fireballAlive) {
                 playerFireball.render(g2d);
             }
@@ -295,25 +325,29 @@ public class Player extends GameObject {
         playerVeloY += 8;// gravity
     }
 
-    public int[] swingSword(int x2, int y2) {// math to make a sword swing hitbox
+    public void swingSword(int x2, int y2) {// math to make a sword swing hitbox
         if (isAttackOnCooldown) {
-            return null;
+            return;
         }
 
         int diffX = ((int) x - x2 - 15) * -1;
         int diffY = ((int) y - y2 - 15);
-
+        direction = true;
         // System.out.println("diffx and y: " + diffX + " " + diffY);
 
         attackAngle = Math.atan((double) diffY / diffX);
         if (diffX < 0 && diffY > 0) {
             // System.out.println("here1");
             attackAngle = Math.PI + attackAngle;
+            direction = false;
+
         }
         if (diffX < 0 && diffY < 0) {
             attackAngle = Math.PI + attackAngle;
+            direction = false;
         } else if (diffX > 0 && diffY < 0) {
             attackAngle = 2 * Math.PI + attackAngle;
+            direction = true;
         }
 
         arcX = (int) (x + 15 + (25 * Math.cos(attackAngle)));
@@ -336,9 +370,6 @@ public class Player extends GameObject {
         attackTriangle = new Polygon(triangleXvalues, triangleYvalues, 3);
 
         attackTimer = System.currentTimeMillis() + 450;
-
-        return new int[] { arcX2, arcY2 };
-
     }
 
     public void fireball(int x2, int y2) {
