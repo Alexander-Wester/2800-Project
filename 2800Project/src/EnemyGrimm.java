@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.*;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -7,7 +6,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import java.awt.image.BufferedImage;
-import java.awt.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
