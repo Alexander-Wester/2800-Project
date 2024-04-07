@@ -12,7 +12,7 @@ public class LavaTrap extends Enemy {
         super(x, y, width, height, 0);
         isInvincible = true;
         hitBox = new Rectangle(x, y, width, height);
-        loadSpriteSheet("lava.png");
+        loadSpriteSheet("./lib/lava.png");
     }
 
     private void loadSpriteSheet(String path) {
@@ -28,10 +28,10 @@ public class LavaTrap extends Enemy {
         }
     }
 
-    public void tick(GameManager gm){
+    public void tick(GameManager gm) {
         Player player = gm.player;
-        if(hitBox.intersects(player.rect())){
-            //player.jumpAllowed = true; //variable is private
+        if (hitBox.intersects(player.rect())) {
+            // player.jumpAllowed = true; //variable is private
             player.jump();
         }
     }

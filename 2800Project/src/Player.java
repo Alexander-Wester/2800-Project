@@ -2,7 +2,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.awt.geom.Ellipse2D;
 
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -52,24 +51,23 @@ public class Player extends GameObject {
     private boolean jumpActive = false;
     private boolean jumpAllowed = true;
 
-    public int health=5;   //health stuff
-     long IFrames;
-     boolean canBeHit = true;    //temp invincibility after being hit
+    public int health = 5; // health stuff
+    long IFrames;
+    boolean canBeHit = true; // temp invincibility after being hit
     private Rectangle hitBox;
 
-    private long deathMessageTimer; //calcs how long to display "you died" message
+    private long deathMessageTimer; // calcs how long to display "you died" message
 
     private boolean fireballActivated = false; // one of the abilities that you unlock
     private PlayerFireball playerFireball;
     private boolean fireballAlive = false;
     private double fireballTimer = 0;
 
-
     public boolean orbActive = false;
     public Color orbColor;
 
     boolean bossSwordKnockback = false;
-    int bossSwordKnockbackDirection=0; //-1 left, 1 right;
+    int bossSwordKnockbackDirection = 0; // -1 left, 1 right;
     long bossSwordKnockbackTimer;
 
     boolean runningActivated = true;
@@ -79,7 +77,7 @@ public class Player extends GameObject {
 
     public Player() {
         super(450, 400, 30, 60);
-        loadSpriteSheet("player.png");
+        loadSpriteSheet("./lib/player.png");
         lastFrameTime = System.currentTimeMillis();
     }
 
@@ -87,7 +85,7 @@ public class Player extends GameObject {
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
                 spriteSheet = ImageIO.read(inputStream);
-                swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("sword.png"));
+                swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("./lib/sword.png"));
             } else {
                 throw new IOException("Resource not found: " + path);
             }
@@ -103,22 +101,23 @@ public class Player extends GameObject {
 
         playerVeloCalc();
 
-        if(bossSwordKnockback && System.currentTimeMillis()>bossSwordKnockbackTimer){
+        if (bossSwordKnockback && System.currentTimeMillis() > bossSwordKnockbackTimer) {
             bossSwordKnockback = false;
         }
-       
-        if(System.currentTimeMillis() >= attackTimer && isAttackOnline){//checks if the attack hitbox and render should still be active
-            isAttackOnline=false;
+
+        if (System.currentTimeMillis() >= attackTimer && isAttackOnline) {// checks if the attack hitbox and render
+                                                                          // should still be active
+            isAttackOnline = false;
         }
 
         if (System.currentTimeMillis() <= attackTimer) {// ditto
             isAttackOnline = true;
         }
-        if(fireballAlive){
+        if (fireballAlive) {
             playerFireball.tick(gm);
         }
-        
-        playerCollision(gm);//lets you stand on rects from the collisionArray from the current level
+
+        playerCollision(gm);// lets you stand on rects from the collisionArray from the current level
 
         if (x < 10 && gm.getCurrentLevel().leftLevel == null && playerVeloX < 0) {// Can't enter null levels
             playerVeloX = 0;
@@ -230,16 +229,16 @@ public class Player extends GameObject {
                 g2d.setColor(Color.red);
                 g2d.drawString("YOU DIED", 400, 150);
 
+            }
+
+            if (orbActive) {
+                g2d.setColor(orbColor);
+                Ellipse2D.Double sphere = new Ellipse2D.Double(x + 40, y - 20, 10, 10);
+                g2d.fill(sphere);
+            }
+            // g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+
+            // bossSwordKnockbackDirection, 100, 120);
         }
-        
-        
-        if(orbActive){
-            g2d.setColor(orbColor);
-            Ellipse2D.Double sphere = new Ellipse2D.Double(x + 40, y - 20, 10, 10);
-            g2d.fill(sphere);
-        }
-        //g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+ bossSwordKnockbackDirection, 100, 120);
-    }
     }
 
     public void playerInputVeloX(int x) {// part of velo calc. I could probably find a way to skip this step but it
@@ -262,10 +261,10 @@ public class Player extends GameObject {
             playerVeloY += (int) (-5 * (-2 * (((double) (System.currentTimeMillis() - jumpTimer) / 500.0) - 1) + 2));// jump
                                                                                                                      // calc
         }
-        if(bossSwordKnockback){
+        if (bossSwordKnockback) {
             playerVeloX += 20 * bossSwordKnockbackDirection;
         }
-        playerVeloY+=8;//gravity
+        playerVeloY += 8;// gravity
     }
 
     public void swingSword(int x2, int y2) {// math to make a sword swing hitbox
@@ -312,12 +311,12 @@ public class Player extends GameObject {
 
     }
 
-    public void fireball(int x2, int y2){
-        if(fireballActivated && !fireballAlive && System.currentTimeMillis() >= fireballTimer + 500){
+    public void fireball(int x2, int y2) {
+        if (fireballActivated && !fireballAlive && System.currentTimeMillis() >= fireballTimer + 500) {
             double dx = x2 - x;
             double dy = y2 - y;
-            double angle = Math.atan2(dy,dx);
-            playerFireball = new PlayerFireball(x,y,angle, System.currentTimeMillis());
+            double angle = Math.atan2(dy, dx);
+            playerFireball = new PlayerFireball(x, y, angle, System.currentTimeMillis());
             fireballAlive = true;
         }
     }
@@ -325,27 +324,35 @@ public class Player extends GameObject {
     public void activateFireball() {
         this.fireballActivated = true;
     }
-    public void activateRunning(){this.runningActivated = true;}
-    public boolean canRun(){
+
+    public void activateRunning() {
+        this.runningActivated = true;
+    }
+
+    public boolean canRun() {
         return runningActivated;
     }
-    public boolean isRunning(){
+
+    public boolean isRunning() {
         return running;
     }
-    public void playerRun(boolean running){
+
+    public void playerRun(boolean running) {
         this.running = running;
     }
+
     public void resetFireball() {
         this.fireballAlive = false;
         fireballTimer = System.currentTimeMillis();
     }
-    public void collectKey(){
+
+    public void collectKey() {
         keys++;
     }
-    public int keyAmount(){
+
+    public int keyAmount() {
         return keys;
     }
-
 
     public int getArcX() {// random getters needed because of bad formatting at the start of this project.
                           // may be refactored later
@@ -404,17 +411,18 @@ public class Player extends GameObject {
     public void detectHits(GameManager gm) {
         // if sword is in enemy hitbox, they take damage
         ArrayList<Enemy> tempEnemyList = gm.getCurrentLevel().enemyList;
-        for(int i=0;i<tempEnemyList.size();i++){
-            if (isAttackOnline && this.attackTriangle.intersects(tempEnemyList.get(i).getHitBox())){
+        for (int i = 0; i < tempEnemyList.size(); i++) {
+            if (isAttackOnline && this.attackTriangle.intersects(tempEnemyList.get(i).getHitBox())) {
                 tempEnemyList.get(i).hitLanded(gm);
             }
 
             if (System.currentTimeMillis() > IFrames) {
                 canBeHit = true;
             }
-           // System.out.println("i is " + i);
-           //if you are in enemy hitbox, you take damage
-            if(hitBox.intersects(tempEnemyList.get(i).getHitBox()) && canBeHit && tempEnemyList.get(i).isAlive && tempEnemyList.get(i).doesDamageOnCollision){
+            // System.out.println("i is " + i);
+            // if you are in enemy hitbox, you take damage
+            if (hitBox.intersects(tempEnemyList.get(i).getHitBox()) && canBeHit && tempEnemyList.get(i).isAlive
+                    && tempEnemyList.get(i).doesDamageOnCollision) {
                 tempEnemyList.get(i).hitLanded(gm);
                 health--;
                 if (health <= 0) {
@@ -427,7 +435,6 @@ public class Player extends GameObject {
                 // defined in the unique enemy file (eg knockback, more than one hit, etc. )
             }
 
-
         }
     }
 
@@ -438,18 +445,17 @@ public class Player extends GameObject {
         x = 450;
         y = 400;
         deathMessageTimer = System.currentTimeMillis() + 3000;
-        orbActive=false;
-        orbColor=null;
+        orbActive = false;
+        orbColor = null;
     }
 
-    public Polygon getAttackTriangle(){
+    public Polygon getAttackTriangle() {
         return this.attackTriangle;
     }
 
-    public Rectangle getHitBox(){
-        return new Rectangle((int)x,(int)y,(int)width,(int)height);
+    public Rectangle getHitBox() {
+        return new Rectangle((int) x, (int) y, (int) width, (int) height);
     }
-    
 
     public void playerCollision(GameManager gm) {
 

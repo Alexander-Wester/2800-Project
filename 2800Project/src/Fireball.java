@@ -39,7 +39,7 @@ public class Fireball extends Enemy {
         hitBox = new Rectangle(fixedX, fixedY, FIREBALL_SIZE, FIREBALL_SIZE);
         createVisualCircle();
         generateRandomAngle();
-        loadSpriteSheet("fireball.png");
+        loadSpriteSheet("./lib/fireball.png");
         lastFrameTime = System.currentTimeMillis();
     }
 
