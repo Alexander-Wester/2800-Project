@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
@@ -211,6 +212,7 @@ public class Level {
 
         ArrayList<Rectangle> colArr7 = new ArrayList<>();
         ArrayList<Enemy> enemyArr7 = new ArrayList<Enemy>();
+        enemyArr7.add(new LavaTrap(0,480,1000,40));
         colArr7.add(new Rectangle(0,500,1000,40));
         colArr7.add(new Rectangle(900,0,50,300));
         colArr7.add(new Rectangle(900,450,50,100));
@@ -307,6 +309,11 @@ public class Level {
         colArr9.add(new Rectangle(0,450,100,50));
         colArr9.add(new Rectangle(280,400,400,20));
         colArr9.add(new Rectangle(860,450,100,50));
+        Enemy roomNineBoss1 = new Boss2(425,75,100,100,10);
+        enemyArr9.add(roomNineBoss1);
+        UnlockableDoor roomNineDoor1 = new UnlockableDoor(930,0,30,450,roomNineBoss1);
+        colArr9.add(roomNineDoor1.hitBox);
+        enemyArr9.add(roomNineDoor1);
         Level roomNine = new Level(roomEight, null, colArr9, "Room Nine", enemyArr9);
         roomEight.rightLevel = roomNine;
 
@@ -318,7 +325,6 @@ public class Level {
         colArr10.add(new Rectangle(380,360,200,100));
         enemyArr10.add(new Key(480,300));
         enemyArr10.add(new Portal(470,100, roomOne,430,300));
-        enemyArr10.add(new Boss2(400,100,100,100,10));
         Level roomTen = new Level(roomNine, null, colArr10, "Room Ten", enemyArr10);
         roomNine.rightLevel = roomTen;
 
@@ -331,10 +337,10 @@ public class Level {
         colArr11.add(new Rectangle(0,300,890,10));
         colArr11.add(new Rectangle(50,200,910,10));
         colArr11.add(new Rectangle(0,100,890,10));
-        enemyArr11.add(new JumpingEnemy(60,420,40,50,3));
-        enemyArr11.add(new JumpingEnemy(7,200,40,50,3));
-        enemyArr11.add(new JumpingEnemy(895,300,40,50,3));
-        enemyArr11.add(new JumpingEnemy(895,100,40,50,3));
+        enemyArr11.add(new JumpingEnemy(60,420,50,100,3));
+        enemyArr11.add(new JumpingEnemy(60,200,50,100,3));
+        enemyArr11.add(new JumpingEnemy(870,300,50,100,3));
+        enemyArr11.add(new JumpingEnemy(870,100,50,100,3));
         enemyArr11.add(new VengeflyEnemy(300,300,20,20,2));
         enemyArr11.add(new VengeflyEnemy(250,400,20,20,2));
         enemyArr11.add(new VengeflyEnemy(350,150,20,20,2));
@@ -403,7 +409,7 @@ public class Level {
         colArr14.add(new Rectangle(300, 310, 120, 20));
         enemyArr14.add(new JumpingEnemy(335,210,50,100,2));
         colArr14.add(new Rectangle(570, 270,120,20));
-        enemyArr14.add(new JumpingEnemy(610,170,50,100,2));
+        enemyArr14.add(new JumpingEnemy(570,170,50,100,2));
         for(int i = 0; i < random.nextInt(5) + 5; i ++) {
             randomInt = random.nextInt(800);
             //int randomInt2 = random.nextInt(450);
@@ -423,6 +429,9 @@ public class Level {
         colArr15.add(new Rectangle(940,0,10,350));
         colArr15.add(new Rectangle(380,150,200,10));
         enemyArr15.add(new Portal(460,250,roomOne, 430, 300, 1));
+        enemyArr15.add(new JumpingEnemy(600,200,50,100,2));
+        enemyArr15.add (new JumpingEnemy(300,200,50,100,2));
+        enemyArr15.add (new JumpingEnemy(450,0,50,100,2));
         Level roomFifteen = new Level(null,roomFourteen,colArr15,"LeftMiniBossRoom", enemyArr15);
         enemyArr.add(new Portal(350,250,roomFifteen,460,50, 1));
         roomFourteen.leftLevel = roomFifteen;
@@ -645,9 +654,8 @@ public class Level {
         levelList.add(levelBossRight3);
         levelList.add(levelBossLeft2);
         levelList.add(levelBossLeft3);
-
+        levelList.add(roomFifteen);
         gm.setLevelList(levelList);
-
         return roomOne;
     }
     
@@ -675,7 +683,9 @@ public class Level {
     
         // Increment the 5-second counter
         int fiveSecondCounter = tickCounter / 50; // Since you're incrementing tickCounter every tick, 50 ticks = 1 second
-    
+        if(!gm.leftPortalActivated && gm.getCurrentLevel() == gm.levelList.get(17)){
+            unlockLeftCheckpoint(gm);
+        }
         // Check if 5 seconds have passed
         if (gm.getCurrentLevel() instanceof Level && this == gm.getCurrentLevel() && fiveSecondCounter % 5 == 0) {
             // If 5 seconds have passed, stop fireball generation for 1 second
@@ -747,5 +757,9 @@ public class Level {
         // Generate and add a new fireball to the enemy list
         enemyList.add(new Fireball2(gm));
     }
-    
+    private void unlockLeftCheckpoint(GameManager gm){
+        gm.activateLeftPortal();
+        gm.player.activateRunning();
+        JOptionPane.showMessageDialog(null, "You are now able to run by holding down shift");
+    }
 }

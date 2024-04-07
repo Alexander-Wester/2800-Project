@@ -72,7 +72,7 @@ public class Player extends GameObject {
     int bossSwordKnockbackDirection=0; //-1 left, 1 right;
     long bossSwordKnockbackTimer;
 
-    boolean runningActivated = true;
+    boolean runningActivated = false;
     boolean running = false;
 
     private int keys = 0;
