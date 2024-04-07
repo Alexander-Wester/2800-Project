@@ -1,7 +1,12 @@
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Color;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 // Boss Grimm:
 // Grimm has 10 HPs
@@ -9,17 +14,39 @@ import java.util.ArrayList;
 
 public class EnemyGrimm extends Enemy {
     private ArrayList<Fireball> fireballs;
+    private BufferedImage spriteSheet;
+    private int spriteColumns = 17;
+    private int spriteRows = 7;
+    private int currentFrame = 0;
+    private long lastFrameTime;
+    private static final int ANIMATION_DELAY = 120; // Delay between each frame (milliseconds)
 
     public ArrayList<Fireball> getFireballs() {
         return fireballs;
     }
+
     private double fireballTimer = 0;
-    
+
     public EnemyGrimm(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);
         isInvincible = false;
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
         fireballs = new ArrayList<>();
+        loadSpriteSheet("grimm.png");
+        lastFrameTime = System.currentTimeMillis();
+    }
+
+    private void loadSpriteSheet(String path) {
+        try (InputStream inputStream = getClass().getResourceAsStream(path)) {
+            if (inputStream != null) {
+                spriteSheet = ImageIO.read(inputStream);
+            } else {
+                throw new IOException("Resource not found: " + path);
+            }
+        } catch (IOException e) {
+            System.out.println("Error loading sprite sheet: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -36,11 +63,11 @@ public class EnemyGrimm extends Enemy {
         if (health <= 0) {
             isAlive = false;
         }
-        if(System.currentTimeMillis() > fireballTimer){
-            fireballs.add(new Fireball((int)(this.x + width/2), (int)(this.y + height/2)));
+        if (System.currentTimeMillis() > fireballTimer) {
+            fireballs.add(new Fireball((int) (this.x + width / 2), (int) (this.y + height / 2)));
             fireballTimer = System.currentTimeMillis() + 1000;
         }
-        for(Fireball fireball : fireballs){
+        for (Fireball fireball : fireballs) {
             fireball.tick(gm);
         }
     }
@@ -49,18 +76,44 @@ public class EnemyGrimm extends Enemy {
     public void render(Graphics2D g2d) {
         super.render(g2d); // Call superclass render method to render the square
 
-        if (isAlive) {
+        if (isAlive && spriteSheet != null && !isBeingHit) {
+            int spriteWidth = spriteSheet.getWidth() / spriteColumns;
+            int spriteHeight = spriteSheet.getHeight() / spriteRows;
+            int srcX, srcY;
+
             if (isBeingHit) {
-                g2d.setColor(Color.red);
+                // If the enemy is being hit, display sprite from the 6th row and 2nd column
+                srcX = spriteWidth;
+                srcY = 5 * spriteHeight;
             } else {
-                g2d.setColor(Color.orange);
+                // Otherwise, display the regular animation from the 3rd to 4th row
+                int currentAnimationFrame = currentFrame % (spriteColumns * 12); // End at the 4th row
+                srcX = (currentAnimationFrame % spriteColumns) * spriteWidth;
+                srcY = ((currentAnimationFrame / spriteColumns) % 2 + 2) * spriteHeight; // Start from
+                                                                                         // 3rd row, end
+                                                                                         // at 4th row
             }
-            g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
+            g2d.drawImage(spriteSheet, (int) x - 180, (int) y - 180, (int) (x - 180 + width * 3.8),
+                    (int) (y - 180 + height * 3.8),
+                    srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
+
+            // Update the frame if enough time has passed
+            long currentTime = System.currentTimeMillis();
+            if (!isBeingHit && currentTime - lastFrameTime >= ANIMATION_DELAY) {
+                currentFrame = (currentFrame + 1) % (spriteColumns * 12); // End at the 4th row
+                lastFrameTime = currentTime; // Update lastFrameTime
+            }
+            // if (isBeingHit) {
+            // g2d.setColor(Color.red);
+            // } else {
+            // g2d.setColor(Color.orange);
+            // }
+            // g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
         }
 
         for (Fireball fireball : fireballs) {
             fireball.render(g2d);
         }
     }
-    
+
 }
