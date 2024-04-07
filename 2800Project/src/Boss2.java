@@ -18,8 +18,6 @@ public class Boss2 extends Enemy {
     private int currentFrame = 0; // Current frame for animation
     private long lastFrameTime; // Time of the last frame update
     private final int ANIMATION_DELAY = 100; // Delay between each frame (milliseconds)
-    private int spriteWidth; // Width of each sprite frame
-    private int spriteHeight; // Height of each sprite frame
 
     private ArrayList<Fireball2> fireballs;
 

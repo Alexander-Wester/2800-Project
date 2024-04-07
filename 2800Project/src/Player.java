@@ -73,7 +73,6 @@ public class Player extends GameObject {
     boolean running = false;
 
     private int keys = 0;
-    private String swingDirection; // New variable to store sword swing direction
 
     public Player() {
         super(450, 400, 30, 60);

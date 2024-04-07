@@ -12,9 +12,6 @@ public class Level {
     public Level leftLevel;
     public Level rightLevel;
 
-    private String name;
-    private BufferedImage levelTitle;
-    private BufferedImage ground;
     private BufferedImage brick;
 
 
@@ -28,11 +25,9 @@ public class Level {
             ArrayList<Enemy> enArr) {// ADD
         // ENEMY
         // ARRAY
-        this.name = name;
         leftLevel = left;
         rightLevel = right;
         collisionArray = colArr;
-        levelTitle = title;
         enemyList = enArr;
         tickCounter = 0;
         loadSpriteSheet("lib/ground.png");
@@ -42,7 +37,6 @@ public class Level {
     private void loadSpriteSheet(String path) { // loading the spritesheet
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
-                ground = ImageIO.read(inputStream);
             } else {
                 throw new IOException("Resource not found: " + path);
             }
