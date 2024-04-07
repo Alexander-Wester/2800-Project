@@ -1,19 +1,15 @@
 {
-	"folders": [
-		{
-			"path": ".."
-		},
-		{
-			"path": "../../../../Downloads/Lab5Demo1/Lab5"
-		}
-	],
-	"settings": {
-		"java.project.sourcePaths": [
-			"src"
-		],
-		"java.project.outputPath": "bin",
-		"java.project.referencedLibraries": [
-			"lib/**/*.jar"
-		]
-	}
+  "folders": [
+    {
+      "path": ".."
+    },
+    {
+      "path": "../../../../Downloads/Lab5Demo1/Lab5"
+    }
+  ],
+  "settings": {
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": ["**/*.jar"]
+  }
 }
