@@ -24,7 +24,8 @@ public class GameCanvas extends Canvas implements Runnable {
 	Point mousePos;
 
 	public GameCanvas() {
-		gameManager.addGameObject(player);
+		//gameManager.addGameObject(player);
+		gameManager.player = this.player;
 		loadBackgroundSprite("mountain-bg.png");
 	}
 

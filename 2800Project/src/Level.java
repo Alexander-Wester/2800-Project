@@ -739,7 +739,7 @@ public class Level {
     
     private void generateNewFireball() {
         // Generate and add a new fireball to the enemy list
-        enemyList.add(new Fireball());
+        enemyList.add(new Fireball(0,0));
     }
     
     private void generateNewFireball2(GameManager gm) {

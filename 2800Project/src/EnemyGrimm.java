@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,7 +27,7 @@ public class EnemyGrimm extends Enemy {
         return fireballs;
     }
 
-    private double fireballTimer = 0;
+  //  private double fireballTimer = 0;
 
     public EnemyGrimm(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);

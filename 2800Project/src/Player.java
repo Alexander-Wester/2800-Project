@@ -239,7 +239,7 @@ public class Player extends GameObject {
             g2d.fill(sphere);
         }
         //g2d.drawString("bsk is " + bossSwordKnockback + "dir is "+ bossSwordKnockbackDirection, 100, 120);
-       
+    }
     }
 
     public void playerInputVeloX(int x) {// part of velo calc. I could probably find a way to skip this step but it
