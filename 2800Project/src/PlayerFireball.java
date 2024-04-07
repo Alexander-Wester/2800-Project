@@ -84,8 +84,8 @@ public class PlayerFireball {
         int fireballSpriteHeight = fireSpriteSheet.getHeight() / FIRE_SPRITE_ROWS;
 
         // Increase the size of the fireball
-        int scaledFireballWidth = (int) (fireballSpriteWidth * 3.5);
-        int scaledFireballHeight = (int) (fireballSpriteHeight * 3.5);
+        int scaledFireballWidth = (int) (fireballSpriteWidth * 5);
+        int scaledFireballHeight = (int) (fireballSpriteHeight * 5);
 
         int fireSrcX = (fireballCurrentFrame % FIRE_SPRITE_COLUMNS) * fireballSpriteWidth;
         int fireSrcY = (fireballCurrentFrame / FIRE_SPRITE_COLUMNS) * fireballSpriteHeight;

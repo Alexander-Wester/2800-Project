@@ -123,15 +123,15 @@ public class Player extends GameObject {
     }
 
     public void render(Graphics2D g2d) {
-        g2d.setColor(Color.blue);// render character
-        g2d.fillRect((int) x, (int) y, 30, 60);
+        // g2d.setColor(Color.blue);// render character
+        // g2d.fillRect((int) x, (int) y, 30, 60);
 
         if (spriteSheet != null) {
             int spriteWidth = spriteSheet.getWidth() / SPRITE_COLUMNS;
             int spriteHeight = spriteSheet.getHeight() / SPRITE_ROWS;
 
-            int scaledSpriteWidth = (int) (spriteWidth * 1.5); // Adjusted sword width
-            int scaledSpriteHeight = (int) (spriteHeight * 1.5); // Adjusted sword height
+            int scaledSpriteWidth = (int) (spriteWidth * 1.8); // Adjusted sword width
+            int scaledSpriteHeight = (int) (spriteHeight * 1.8); // Adjusted sword height
 
             int srcX, srcY;
 
@@ -151,6 +151,12 @@ public class Player extends GameObject {
 
                 // Calculate the column based on current frame
                 srcX = (currentFrame % NUM_FRAMES_WALKING) * spriteWidth;
+
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastFrameTime >= ANIMATION_DELAY) {
+                    currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
+                    lastFrameTime = currentTime; // Update lastFrameTime
+                }
             }
 
             if (isAttackOnline && swordSpriteSheet != null) {
@@ -180,7 +186,7 @@ public class Player extends GameObject {
                 }
 
             }
-            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 13, (int) x - 20 + scaledSpriteWidth, (int) y - 13 +
+            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 + scaledSpriteWidth, (int) y - 22 +
                     scaledSpriteHeight,
                     srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
