@@ -10,11 +10,25 @@ import java.io.InputStream;
 
 public class Player extends GameObject {
     private BufferedImage spriteSheet;
+    private BufferedImage swordSpriteSheet;
     private final int SPRITE_COLUMNS = 8; // Number of columns in the spritesheet
     private final int SPRITE_ROWS = 4; // Number of rows in the spritesheet
+    private final int SWORD_SPRITE_COLUMNS = 3; // Number of columns in the sword spritesheet
+    private final int FIRE_SPRITE_COLUMNS = 3;
+    private final int FIRE_SPRITE_ROWS = 5;
+    private static final int NUM_FRAMES_WALKING = 8; // frames to walk
+    private final int SWORD_FRAME_ROW = 1; // Row of the sword animation frames
+    private final int NUM_FRAMES_FIREBALL = FIRE_SPRITE_COLUMNS * FIRE_SPRITE_ROWS;
+    private static final int ANIMATION_DELAY = 100; // Delay between each frame (milliseconds)
+    private int currentFrame = 0;
+    private long lastFrameTime;
+    private final int swordOffsetX = 40;
+    private final int swordOffsetY = 10;
 
     private final int IDLE_FRAME_COLUMN = 0; // Column of the idle animation frame
     private final int IDLE_FRAME_ROW = 0; // Row of the idle animation frame
+    private int fireballCurrentFrame = 0;
+    private long fireballLastFrameTime;
 
     private int playerInputVeloX; // player input's portion of the player's velocity
     private int playerInputVeloY;
@@ -66,12 +80,14 @@ public class Player extends GameObject {
     public Player() {
         super(450, 400, 30, 60);
         loadSpriteSheet("player.png");
+        lastFrameTime = System.currentTimeMillis();
     }
 
     private void loadSpriteSheet(String path) { // loading the spritesheet
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
                 spriteSheet = ImageIO.read(inputStream);
+                swordSpriteSheet = ImageIO.read(getClass().getResourceAsStream("sword.png"));
             } else {
                 throw new IOException("Resource not found: " + path);
             }
@@ -117,52 +133,102 @@ public class Player extends GameObject {
         swapLevel(gm); // if close to side, change level
         detectHits(gm);// detects sword on enemy, detects ememies colliding with you.
 
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - fireballLastFrameTime >= ANIMATION_DELAY) {
+            fireballCurrentFrame = (fireballCurrentFrame + 1) % NUM_FRAMES_FIREBALL;
+            fireballLastFrameTime = currentTime; // Update lastFrameTime
+
+        }
     }
 
     public void render(Graphics2D g2d) {
-        g2d.setColor(Color.blue);// render character
-        g2d.fillRect((int) x, (int) y, 30, 60);
+        // g2d.setColor(Color.blue);// render character
+        // g2d.fillRect((int) x, (int) y, 30, 60);
 
         if (spriteSheet != null) {
             int spriteWidth = spriteSheet.getWidth() / SPRITE_COLUMNS;
             int spriteHeight = spriteSheet.getHeight() / SPRITE_ROWS;
 
+            int scaledSpriteWidth = (int) (spriteWidth * 1.8); // Adjusted sword width
+            int scaledSpriteHeight = (int) (spriteHeight * 1.8); // Adjusted sword height
+
             int srcX, srcY;
 
-            if (!keyA) {
+            if (jumpActive) {
+                srcY = spriteHeight * 0;
+                if (currentFrame == 0) {
+                    srcX = spriteWidth * 6;
+                } else {
+                    srcX = spriteWidth * 7;
+                }
+            } else if (!keyA && !keyD) { // IDLE
                 // Calculate the position of the idle frame in the spritesheet
                 srcX = IDLE_FRAME_COLUMN * spriteWidth;
                 srcY = IDLE_FRAME_ROW * spriteHeight;
+            } else { // If walking, show walking animation frames
+                srcY = 3 * spriteHeight; // Row of walking animation frames in the spritesheet
 
-                g2d.drawImage(spriteSheet, (int) x, (int) y, (int) x + spriteWidth, (int) y + spriteHeight,
-                        srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
-            } else {
-                srcX = IDLE_FRAME_COLUMN + 1 * spriteWidth;
-                srcY = IDLE_FRAME_ROW * spriteHeight;
+                // Calculate the column based on current frame
+                srcX = (currentFrame % NUM_FRAMES_WALKING) * spriteWidth;
 
-                g2d.drawImage(spriteSheet, (int) x, (int) y, (int) x + spriteWidth, (int) y + spriteHeight,
-                        srcX, srcY, -srcX + spriteWidth, srcY + spriteHeight, null);
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastFrameTime >= ANIMATION_DELAY) {
+                    currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
+                    lastFrameTime = currentTime; // Update lastFrameTime
+                }
             }
-        }
 
-        if (isAttackOnline) {// print attack hitbox
-            // printing attack hitbox. the animation for the attack should eventually go
-            // here, likely.
-            g2d.setColor(Color.yellow);
-            g2d.fillPolygon(attackTriangle);
-		}
-        if(fireballAlive){
-            playerFireball.render(g2d);
-        }
+            if (isAttackOnline && swordSpriteSheet != null) {
+                srcX = 5 * spriteWidth;
+                srcY = 0 * spriteHeight;
+                int swordSpriteWidth = swordSpriteSheet.getWidth() / SWORD_SPRITE_COLUMNS;
+                int swordSpriteHeight = swordSpriteSheet.getWidth() / SWORD_FRAME_ROW;
 
-        g2d.setColor(Color.RED);// print level title
-        for (int i = 0; i < health; i++) {
-            g2d.fillRect(50 + 25 * (i + 1), 50, 20, 20);
-        }
+                int scaledSwordWidth = (int) (swordSpriteWidth * 2); // Adjusted sword width
+                int scaledSwordHeight = (int) (swordSpriteHeight * 2); // Adjusted sword height
 
-        if (System.currentTimeMillis() < deathMessageTimer) {// print death message
-            g2d.setColor(Color.red);
-            g2d.drawString("YOU DIED", 400, 150);
+                int swordSrcX = (currentFrame % SWORD_SPRITE_COLUMNS) * spriteWidth;
+                int swordSrcY = SWORD_FRAME_ROW * spriteHeight;
+
+                int swordRenderX = (int) (x + swordOffsetX);
+                int swordRenderY = (int) (y + swordOffsetY);
+
+                g2d.drawImage(swordSpriteSheet, swordRenderX, swordRenderY,
+                        swordRenderX + scaledSwordWidth, swordRenderY + scaledSwordHeight,
+                        swordSrcX, swordSrcY, swordSrcX + swordSpriteWidth, swordSrcY + swordSpriteHeight,
+                        null);
+                // Slow down the sword animation by increasing the delay
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastFrameTime >= ANIMATION_DELAY * 2) {
+                    currentFrame = (currentFrame + 1) % NUM_FRAMES_WALKING;
+                    lastFrameTime = currentTime; // Update lastFrameTime
+                }
+
+            }
+            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 + scaledSpriteWidth, (int) y - 22 +
+                    scaledSpriteHeight,
+                    srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
+
+            if (isAttackOnline)
+
+            {// print attack hitbox
+             // printing attack hitbox. the animation for the attack should eventually go
+             // here, likely.
+                g2d.setColor(Color.yellow);
+                g2d.fillPolygon(attackTriangle);
+            }
+            if (fireballAlive) {
+                playerFireball.render(g2d);
+            }
+
+            g2d.setColor(Color.RED);// print level title
+            for (int i = 0; i < health; i++) {
+                g2d.fillRect(50 + 25 * (i + 1), 50, 20, 20);
+            }
+
+            if (System.currentTimeMillis() < deathMessageTimer) {// print death message
+                g2d.setColor(Color.red);
+                g2d.drawString("YOU DIED", 400, 150);
 
         }
         
