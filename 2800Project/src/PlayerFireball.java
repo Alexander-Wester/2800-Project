@@ -69,7 +69,7 @@ public class PlayerFireball {
                 return;
             }
         }
-        if(System.currentTimeMillis() >= startTime + 2000){
+        if (System.currentTimeMillis() >= startTime + 2000) {
             Player player = gm.player;
             player.resetFireball();
         }

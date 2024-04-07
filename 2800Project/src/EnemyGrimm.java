@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-
 // Boss Grimm:
 // Grimm has 10 HPs
 // it creates multiple fireballs to attack player, if hitted by fireballs, player will lose 1 health.
