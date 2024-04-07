@@ -62,12 +62,17 @@ public class EnemyGrimm extends Enemy {
                 }
             }
         }
+        if(gm.rightPortalActivated){
+            health = -1;
+            isAlive = false;
+        }
         if (health == 0) {
             health = -1;
             isAlive = false;
             //Since this is a miniboss type enemy and it uses fireballs killing it lets the player use fireballs
             gm.player.activateFireball();
             JOptionPane.showMessageDialog(null, "You have unlocked the ability to use the fireball (right click to use)");
+            gm.activateRightPortal();
         }
     }
 

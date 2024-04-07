@@ -184,12 +184,13 @@ public class Level {
         colArr5.add(new Rectangle(300,450,360,100));
         colArr5.add(new Rectangle(835, 450, 125,100));
         colArr5.add(new Rectangle(125,265,175,20));
+        colArr5.add(new Rectangle(660,265,175,20));
         Enemy miniBoss1 = new EnemyGrimm(480,100,100,100,10);
         enemyArr5.add(miniBoss1);
-        enemyArr5.add(new Portal(455, 150, roomOne, 430,300, miniBoss1));
+        enemyArr5.add(new Portal(455, 150, roomOne, 430,300, 2));
         Level roomFive = new Level(roomFour,null, colArr5, "Boss Room" ,enemyArr5);
         roomFour.rightLevel = roomFive;
-        enemyArr.add(new Portal(485,250, roomFive, 455,350,miniBoss1));
+        enemyArr.add(new Portal(485,250, roomFive, 455,350, 2));
 
 
         ArrayList<Rectangle> colArr6 = new ArrayList<>();
@@ -421,9 +422,9 @@ public class Level {
         colArr15.add(new Rectangle(535,325,200,10));
         colArr15.add(new Rectangle(940,0,10,350));
         colArr15.add(new Rectangle(380,150,200,10));
-        enemyArr15.add(new Portal(460,250,roomOne, 430, 300));
+        enemyArr15.add(new Portal(460,250,roomOne, 430, 300, 1));
         Level roomFifteen = new Level(null,roomFourteen,colArr15,"LeftMiniBossRoom", enemyArr15);
-        enemyArr.add(new Portal(350,250,roomFifteen,460,50/*, miniboss */));
+        enemyArr.add(new Portal(350,250,roomFifteen,460,50, 1));
         roomFourteen.leftLevel = roomFifteen;
 
         ArrayList<Rectangle> colArr16 = new ArrayList<>();

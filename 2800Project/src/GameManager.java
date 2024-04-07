@@ -22,7 +22,18 @@ public class GameManager {
 	public LinkedList<GameObject> getGameObjects() {
         return gameObjects;
     }
-	
+
+	public boolean leftPortalActivated = false;
+
+	public boolean rightPortalActivated = false;
+
+	public void activateLeftPortal(){
+		leftPortalActivated = true;
+	}
+
+	public void activateRightPortal(){
+		rightPortalActivated = true;
+	}
 	public void tick() {
 		//calls all gameobject's tick()
 		for(int i = 0; i < gameObjects.size(); i++){

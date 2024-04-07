@@ -7,7 +7,8 @@ public class Portal extends Enemy{
     private int xAfter, yAfter;
     private  boolean active;
 
-    private Enemy condition;
+    int miniBossPortal = -1;
+
     public Portal(int x, int y, Level level, int xAfter, int yAfter) {
         super(x, y, 50, 80, 0);
         isInvincible = true;
@@ -19,9 +20,9 @@ public class Portal extends Enemy{
         this.portal = new Ellipse2D.Double(x,y,width, height);
         active = true;
     }
-    public Portal(int x, int y, Level level, int xAfter, int yAfter, Enemy condition){
+    public Portal(int x, int y, Level level, int xAfter, int yAfter, int oneIsLeftTwoisRight ){
         this(x,y,level,xAfter,yAfter);
-        this.condition = condition;
+        miniBossPortal = oneIsLeftTwoisRight;
         active = false;
     }
 
@@ -34,7 +35,7 @@ public class Portal extends Enemy{
                 player.y = yAfter;
             }
         } else{
-            active = checkCondition();
+            active = checkCondition(gm);
         }
     }
 
@@ -45,11 +46,11 @@ public class Portal extends Enemy{
         }
     }
 
-    public boolean checkCondition(){
-        if(condition != null){
-            if(condition.isAlive == false){
-                return true;
-            }
+    public boolean checkCondition(GameManager gm){
+        if(miniBossPortal == 1){
+            return gm.leftPortalActivated;
+        } else if(miniBossPortal == 2){
+            return gm.rightPortalActivated;
         }
         return false;
     }
