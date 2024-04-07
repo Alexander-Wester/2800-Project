@@ -117,7 +117,7 @@ public class VengeflyEnemy extends Enemy {
                     currentFrame = (currentFrame + 1) % 9; // Advance to the next frame till frame 9
                     lastFrameTime = currentTime; // Update lastFrameTime
                 }
-            } else {
+            } else if (isAlive && isBeingHit) {
                 int spriteWidth = spriteSheet.getWidth() / SPRITE_COLUMNS;
                 int spriteHeight = spriteSheet.getHeight() / SPRITE_ROWS;
                 int srcX = currentFrame * spriteWidth;
