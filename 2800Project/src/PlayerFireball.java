@@ -55,7 +55,7 @@ public class PlayerFireball {
         ArrayList<Rectangle> arr = gm.getCurrentLevel().collisionArray;
         for (Rectangle rectangle : arr) {
             if (hitBox.intersects(rectangle)) {
-                Player player = (Player) gm.gameObjects.get(0);
+                Player player = gm.player;
                 player.resetFireball();
                 return;
             }
@@ -63,14 +63,14 @@ public class PlayerFireball {
         ArrayList<Enemy> enemyArr = gm.getCurrentLevel().enemyList;
         for (Enemy enemy : enemyArr) {
             if (hitBox.intersects(enemy.hitBox) && enemy.isAlive) {
-                enemy.hitLanded();
-                Player player = (Player) gm.gameObjects.get(0);
+                enemy.hitLanded(gm);
+                Player player = gm.player;
                 player.resetFireball();
                 return;
             }
         }
-        if (System.currentTimeMillis() >= startTime + 2000) {
-            Player player = (Player) gm.gameObjects.get(0);
+        if(System.currentTimeMillis() >= startTime + 2000){
+            Player player = gm.player;
             player.resetFireball();
         }
 

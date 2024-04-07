@@ -24,7 +24,8 @@ public class GameCanvas extends Canvas implements Runnable {
 	Point mousePos;
 
 	public GameCanvas() {
-		gameManager.addGameObject(player);
+		//gameManager.addGameObject(player);
+		gameManager.player = this.player;
 		loadBackgroundSprite("mountain-bg.png");
 	}
 
@@ -149,17 +150,30 @@ public class GameCanvas extends Canvas implements Runnable {
 		@Override
 		public void keyPressed(KeyEvent e) {
 
-			if (e.getKeyCode() == KeyEvent.VK_A) {
-				player.playerInputVeloX(-5);
+			if (e.getKeyCode() == KeyEvent.VK_A){
+				if(player.isRunning()){
+					player.playerInputVeloX(-10);
+				} else {
+					player.playerInputVeloX(-5);
+				}
 				player.setKeyA(true);
 			}
-			if (e.getKeyCode() == KeyEvent.VK_D) {
-				player.playerInputVeloX(5);
+			if (e.getKeyCode() == KeyEvent.VK_D){
+				if(player.isRunning()){
+					player.playerInputVeloX(10);
+				} else {
+					player.playerInputVeloX(5);
+				}
 				player.setKeyD(true);
 			}
 			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 				player.jump();
 
+			}
+			if (e.getKeyCode() == KeyEvent.VK_SHIFT){
+				if(player.canRun()){
+					player.playerRun(true);
+				}
 			}
 		}
 
@@ -182,8 +196,14 @@ public class GameCanvas extends Canvas implements Runnable {
 					player.playerInputVeloX(0);
 				}
 			}
+			if(e.getKeyCode() == KeyEvent.VK_SHIFT){
+				player.playerRun(false);
+			}
 		}
 
 	}
 
 }
+
+
+

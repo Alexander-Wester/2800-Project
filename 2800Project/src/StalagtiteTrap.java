@@ -38,11 +38,11 @@ public class StalagtiteTrap extends Enemy {
         }
     }
 
-    public void tick(GameManager gm) {
-        hitBox = new Rectangle((int) x + 5, (int) y, 10, 25);
-
-        if (Math.abs(gm.gameObjects.get(0).x - x) < 50) {// falls if near the player.
-            isFalling = true;
+    public void tick(GameManager gm){
+        hitBox = new Rectangle((int)x+5,(int)y,10,25);
+       
+        if(Math.abs(gm.player.x-x)<50){//falls if near the player. 
+           isFalling=true;
         }
         if (isFalling) {// falls, breaks when it hits the ground.
             Rectangle tempRectangle = new Rectangle((int) x, (int) (y + 5 + height), (int) width, 5);

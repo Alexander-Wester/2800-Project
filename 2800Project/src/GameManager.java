@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class GameManager {
 
@@ -8,7 +9,15 @@ public class GameManager {
 	
 	
 	public LinkedList<GameObject> gameObjects = new LinkedList<GameObject>();
-	Level currLevel = Level.level1();
+	Level currLevel = Level.level1(this);
+
+	public ArrayList<Level> levelList;
+
+	Player player;
+
+	public void setLevelList(ArrayList<Level> l){
+		this.levelList = l;
+	}
 
 	public LinkedList<GameObject> getGameObjects() {
         return gameObjects;
@@ -20,6 +29,7 @@ public class GameManager {
 			gameObjects.get(i).tick(this);
 		}
 		currLevel.tick(this);
+		player.tick(this);
 		//NOTE: Enemy tick is called through the level tick function
 	}
 	
@@ -27,6 +37,7 @@ public class GameManager {
 		//calls all gameObject's render()
 		for(int i = 0; i < gameObjects.size(); i++) gameObjects.get(i).render(g2d);
 		currLevel.render(g2d);
+		player.render(g2d);
 	}
 
 	public void addGameObject(GameObject gameObject) {
@@ -46,7 +57,7 @@ public class GameManager {
 	}
 
 	public void reset(){
-		currLevel = Level.level1();
+		currLevel = Level.level1(this);
 		//this is for death: currently just resets the whole game basically lol.
 	}
 }

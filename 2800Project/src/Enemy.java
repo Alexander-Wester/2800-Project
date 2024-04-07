@@ -10,12 +10,16 @@ public class Enemy extends GameObject{
     boolean isAlive = true;
     boolean doneFalling;
 
+    boolean actualEnemy=true;
+
     boolean isInvincible;//used for traps or other hazards that cannot be killed. 
     
 
     public boolean isAlive() {
         return isAlive;
     }
+
+    boolean doesDamageOnCollision = true;
 
     //basic enemy. can even be made general if needed
     //NOTE: a fair bit of the enemies' collisions with player is in the play function
@@ -30,14 +34,14 @@ public class Enemy extends GameObject{
     }
 
     //NOTE: all enemies hurt you if you collide with their hitbox. feel free to change this if needed.
-    public void hitLanded(){
+    public void hitLanded(GameManager gm){
         if(!isBeingHit && isAlive){
-        beingHitTimer = System.currentTimeMillis() + 500;
-        isBeingHit=true;
-        if(!isInvincible){
-        health--;
-        }
-       }
+            beingHitTimer = System.currentTimeMillis() + 500;
+            isBeingHit=true;
+            if(!isInvincible){
+            health--;
+            }
+           }
     }
 
     public void tick(GameManager gm){}//Enemy logic goes here: checking hits, moving the enemy, etc. 

@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -5,6 +6,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,7 +27,7 @@ public class EnemyGrimm extends Enemy {
         return fireballs;
     }
 
-    private double fireballTimer = 0;
+  //  private double fireballTimer = 0;
 
     public EnemyGrimm(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);
@@ -60,21 +62,39 @@ public class EnemyGrimm extends Enemy {
                 }
             }
         }
-        if (health <= 0) {
+        if (health == 0) {
+            health = -1;
             isAlive = false;
-        }
-        if (System.currentTimeMillis() > fireballTimer) {
-            fireballs.add(new Fireball((int) (this.x + width / 2), (int) (this.y + height / 2)));
-            fireballTimer = System.currentTimeMillis() + 1000;
-        }
-        for (Fireball fireball : fireballs) {
-            fireball.tick(gm);
+            //Since this is a miniboss type enemy and it uses fireballs killing it lets the player use fireballs
+            gm.player.activateFireball();
+            JOptionPane.showMessageDialog(null, "You have unlocked the ability to use the fireball (right click to use)");
         }
     }
 
     @Override
-    public void render(Graphics2D g2d) {
-        super.render(g2d); // Call superclass render method to render the square
+public void render(Graphics2D g2d) {
+    super.render(g2d); // Call superclass render method to render the square
+
+    int healthBarWidth = 50;
+    int healthBarHeight = 10;
+    int healthBarX = (int) x;
+    int healthBarY = (int) y - healthBarHeight - 5; // Place health bar above the EnemyGrimm
+
+    // Calculate health bar color based on current health
+    Color healthBarColor = Color.GREEN;
+    double healthPercentage = (double) health / 10;
+    if (healthPercentage <= 0.5) {
+        healthBarColor = Color.YELLOW;
+    }
+    if (healthPercentage <= 0.2) {
+        healthBarColor = Color.RED;
+    }
+
+    g2d.setColor(Color.BLACK);
+    g2d.drawRect(healthBarX, healthBarY, healthBarWidth, healthBarHeight);
+    g2d.setColor(healthBarColor);
+    int barWidth = (int) (healthBarWidth * healthPercentage);
+    g2d.fillRect(healthBarX, healthBarY, barWidth, healthBarHeight);
 
         if (isAlive && spriteSheet != null && !isBeingHit) {
             int spriteWidth = spriteSheet.getWidth() / spriteColumns;
