@@ -31,7 +31,7 @@ public class EnemyGrimm extends Enemy {
     public EnemyGrimm(int x1, int y1, int w1, int h1, int h2) {
         super(x1, y1, w1, h1, h2);
         isInvincible = false;
-        hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
+        hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height+40);
         fireballs = new ArrayList<>();
         loadSpriteSheet("lib/grimm.png");
         lastFrameTime = System.currentTimeMillis();
@@ -52,7 +52,7 @@ public class EnemyGrimm extends Enemy {
 
     @Override
     public void tick(GameManager gm) {
-        hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
+        hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height+40);
 
         if (isAlive) {
             if (isBeingHit) {
@@ -114,7 +114,7 @@ public class EnemyGrimm extends Enemy {
                                                                                          // 3rd row, end
                                                                                          // at 4th row
             }
-            g2d.drawImage(spriteSheet, (int) x - 180, (int) y - 180, (int) (x - 180 + width * 3.8),
+            g2d.drawImage(spriteSheet, (int) x - 110, (int) y - 220, (int) (x - 180 + width * 3.8),
                     (int) (y - 180 + height * 3.8),
                     srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 

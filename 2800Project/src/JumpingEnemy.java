@@ -97,6 +97,7 @@ public class JumpingEnemy extends Enemy {
 
     public void render(Graphics2D g2d) {
         if (isAlive) {
+
             if (isBeingHit) {
                 // Calculate sprite width and height
                 int spriteWidth = enemySpriteSheetRed.getWidth() / ENEMY_SPRITE_COLUMNS;
