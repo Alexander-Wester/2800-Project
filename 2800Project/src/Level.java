@@ -531,7 +531,7 @@ public class Level {
         colArrBossRight1.add(new Rectangle(100,200,800,20));
         colArrBossRight1.add(new Rectangle(0,0,5,400));
         colArrBossRight1.add(new Rectangle(940,100,20,400));
-        // enemyArrBossRight1.add(new BossBeamAttack(true,0));
+        enemyArrBossRight1.add(new BossBeamAttack(true,0));
 
          ArrayList<Enemy> enemyArrBossRight2 = new ArrayList<Enemy>();
          ArrayList<Rectangle> colArrBossRight2 = new ArrayList<>();
@@ -552,7 +552,7 @@ public class Level {
  
          colArrBossRight3.add(new Rectangle(0,350,150,200));
          enemyArrBossRight3.add(new LavaTrap(0,485,960,30));
-         //enemyArrBossRight3.add(new BossBeamAttack(true, 0));
+         enemyArrBossRight3.add(new BossBeamAttack(true, 0));
          colArrBossRight3.add(new Rectangle(0,500,960,20));
          colArrBossRight3.add(new Rectangle(280,450,80,50));
          colArrBossRight3.add(new Rectangle(480,450,80,50));

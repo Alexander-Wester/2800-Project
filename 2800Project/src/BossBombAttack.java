@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class BossBombAttack extends Enemy{
     
@@ -8,6 +9,8 @@ public class BossBombAttack extends Enemy{
     boolean windupState=false;
     boolean damageState=false;
     boolean bothStatesOff=true;
+
+    BufferedImage image;
 
     boolean firstTimeSetup=true;
     boolean reposisitionThisCylcle=false;
@@ -19,6 +22,8 @@ public class BossBombAttack extends Enemy{
         doesDamageOnCollision=false;
         isAlive=true;
         this.actualEnemy=false;
+
+        image = ImageLoader.loadImage("./lib/explo3.png");
        
         hitBox = new Rectangle((int)x-(int)width/2,(int)(y-width/2),(int)width,(int)height);
     }
@@ -80,7 +85,8 @@ public class BossBombAttack extends Enemy{
         }
     }
         else if(damageState){
-            g2d.fillOval((int)x-40, (int)y-40,80,80);
+            g2d.drawImage(image, (int)x-100, (int)y-60, (int)width +120, (int)height+40, null);
+            //g2d.draw(hitBox);  
         }
     }
 

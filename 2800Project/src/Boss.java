@@ -6,7 +6,9 @@ import java.io.IOException;
 
 public class Boss extends Enemy{
     
-    BufferedImage image;
+    BufferedImage golemImage;
+    BufferedImage golemImage2;
+
     BufferedImage blueImage;
     BufferedImage orangeImage;
 
@@ -18,12 +20,12 @@ public class Boss extends Enemy{
     BossSwordAttack sword = null;
 
     public Boss(){
-        super(960/2-50,200,100,200,10);
+        super(430,200,100,200,10);
     hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
     orangeImage = loadImage("./lib/Topaz.png");
     blueImage = loadImage("./lib/Sapphire.png");
-    image = loadImage("./lib/Golem.png");
-
+    golemImage = loadImage("./lib/Golem2.png");
+    golemImage2 = loadImage("./lib/Golem_Core.png");
 
     }
 
@@ -89,8 +91,14 @@ public class Boss extends Enemy{
 
     public void render(Graphics2D g2d){
         if(isAlive){
-        g2d.setColor(Color.red);
-        g2d.fillRect((int)x, (int)y, (int)width, (int)height);
+
+        if(orangeCrystalAlive || blueCrystalAlive){
+        g2d.drawImage(golemImage,(int)x-40, (int)y, (int)width+80, (int)height,null);
+        }
+        else{
+            g2d.drawImage(golemImage2,(int)x-40, (int)y, (int)width+80, (int)height,null);
+        }
+        //g2d.fillRect((int)x, (int)y, (int)width, (int)height);
         //g2d.rotate(Math.toRadians(45));
         if(orangeCrystalAlive){
         //g2d.setColor(Color.orange);

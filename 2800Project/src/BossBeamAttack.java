@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class BossBeamAttack extends Enemy{
     
@@ -21,6 +22,8 @@ public class BossBeamAttack extends Enemy{
     boolean firstTimeSetup=true;
     boolean reposisitionThisCylcle=false;
 
+    BufferedImage image;
+
     
     public BossBeamAttack(boolean r,int p){
         super(300,0,50,500,1);
@@ -28,6 +31,8 @@ public class BossBeamAttack extends Enemy{
         isInvincible=true;
         doesDamageOnCollision=false;
         root=r;
+
+        image = ImageLoader.loadImage("./lib/lazar.png");
        
         hitBox = new Rectangle((int)x,(int)y,(int)width,(int)height);
     }
@@ -109,7 +114,8 @@ public class BossBeamAttack extends Enemy{
         }
     }
         else if(damageState){
-            g2d.fillRect((int)x, (int)y, (int)width,(int)height);
+            g2d.drawImage(image, (int)x-20, (int)y, (int)width+40, 460, null);
+            //g2d.drawRect((int)x, (int)y, (int)width,(int)height);
         }
     }
 
