@@ -1,8 +1,15 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class Boss extends Enemy{
     
-    
+    BufferedImage image;
+    BufferedImage blueImage;
+    BufferedImage orangeImage;
+
     boolean blueCrystalAlive=true;
     boolean orangeCrystalAlive=true;
 
@@ -13,6 +20,10 @@ public class Boss extends Enemy{
     public Boss(){
         super(960/2-50,200,100,200,10);
     hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
+    orangeImage = loadImage("./lib/Topaz.png");
+    blueImage = loadImage("./lib/Sapphire.png");
+    image = loadImage("./lib/Golem.png");
+
 
     }
 
@@ -21,9 +32,6 @@ public class Boss extends Enemy{
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
 
         if(isAlive){
-
-            if(gm.player.y<465){
-                this.isInvincible=true;            }
 
         if(gm.player.x>x-140 && gm.player.x<x+width+140){
             if(System.currentTimeMillis()>attackCooldownTimer){
@@ -39,7 +47,7 @@ public class Boss extends Enemy{
             }
         }
 
-    if(blueCrystalAlive || orangeCrystalAlive){
+    if(blueCrystalAlive || orangeCrystalAlive || gm.player.y<465){
         isInvincible=true;
     }
     else{
@@ -85,12 +93,14 @@ public class Boss extends Enemy{
         g2d.fillRect((int)x, (int)y, (int)width, (int)height);
         //g2d.rotate(Math.toRadians(45));
         if(orangeCrystalAlive){
-        g2d.setColor(Color.orange);
-        g2d.fillRect((int)x-40, (int)y-40, 20, 20);
+        //g2d.setColor(Color.orange);
+        //g2d.fillRect((int)x-40, (int)y-40, 20, 20);
+        g2d.drawImage(orangeImage,(int)x-40, (int)y-40, null);
         }
         if(blueCrystalAlive){
-        g2d.setColor(Color.blue);
-        g2d.fillRect((int)x+120, (int)y-40, 20, 20);
+        //g2d.setColor(Color.blue);
+        //g2d.fillRect((int)x+120, (int)y-40, 20, 20);
+        g2d.drawImage(blueImage,(int)x+120, (int)y-40,null);
         }
 
         g2d.setColor(Color.gray);
@@ -99,17 +109,15 @@ public class Boss extends Enemy{
         g2d.setColor(Color.red);
         g2d.fillRect(442, 152, 8 * health, 16);
 
-        
-       //g2d.setColor(Color.white);
-       //g2d.drawString("Invicible returns: " + isInvincible + " health is: " + health, 100, 100);
-       
-
-
-     //  if(isAttackActive){
-       // sword.render(g2d);
-       //}
     }
-        //g2d.rotate(Math.toRadians(0));
+    
+}
+public BufferedImage loadImage(String path){
+    try{
+        return ImageIO.read(new File(path));
+    } catch (IOException e) {
+        throw new RuntimeException(e);
     }
+}
 
 }
