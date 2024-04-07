@@ -405,7 +405,7 @@ public class Level {
         enemyArr14.add(new JumpingEnemy(610,170,50,100,2));
         for(int i = 0; i < random.nextInt(5) + 5; i ++) {
             randomInt = random.nextInt(800);
-            int randomInt2 = random.nextInt(450);
+            //int randomInt2 = random.nextInt(450);
             //enemyArr14.add(new VengeflyEnemy(randomInt, randomInt2, 20, 20, 2));//temp disable for testing this is super hard lol
         }
         Level roomFourteen = new Level(null, roomThirteen, colArr14, "LeftRoomFour", enemyArr14);
