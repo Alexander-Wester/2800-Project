@@ -92,25 +92,27 @@ public class Boss2 extends Enemy {
         g2d.fillRect(healthBarX, healthBarY, barWidth, healthBarHeight); // Fill
 
         if (isAlive) {
-            // Determine the source X coordinate for the sprite based on the current frame
-            int srcX = (currentFrame % SPRITE_COLUMNS) * spriteWidth;
+            int spriteWidth = spriteSheet.getWidth() / SPRITE_COLUMNS;
+            int spriteHeight = spriteSheet.getHeight() / SPRITE_ROWS;
+            int srcX, srcY;
 
-            // Calculate the scaled sprite width and height
-            int scaledSpriteWidth = (int) (spriteWidth * 1.8); // Adjust as needed
-            int scaledSpriteHeight = (int) (spriteHeight * 1.8); // Adjust as needed
+            // Otherwise, display the regular animation from the 3rd to 4th row
+            srcX = (currentFrame % SPRITE_COLUMNS) * spriteWidth;
+            srcY = ((currentFrame / SPRITE_COLUMNS) % 1) * spriteHeight; // Start from
+                                                                         // 3rd row, end
+                                                                         // at 4th row
 
-            // Draw the sprite from the sprite sheet
-            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 22, (int) x - 20 + scaledSpriteWidth,
-                    (int) y - 22 + scaledSpriteHeight,
-                    srcX, 0, srcX + spriteWidth, spriteHeight, null);
+            g2d.drawImage(spriteSheet, (int) x - 20, (int) y - 30, (int) (x - 20 + width * 1.5),
+                    (int) (y - 30 + height * 1.5),
+                    srcX, srcY, srcX + spriteWidth, srcY + spriteHeight, null);
 
-            // Update the current frame for animation
+            // Update the frame if enough time has passed
             long currentTime = System.currentTimeMillis();
-            if (currentTime - lastFrameTime >= ANIMATION_DELAY) {
-                currentFrame = (currentFrame + 1) % SPRITE_COLUMNS;
+            if (!isBeingHit && currentTime - lastFrameTime >= ANIMATION_DELAY) {
+                currentFrame = (currentFrame + 1) % (SPRITE_COLUMNS); // End at the 4th row
                 lastFrameTime = currentTime; // Update lastFrameTime
             }
-            // g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
+            g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
         }
 
         for (Fireball2 fireball : fireballs) {
