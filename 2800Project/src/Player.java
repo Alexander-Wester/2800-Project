@@ -66,7 +66,7 @@ public class Player extends GameObject {
     int bossSwordKnockbackDirection = 0; // -1 left, 1 right;
     long bossSwordKnockbackTimer;
 
-    boolean runningActivated = true;
+    boolean runningActivated = false;
     boolean running = false;
 
     private int keys = 0;
@@ -142,6 +142,8 @@ public class Player extends GameObject {
     public void render(Graphics2D g2d) {
         // g2d.setColor(Color.blue);// render character
         // g2d.fillRect((int) x, (int) y, 30, 60);
+        g2d.setColor(Color.black);
+        g2d.drawString("Keys Held: " + keys, 800, 20);
 
         if (spriteSheet != null) {
             int spriteWidth = spriteSheet.getWidth() / SPRITE_COLUMNS;

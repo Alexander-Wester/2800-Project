@@ -74,11 +74,12 @@ public class Fireball extends Enemy {
     @Override
     public void render(Graphics2D g2d) {
         if (fireballFrames != null) {
+
             int xPos = (int) hitBox.getX();
             int yPos = (int) hitBox.getY();
             int scaledWidth = (int) (frameWidth * 4);
             int scaledHeight = (int) (frameHeight * 4);
-            g2d.drawImage(fireballFrames[currentFrame], xPos, yPos, scaledWidth, scaledHeight, null);
+            g2d.drawImage(fireballFrames[currentFrame], xPos, yPos-20, scaledWidth, scaledHeight, null);
         } else {
             g2d.setColor(Color.RED);
             g2d.fill(hitBox);
