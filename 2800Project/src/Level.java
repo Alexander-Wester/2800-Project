@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.*;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 
 public class Level {
@@ -19,6 +20,7 @@ public class Level {
 
     // Add a tick counter for fireball generation
     private int tickCounter;
+    private BufferedImage ground;
 
     public Level(String name, Level left, Level right, ArrayList<Rectangle> colArr, BufferedImage title,
             ArrayList<Enemy> enArr) {// ADD
@@ -38,10 +40,11 @@ public class Level {
     private void loadSpriteSheet(String path) { // loading the spritesheet
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
-                //ground = ImageIO.read(inputStream);
+                ground = ImageIO.read(inputStream);
             } else {
                 throw new IOException("Resource not found: " + path);
             }
+            //ground = ImageIO.read(new File(path));
         } catch (IOException e) {
             System.out.println("Error loading spritesheet: " + e.getMessage());
             e.printStackTrace();
@@ -216,7 +219,7 @@ public class Level {
         Enemy miniBoss1 = new EnemyGrimm(480,100,100,100,10);
         enemyArr5.add(miniBoss1);
         enemyArr5.add(new Portal(455, 150, roomOne, 430,300, 2));
-        Level roomFive = new Level("Room5",roomFour,null, colArr5, loadImage("./src/lib/Room5.png"),enemyArr5);
+        Level roomFive = new Level("Room5",roomFour,null, colArr5, loadImage("./src/lib/BossRoom.png"),enemyArr5);
         roomFour.rightLevel = roomFive;
         enemyArr.add(new Portal(485,250, roomFive, 455,350, 2));
 
@@ -640,6 +643,7 @@ public class Level {
         colArrBossLeft3.add(new Rectangle(820,200,40,600));
         colArrBossLeft3.add(new Rectangle(900,480,60,100));
         colArrBossLeft3.add(new Rectangle(0,200,150,50));
+        colArrBossLeft3.add(new Rectangle(600,300,100,10));
         MovingPlatform movingPlatformBossLeft3 = new MovingPlatform(220, 200, 150, 20, 219, 700,2, false);
         colArrBossLeft3.add(movingPlatformBossLeft3.hitBox);
         enemyArrBossLeft3.add(movingPlatformBossLeft3);

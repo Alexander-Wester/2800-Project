@@ -49,7 +49,7 @@ public class Boss extends Enemy{
             }
         }
 
-    if(blueCrystalAlive || orangeCrystalAlive || gm.player.y<465){
+    if(blueCrystalAlive || orangeCrystalAlive){
         isInvincible=true;
     }
     else{

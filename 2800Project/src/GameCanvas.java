@@ -173,6 +173,11 @@ public class GameCanvas extends Canvas implements Runnable {
 			if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 				if (player.canRun()) {
 					player.playerRun(true);
+					if (player.getKeyA()){
+						player.playerInputVeloX(-10);
+					}else if(player.getKeyD()){
+						player.playerInputVeloX(10);
+					}
 				}
 			}
 		}

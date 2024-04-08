@@ -110,7 +110,7 @@ public class Boss2 extends Enemy {
                 currentFrame = (currentFrame + 1) % (SPRITE_COLUMNS); // End at the 4th row
                 lastFrameTime = currentTime; // Update lastFrameTime
             }
-            g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
+            //g2d.fill(new Rectangle((int) x, (int) y, (int) width, (int) height));
         }
 
         for (Fireball2 fireball : fireballs) {
