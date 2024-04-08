@@ -33,7 +33,7 @@ public class BossBombAttack extends Enemy{
         hitBox = new Rectangle((int)x-(int)width/2+10,(int)(y-width/2)+10,(int)width-20,(int)height-20);
 
         //generous if to stop unfair damage when renetering: simply resets timer to 0;
-        if (gm.player.x < 15 || gm.player.x > 910) {
+        if (gm.player.x < 25 || gm.player.x > 900) {
           timer = System.currentTimeMillis();
           bothStatesOff=true;
           windupState=false;

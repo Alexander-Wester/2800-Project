@@ -652,7 +652,7 @@ public class Level {
             enemyArrBossLeft3.add(new StalagtiteTrap(randomInt, 0, 0, 0, 0));
         }
         enemyArrBossLeft3.add(new Portal(10, 100, levelBossMain, 800, 420));
-        enemyArrBossLeft3.add(new BossOrbGenerator(190, 50, Color.orange));
+        enemyArrBossLeft3.add(new BossOrbGenerator(50, 190, Color.orange));
         enemyArrBossLeft3.add(new LavaTrap(0,485,820,30));
 
 

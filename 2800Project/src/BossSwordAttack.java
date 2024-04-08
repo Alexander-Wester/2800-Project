@@ -56,6 +56,6 @@ public class BossSwordAttack extends Enemy {
             g2d.drawImage(image,(int)x, (int)y-20, (int)width, (int)height+40, null);
         }
 
-        g2d.drawRect((int)x,(int)y,(int)width,(int)height);
+       // g2d.drawRect((int)x,(int)y,(int)width,(int)height);
     }
 }

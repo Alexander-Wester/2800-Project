@@ -22,7 +22,7 @@ public class BossDoor extends Enemy {
     @Override
     public void tick(GameManager gm) {
         if (hitBox.intersects(gm.player.getHitBox())) {//
-            if(gm.player.keyAmount() >=2){
+            if(gm.player.keyAmount() >=2){//gm.player.keyAmount() >=2
             gm.currLevel = gm.levelList.get(5);
             gm.player.x = 450;
             gm.player.y = 400;

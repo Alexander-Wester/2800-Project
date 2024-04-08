@@ -87,6 +87,7 @@ public class Boss extends Enemy{
         sword=null;
     }
 }
+
 }
 
     public void render(Graphics2D g2d){
@@ -117,6 +118,11 @@ public class Boss extends Enemy{
         g2d.setColor(Color.red);
         g2d.fillRect(442, 152, 8 * health, 16);
 
+    }
+    else{
+        g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 60));
+        g2d.setColor(Color.yellow);
+        g2d.drawString("YOU WIN", 350, 200);
     }
     
 }
