@@ -3,10 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 //import java.awt.geom.*;
 import java.awt.image.*;
+import java.io.File;
 import java.io.IOException;
 import java.awt.event.*;
 //import java.io.*;
 //import javax.imageio.*;
+import javax.sound.sampled.*;
 
 //simple canvas and thread.
 //important: this file contains mouse and keyboard listener, for new tools you will likely have to add new if statements for new keys.
@@ -22,11 +24,13 @@ public class GameCanvas extends Canvas implements Runnable {
 	Player player = new Player();
 
 	Point mousePos;
+	private Clip clip;
 
 	public GameCanvas() {
 		// gameManager.addGameObject(player);
 		gameManager.player = this.player;
 		loadBackgroundSprite("lib/mountain-bg.png");
+		loadBackgroundSound("lib/background.wav");
 	}
 
 	// This initalizes the buffering and starts the game thread.
@@ -139,6 +143,18 @@ public class GameCanvas extends Canvas implements Runnable {
 		}
 	}
 
+	private void loadBackgroundSound(String path) {
+		try {
+			File soundFile = new File(path);
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the sound continuously
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public class playerListener implements KeyListener {
 
 		private Player player;
@@ -173,9 +189,9 @@ public class GameCanvas extends Canvas implements Runnable {
 			if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 				if (player.canRun()) {
 					player.playerRun(true);
-					if (player.getKeyA()){
+					if (player.getKeyA()) {
 						player.playerInputVeloX(-10);
-					}else if(player.getKeyD()){
+					} else if (player.getKeyD()) {
 						player.playerInputVeloX(10);
 					}
 				}
@@ -209,6 +225,3 @@ public class GameCanvas extends Canvas implements Runnable {
 	}
 
 }
-
-
-
