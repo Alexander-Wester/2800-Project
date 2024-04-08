@@ -693,13 +693,14 @@ public class Level {
 
     public void render(Graphics2D g2d) { 
 
-        for(int i=0;i<collisionArray.size();i++){
+      for(int i=0;i<collisionArray.size();i++){
             for(int j=collisionArray.get(i).x;j<collisionArray.get(i).x+collisionArray.get(i).width;j=j+10){
                 for(int k=collisionArray.get(i).y;k<collisionArray.get(i).y+collisionArray.get(i).height;k=k+10){
                     g2d.drawImage(brick, j, k, 10, 10, null);
                 }
             }
         }
+      
 
 
 
@@ -914,7 +915,12 @@ public class Level {
 
     public void tick(GameManager gm) {
         // Increment the tick counter
+       
         tickCounter++;
+
+        for (int i = 0; i < enemyList.size(); i++) {
+            enemyList.get(i).tick(gm);
+        }
 
         // Increment the 5-second counter
         int fiveSecondCounter = tickCounter / 50; // Since you're incrementing tickCounter every tick, 50 ticks = 1
@@ -984,9 +990,7 @@ public class Level {
         }
     
         // Rest of the tick method
-        for (int i = 0; i < enemyList.size(); i++) {
-            enemyList.get(i).tick(gm);
-        }
+        
     }
 }
 
