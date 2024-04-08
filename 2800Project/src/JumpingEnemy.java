@@ -46,6 +46,7 @@ public class JumpingEnemy extends Enemy {
     }
 
     public void tick(GameManager gm) {
+        //System.out.print("*");
         hitBox = new Rectangle((int) x, (int) y, (int) width, (int) height);
 
         if (isAlive) {
@@ -96,6 +97,8 @@ public class JumpingEnemy extends Enemy {
     }
 
     public void render(Graphics2D g2d) {
+        //System.out.print(".");
+       
         if (isAlive) {
             if (isBeingHit) {
                 // Calculate sprite width and height

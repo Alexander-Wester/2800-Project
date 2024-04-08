@@ -361,7 +361,7 @@ public class Level {
         ArrayList<Rectangle> colArr11 = new ArrayList<>();
         ArrayList<Enemy> enemyArr11 = new ArrayList<Enemy>();
         colArr11.add(new Rectangle(0,500,960,60));
-        colArr11.add(new Rectangle(0,100,5,500));
+        colArr11.add(new Rectangle(0,100,10,500));
         colArr11.add(new Rectangle(940,0,5,400));
         colArr11.add(new Rectangle(50,400,910,10));
         colArr11.add(new Rectangle(0,300,890,10));
@@ -414,8 +414,8 @@ public class Level {
         enemyArr13.add(roomThirteenBtn);
         colArr13.add(new Rectangle(100,375,860,50));
         colArr13.add(new Rectangle());
-        colArr13.add(new Rectangle(0,200,10,500));
-        UnlockableDoor roomThirteenDoor = new UnlockableDoor(0,0,10,200, roomThirteenBtn);
+        colArr13.add(new Rectangle(0,200,20,500));
+        UnlockableDoor roomThirteenDoor = new UnlockableDoor(0,0,20,200, roomThirteenBtn);
         colArr13.add(new Rectangle(75,225,100,20));
         colArr13.add(roomThirteenDoor.hitBox);
         enemyArr13.add(roomThirteenDoor);
@@ -476,7 +476,7 @@ public class Level {
         colArr16.add(new Rectangle(100,420,100,40));
         colArr16.add(new Rectangle(150,380,50,40));
         colArr16.add(new Rectangle(0,0,10,380));
-        enemyArr16.add(new LavaTrap(200,480,560,90));
+        enemyArr16.add(new LavaTrap(0,480,960,90));
         for(int i = 0; i < random.nextInt(20) + 10; i ++) {
             randomInt = random.nextInt(560) + 200;
             enemyArr16.add(new StalagtiteTrap(randomInt, 0, 0, 0, 0));
@@ -487,7 +487,7 @@ public class Level {
         ArrayList<Rectangle> colArr17 = new ArrayList<>();
         ArrayList<Enemy> enemyArr17 = new ArrayList<Enemy>();
         colArr17.add(new Rectangle(0,460,960,100));
-        colArr17.add(new Rectangle(0,0,10,380));
+        colArr17.add(new Rectangle(0,0,20,380));
         colArr17.add(new Rectangle(100,380,900,10));
         colArr17.add(new Rectangle(930,0,20,380));
         colArr17.add(new Rectangle(0,280,850,10));
@@ -496,7 +496,7 @@ public class Level {
         colArr17.add(new Rectangle(0,80,850,10));
         Button leftRoomSevenBtn = new Button(20,20,50,50);
         enemyArr17.add(leftRoomSevenBtn);
-        UnlockableDoor roomSeventeenDoor = new UnlockableDoor(0,380,10,80,leftRoomSevenBtn);
+        UnlockableDoor roomSeventeenDoor = new UnlockableDoor(0,380,20,80,leftRoomSevenBtn);
         colArr17.add(roomSeventeenDoor.hitBox);
         enemyArr17.add(roomSeventeenDoor);
         for(int i = 0; i < random.nextInt(5) + 5; i ++) {
@@ -513,7 +513,7 @@ public class Level {
         colArr18.add(new Rectangle(800,460,200,60));
         enemyArr18.add(new LavaTrap(0,480,960,60));
         colArr18.add(new Rectangle(930,0,20,380));
-        colArr18.add(new Rectangle(0,150,10,500));
+        colArr18.add(new Rectangle(0,150,20,500));
         colArr18.add(new Rectangle(100,400,200,10));
         colArr18.add(new Rectangle(700,250,300,10));
         colArr18.add(new Rectangle(0,150,100,10));
@@ -610,7 +610,7 @@ public class Level {
         colArrBossLeft1.add(new Rectangle(550,250,100,40));
         colArrBossLeft1.add(new Rectangle(400,250,100,20));
         colArrBossLeft1.add(new Rectangle(700,100,100,20));
-        colArrBossLeft1.add(new Rectangle(0,100,5,400));
+        colArrBossLeft1.add(new Rectangle(0,100,20,400));
         colArrBossLeft1.add(new Rectangle(0,100,200,20));
         colArrBossLeft1.add(new Rectangle(300,100,300,20));
         //enemyArrBossLeft1.add(new BossOrbGenerator(700, 95, Color.orange));
@@ -622,7 +622,7 @@ public class Level {
         ArrayList<Enemy> enemyArrBossLeft2 = new ArrayList<Enemy>();
         colArrBossLeft2.add(new Rectangle(940,100,20,400));
         colArrBossLeft2.add(new Rectangle(0,500,960,60));
-        colArrBossLeft2.add(new Rectangle(0,0,5,400));
+        colArrBossLeft2.add(new Rectangle(0,0,20,400));
         colArrBossLeft2.add(new Rectangle(0,480,60,100));
         colArrBossLeft2.add(new Rectangle(0,380,5,100));
         enemyArrBossLeft2.add(new VengeflyEnemy(50, 50, 40, 40, 1));
@@ -693,13 +693,14 @@ public class Level {
 
     public void render(Graphics2D g2d) { 
 
-        for(int i=0;i<collisionArray.size();i++){
+      for(int i=0;i<collisionArray.size();i++){
             for(int j=collisionArray.get(i).x;j<collisionArray.get(i).x+collisionArray.get(i).width;j=j+10){
                 for(int k=collisionArray.get(i).y;k<collisionArray.get(i).y+collisionArray.get(i).height;k=k+10){
                     g2d.drawImage(brick, j, k, 10, 10, null);
                 }
             }
         }
+      
 
 
 
@@ -914,7 +915,12 @@ public class Level {
 
     public void tick(GameManager gm) {
         // Increment the tick counter
+       
         tickCounter++;
+
+        for (int i = 0; i < enemyList.size(); i++) {
+            enemyList.get(i).tick(gm);
+        }
 
         // Increment the 5-second counter
         int fiveSecondCounter = tickCounter / 50; // Since you're incrementing tickCounter every tick, 50 ticks = 1
@@ -984,9 +990,7 @@ public class Level {
         }
     
         // Rest of the tick method
-        for (int i = 0; i < enemyList.size(); i++) {
-            enemyList.get(i).tick(gm);
-        }
+        
     }
 }
 
