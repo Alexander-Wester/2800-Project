@@ -20,7 +20,7 @@ public class Level {
 
     // Add a tick counter for fireball generation
     private int tickCounter;
-    private BufferedImage ground;
+    //private BufferedImage ground;
 
     public Level(String name, Level left, Level right, ArrayList<Rectangle> colArr, BufferedImage title,
             ArrayList<Enemy> enArr) {// ADD
@@ -40,7 +40,7 @@ public class Level {
     private void loadSpriteSheet(String path) { // loading the spritesheet
         try (InputStream inputStream = getClass().getResourceAsStream(path)) {
             if (inputStream != null) {
-                ground = ImageIO.read(inputStream);
+                //ground = ImageIO.read(inputStream);
             } else {
                 throw new IOException("Resource not found: " + path);
             }
@@ -906,7 +906,7 @@ public class Level {
             g2d.drawImage(ground, 0, 200, 150, 50, null);
         }
         */
-
+		//System.out.print("*");
         for (int i = 0; i < enemyList.size(); i++) {
             enemyList.get(i).render(g2d);
         }

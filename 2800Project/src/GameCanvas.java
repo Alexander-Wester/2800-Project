@@ -30,7 +30,7 @@ public class GameCanvas extends Canvas implements Runnable {
 		// gameManager.addGameObject(player);
 		gameManager.player = this.player;
 		loadBackgroundSprite("lib/mountain-bg.png");
-		loadBackgroundSound("lib/background.wav");
+		loadBackgroundSound("./src/lib/background.wav");
 	}
 
 	// This initalizes the buffering and starts the game thread.
@@ -123,8 +123,8 @@ public class GameCanvas extends Canvas implements Runnable {
 		Graphics2D g2d = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		// black background
-		g2d.setColor(Color.black);
-		g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+		//g2d.setColor(Color.black);
+		//g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 		g2d.drawImage(backgroundSprite, 0, 0, getWidth(), getHeight(), null);
 
 		// this draws the real code

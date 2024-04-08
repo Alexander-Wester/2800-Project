@@ -46,7 +46,8 @@ public class GameManager {
 	
 	public void render(Graphics2D g2d) {
 		//calls all gameObject's render()
-		for(int i = 0; i < gameObjects.size(); i++) gameObjects.get(i).render(g2d);
+		//for(int i = 0; i < gameObjects.size(); i++) gameObjects.get(i).render(g2d);
+		//System.out.print(".");
 		currLevel.render(g2d);
 		player.render(g2d);
 	}
