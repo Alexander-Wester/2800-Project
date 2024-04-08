@@ -600,7 +600,7 @@ public class Level {
          enemyArrBossRight3.add(new Portal(780,360,levelBossMain,150,400));
 
          Level levelBossRight3 = new Level("Right3",levelBossRight2, null,colArrBossRight3,loadImage("./src/lib/BossRoom.png"),enemyArrBossRight3);
-        enemyArrBossRight1.add(new BossOrbGenerator(700, 190, Color.blue));
+        //enemyArrBossRight1.add(new BossOrbGenerator(700, 190, Color.blue));
 
 
         ArrayList<Rectangle> colArrBossLeft1 = new ArrayList<>();
