@@ -353,6 +353,7 @@ public class Level {
         colArr10.add(new Rectangle(180,420,600,100));
         colArr10.add(new Rectangle(280,390,400,100));
         colArr10.add(new Rectangle(380,360,200,100));
+        colArr10.add(new Rectangle(900,0,100,700));
         enemyArr10.add(new Key(480,300));
         enemyArr10.add(new Portal(470,100, roomOne,430,300));
         Level roomTen = new Level("Room Ten",roomNine, null, colArr10, loadImage("./src/lib/Room10.png"), enemyArr10);
@@ -546,7 +547,7 @@ public class Level {
         colArr20.add(new Rectangle(380,360,200,100));
         enemyArr20.add(new Key(480,300));
         enemyArr20.add(new Portal(470,100, roomOne,430,300));
-
+        colArr20.add(new Rectangle(0,0,30,700));
         Level roomTwenty = new Level("LeftRoom10",null, roomNinteen, colArr20, loadImage("./src/lib/LeftRoomTen.png"), enemyArr20);
         roomNinteen.leftLevel = roomTwenty;
 
